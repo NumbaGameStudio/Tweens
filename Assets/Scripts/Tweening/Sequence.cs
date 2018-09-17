@@ -71,6 +71,8 @@ namespace Numba.Tweening
         private int _loopsCount = 1;
 
         private bool _stopRequested;
+
+        Tween.Accessor _tweenAccessor = new Tween.Accessor();
         #endregion
 
         #region Constructors
@@ -223,13 +225,22 @@ namespace Numba.Tweening
         private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float timePassed)
         {
             foreach (var tweenData in sortedTweensAndCallbacks.StartedTweens)
+            {
+                _tweenAccessor.CallHandleStart(tweenData.Tween);
                 tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+            }
 
             foreach (var tweenData in sortedTweensAndCallbacks.ContinuousTweens)
+            {
+                _tweenAccessor.CallHandleUpdate(tweenData.Tween);
                 tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+            }
 
             foreach (var tweenData in sortedTweensAndCallbacks.CompletedTweens)
+            {
+                _tweenAccessor.CallHandleComplete(tweenData.Tween);
                 tweenData.Tween.SetTime(1f);
+            }
 
             foreach (var callbackData in sortedTweensAndCallbacks.CompletedCallbacks) callbackData.Callback();
         }
@@ -247,6 +258,8 @@ namespace Numba.Tweening
 
                 if (IsValueBetween(tweenEndTime, startTime, endTime) && tweenEndTime != startTime)
                 {
+                    if (tweenData.StartTime > startTime) startedTweens.Add(tweenData);
+
                     completedTweens.Add(tweenData);
                     continue;
                 }

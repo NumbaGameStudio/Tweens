@@ -10,10 +10,12 @@ namespace Namespace
         [SerializeField]
         private Transform _cube;
 
-		private IEnumerator Start()
+		private void Start()
 		{
-            yield return _cube.DoPositionX(1f, 1f, Ease.InOutExpo, 1, LoopType.Yoyo).Play();
-            Debug.Log("Awaited");
+            new Sequence(_cube.DoPositionX(1f, 1f, Ease.InOutExpo, -1, LoopType.Yoyo)
+                .OnStart(() => Debug.Log("Started"))
+                .OnUpdate(() => Debug.Log("Updated"))
+                .OnComplete(() => Debug.Log("Completed"))).Play();
 		}
 	}
 }

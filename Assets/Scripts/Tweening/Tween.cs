@@ -10,6 +10,17 @@ namespace Numba.Tweening
 {
     public class Tween
     {
+        #region Nested classes
+        public class Accessor
+        {
+            public void CallHandleStart(Tween tween) { tween.HandleStart(); }
+
+            public void CallHandleUpdate(Tween tween) { tween.HandleUpdate(); }
+
+            public void CallHandleComplete(Tween tween) { tween.HandleComplete(); }
+        }
+        #endregion
+
         #region Create
         #region Float
         public static Tween Create(float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -202,6 +213,20 @@ namespace Numba.Tweening
         private Ease _ease;
 
         private AnimationCurve _curve = new AnimationCurve();
+
+        #region Events
+        public event Action Started;
+
+        public event Action Updated;
+        
+        public event Action Completed;
+        #endregion
+
+        private Action _onStartCallback;
+
+        private Action _onUpdateCallback;
+        
+        private Action _onCompleteCallback;
         #endregion
 
         #region Constructors
@@ -377,6 +402,8 @@ namespace Numba.Tweening
 
         private IEnumerator PlayTime(bool useRealtime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
+            HandleStart();
+
             float startTime = GetTime(useRealtime);
 
             bool isInfinityLoops = loopsCount == -1;
@@ -391,14 +418,16 @@ namespace Numba.Tweening
             {
                 yield return null;
 
+                float normalizedTime = (GetTime(useRealtime) - startTime) / duration;
+                SetTime(normalizedTime, usedEaseType, ease, curve, loopsCount, loopType);
+
+                HandleUpdate();
+
                 if (_stopRequested)
                 {
                     HandleStop();
                     yield break;
                 }
-
-                float normalizedTime = (GetTime(useRealtime) - startTime) / duration;
-                SetTime(normalizedTime, usedEaseType, ease, curve, loopsCount, loopType);
 
                 while (endTime < GetTime(useRealtime))
                 {
@@ -410,7 +439,10 @@ namespace Numba.Tweening
             while (GetTime(useRealtime) < endTime)
             {
                 yield return null;
+
                 SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
+
+                HandleUpdate();
 
                 if (_stopRequested)
                 {
@@ -419,7 +451,7 @@ namespace Numba.Tweening
                 }
             }
 
-            _playTimeRoutine = null;
+            HandleStop();
         }
 
         private float GetTime(bool useRealtime)
@@ -442,6 +474,46 @@ namespace Numba.Tweening
         {
             _stopRequested = false;
             _playTimeRoutine = null;
+
+            HandleComplete();
+
+            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
+        }
+
+        private void HandleStart()
+        {
+            if (Started != null) Started();
+            if (_onStartCallback != null) _onStartCallback();
+        }
+
+        private void HandleUpdate()
+        {
+            if (Updated != null) Updated();
+            if (_onUpdateCallback != null) _onUpdateCallback();
+        }
+
+        private void HandleComplete()
+        {
+            if (Completed != null) Completed();
+            if (_onCompleteCallback != null) _onCompleteCallback();
+        }
+
+        public Tween OnStart(Action callback)
+        {
+            _onStartCallback = callback;
+            return this;
+        }
+
+        public Tween OnUpdate(Action callback)
+        {
+            _onUpdateCallback = callback;
+            return this;
+        }
+
+        public Tween OnComplete(Action callback)
+        {
+            _onCompleteCallback = callback;
+            return this;
         }
         #endregion
     }
