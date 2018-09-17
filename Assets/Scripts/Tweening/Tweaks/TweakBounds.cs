@@ -11,24 +11,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakBounds(Bounds from, Bounds to, Action<Bounds> setter) : base(from, to, setter) { }
 
-        protected override Bounds Evaluate(float normalizedPassedTime, Ease ease)
+        protected override Bounds Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
         {
-            return new Bounds(Easing.Ease(From.center, To.center, normalizedPassedTime, ease), Easing.Ease(From.size, To.size, normalizedPassedTime, ease));
+            return Evaluate(swapFromTo, (from, to) => new Bounds(Easing.Ease(from.center, to.center, normalizedPassedTime, ease), Easing.Ease(from.size, to.size, normalizedPassedTime, ease)));
         }
 
-        protected override Bounds EvaluateBackward(float normalizedPassedTime, Ease ease)
+        protected override Bounds Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
         {
-            return new Bounds(Easing.Ease(To.center, From.center, normalizedPassedTime, ease), Easing.Ease(To.size, From.size, normalizedPassedTime, ease));
-        }
-
-        protected override Bounds Evaluate(float normalizedTime, AnimationCurve curve)
-        {
-            return new Bounds(Easing.Ease(From.center, To.center, normalizedTime, curve), Easing.Ease(From.size, To.size, normalizedTime, curve));
-        }
-
-        protected override Bounds EvaluateBackward(float normalizedTime, AnimationCurve curve)
-        {
-            return new Bounds(Easing.Ease(To.center, From.center, normalizedTime, curve), Easing.Ease(To.size, From.size, normalizedTime, curve));
+            return Evaluate(swapFromTo, (from, to) => new Bounds(Easing.Ease(from.center, to.center, normalizedTime, curve), Easing.Ease(from.size, to.size, normalizedTime, curve)));
         }
     }
 }

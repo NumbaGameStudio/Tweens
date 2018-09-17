@@ -11,24 +11,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakVector2(Vector2 from, Vector2 to, Action<Vector2> setter) : base(from, to, setter) { }
 
-        protected override Vector2 Evaluate(float normalizedPassedTime, Ease ease)
+        protected override Vector2 Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
         {
-            return Easing.Ease(From, To, normalizedPassedTime, ease);
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedPassedTime, ease));
         }
-
-        protected override Vector2 EvaluateBackward(float normalizedPassedTime, Ease ease)
+        
+        protected override Vector2 Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
         {
-            return Easing.Ease(To, From, normalizedPassedTime, ease);
-        }
-
-        protected override Vector2 Evaluate(float normalizedTime, AnimationCurve curve)
-        {
-            return Easing.Ease(From, To, normalizedTime, curve);
-        }
-
-        protected override Vector2 EvaluateBackward(float normalizedTime, AnimationCurve curve)
-        {
-            return Easing.Ease(To, From, normalizedTime, curve);
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedTime, curve));
         }
     }
 }

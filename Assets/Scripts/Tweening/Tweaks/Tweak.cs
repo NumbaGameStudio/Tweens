@@ -80,13 +80,9 @@ namespace Numba.Tweening.Tweaks
         }
         #endregion
 
-        public abstract void SetTime(float normalizedTime, Ease ease);
+        public abstract void SetTime(float normalizedTime, Ease ease, bool swapFromTo = false);
 
-        public abstract void SetTime(float normalizedTime, AnimationCurve curve);
-
-        public abstract void SetTimeBackward(float normalizedTime, Ease ease);
-
-        public abstract void SetTimeBackward(float normalizedTime, AnimationCurve curve);
+        public abstract void SetTime(float normalizedTime, AnimationCurve curve, bool swapFromTo = false);
     }
 
     public abstract class Tweak<T> : Tweak
@@ -120,32 +116,40 @@ namespace Numba.Tweening.Tweaks
             if (_setter != null) _setter.Invoke(value);
         }
 
-        protected abstract T Evaluate(float normalizedTime, Ease ease);
+        protected abstract T Evaluate(float normalizedTime, Ease ease, bool swapFromTo = false);
 
-        protected abstract T Evaluate(float normalizedTime, AnimationCurve curve);
+        protected abstract T Evaluate(float normalizedTime, AnimationCurve curve, bool useSwap = false);
 
-        protected abstract T EvaluateBackward(float normalizedTime, Ease ease);
-
-        protected abstract T EvaluateBackward(float normalizedTime, AnimationCurve curve);
-
-        public sealed override void SetTime(float normalizedTime, Ease ease)
+        public sealed override void SetTime(float normalizedTime, Ease ease, bool swapFromTo = false)
         {
-            CallSetter(Evaluate(normalizedTime, ease));
+            CallSetter(Evaluate(normalizedTime, ease, swapFromTo));
         }
 
-        public override void SetTime(float normalizedTime, AnimationCurve curve)
+        public override void SetTime(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
         {
-            CallSetter(Evaluate(normalizedTime, curve));
+            CallSetter(Evaluate(normalizedTime, curve, swapFromTo));
         }
 
-        public sealed override void SetTimeBackward(float normalizedTime, Ease ease)
+        protected void GetSwapedFromTo(out T from, out T to, bool swapFromTo)
         {
-            CallSetter(EvaluateBackward(normalizedTime, ease));
+            if (swapFromTo)
+            {
+                from = To;
+                to = From;
+            }
+            else
+            {
+                from = From;
+                to = To;
+            }
         }
 
-        public sealed override void SetTimeBackward(float normalizedTime, AnimationCurve curve)
+        protected T Evaluate(bool swapFromTo, Func<T, T, T> easer)
         {
-            CallSetter(EvaluateBackward(normalizedTime, curve));
+            T from, to;
+            GetSwapedFromTo(out from, out to, swapFromTo);
+
+            return easer(from, to);
         }
     }
 }

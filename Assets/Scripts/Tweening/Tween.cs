@@ -313,8 +313,8 @@ namespace Numba.Tweening
                     else Tweak.SetTime(Wrap01(normalizedTime * loopsCount), curve);
                     break;
                 case LoopType.Backward:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTimeBackward(Wrap01(normalizedTime * loopsCount), ease);
-                    else Tweak.SetTimeBackward(Wrap01(normalizedTime * loopsCount), curve);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime * loopsCount), ease, true);
+                    else Tweak.SetTime(Wrap01(normalizedTime * loopsCount), curve, true);
                     break;
                 case LoopType.Reversed:
                     if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Wrap01(normalizedTime * loopsCount), ease);
@@ -323,16 +323,8 @@ namespace Numba.Tweening
                 case LoopType.Yoyo:
                     normalizedTime = normalizedTime * loopsCount * 2;
 
-                    if (IsYoyoBackward(normalizedTime))
-                    {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTimeBackward(Wrap01(normalizedTime), ease);
-                        else Tweak.SetTimeBackward(Wrap01(normalizedTime), curve);
-                    }
-                    else
-                    {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime), ease);
-                        else Tweak.SetTime(Wrap01(normalizedTime), curve);
-                    }
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime), ease, IsYoyoBackward(normalizedTime));
+                    else Tweak.SetTime(Wrap01(normalizedTime), curve, IsYoyoBackward(normalizedTime));
 
                     break;
                 case LoopType.ReversedYoyo:

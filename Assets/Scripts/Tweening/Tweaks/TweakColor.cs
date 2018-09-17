@@ -11,24 +11,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakColor(Color from, Color to, Action<Color> setter) : base(from, to, setter) { }
 
-        protected override Color Evaluate(float normalizedPassedTime, Ease ease)
+        protected override Color Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
         {
-            return Easing.Ease(From, To, normalizedPassedTime, ease);
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedPassedTime, ease));
         }
 
-        protected override Color EvaluateBackward(float normalizedPassedTime, Ease ease)
+        protected override Color Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
         {
-            return Easing.Ease(To, From, normalizedPassedTime, ease);
-        }
-
-        protected override Color Evaluate(float normalizedTime, AnimationCurve curve)
-        {
-            return Easing.Ease(From, To, normalizedTime, curve);
-        }
-
-        protected override Color EvaluateBackward(float normalizedTime, AnimationCurve curve)
-        {
-            return Easing.Ease(To, From, normalizedTime, curve);
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedTime, curve));
         }
     }
 }
