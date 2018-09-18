@@ -8,14 +8,30 @@ namespace Namespace
 	public class Test : MonoBehaviour 
 	{
         [SerializeField]
-        private Transform _cube;
+        private Transform _cube1;
 
-		private void Start()
+        [SerializeField]
+        private Transform _cube2;
+
+        private Sequence _sequence;
+
+        [SerializeField]
+        //[Range(0f, 6f)]
+        private float _time;
+
+		private void Awake()
 		{
-            new Sequence(_cube.DoPositionX(1f, 1f, Ease.InOutExpo, -1, LoopType.Yoyo)
-                .OnStart(() => Debug.Log("Started"))
-                .OnUpdate(() => Debug.Log("Updated"))
-                .OnComplete(() => Debug.Log("Completed"))).Play();
-		}
-	}
+            _sequence = new Sequence().SetLoops(2, LoopType.Forward);
+
+            _sequence.Append(_cube1.DoPositionZ(1.5f, 1f, Ease.InOutExpo));
+            _sequence.Insert(0f, _cube2.DoPositionZ(-1.5f, 1f, Ease.InOutExpo));
+            _sequence.Append(_cube1.DoPositionY(-1f, 1f, Ease.InOutExpo));
+            _sequence.Append(_cube2.DoPositionY(1f, 0.5f, Ease.InOutExpo));
+        }
+
+        private void Update()
+        {
+            _sequence.SetTime(_time);
+        }
+    }
 }

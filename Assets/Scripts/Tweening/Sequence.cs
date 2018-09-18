@@ -7,10 +7,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    /// <summary>
-    /// Represent a tweens container. May play them all sequentially.
-    /// </summary>
-	public class Sequence
+    public class Sequence : IPlayable
     {
         #region Structures and classes
         private struct TweenData
@@ -70,35 +67,41 @@ namespace Numba.Tweening
 
         private int _loopsCount = 1;
 
+        private LoopType _loopType;
+
         private bool _stopRequested;
 
         Tween.Accessor _tweenAccessor = new Tween.Accessor();
+
+        private float _currentTime = -1f;
+
+        #region Events
+        public event Action Started;
+
+        public event Action Updated;
+
+        public event Action Completed;
+        #endregion
+
+        #region Callback
+        private Action _onStartCallback;
+
+        private Action _onUpdateCallback;
+
+        private Action _onCompleteCallback;
+        #endregion
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Create empty sequence.
-        /// </summary>
         public Sequence() : this(string.Empty) { }
 
-        /// <summary>
-        /// Create empty sequence with name.
-        /// </summary>
         public Sequence(string name)
         {
             Name = name;
         }
 
-        /// <summary>
-        /// Create sequence and add all tweens in zero time position.
-        /// </summary>
-        /// <param name="tweens">Tweens which will be added.</param>
         public Sequence(params Tween[] tweens) : this(string.Empty, tweens) { }
 
-        /// <summary>
-        /// Create sequence with name and add all tweens in zero time position.
-        /// </summary>
-        /// <param name="tweens">Tweens which will be added.</param>
         public Sequence(string name, params Tween[] tweens)
         {
             foreach (var tween in tweens)
@@ -111,6 +114,8 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
+        public float CurrentTime { get { return _currentTime; } }
+
         public float Duration { get; private set; }
 
         public int LoopsCount
@@ -120,6 +125,23 @@ namespace Numba.Tweening
         }
 
         public bool IsPlaying { get { return _playTimeRoutine != null; } }
+
+        public LoopType LoopType
+        {
+            get { return _loopType; }
+            set
+            {
+                switch (value)
+                {
+                    case LoopType.Reversed: _loopType = LoopType.Backward;
+                        return;
+                    case LoopType.ReversedYoyo: _loopType = LoopType.Yoyo;
+                        return;
+                }
+
+                _loopType = value;
+            }
+        }
         #endregion
 
         #region Methods
@@ -162,10 +184,32 @@ namespace Numba.Tweening
             return _tweenDurations[tween];
         }
 
-        public Sequence SetLoopsCount(int loopsCount)
+        public Sequence SetLoops(int loopsCount)
         {
-            LoopsCount = loopsCount;
+            return SetLoops(loopsCount, LoopType);
+        }
+
+        public Sequence SetLoops(LoopType loopType)
+        {
+            return SetLoops(_loopsCount, loopType);
+        }
+
+        public Sequence SetLoops(int loopsCount, LoopType loopType)
+        {
+            _loopsCount = loopsCount;
+            LoopType = loopType;
+
             return this;
+        }
+
+        public void SetTime(float time)
+        {
+            time = Mathf.Min(time, Duration);
+
+            var soretedTweens = FindTweensAndCallbacksBetween(_currentTime, time);
+            UpdateTweensAndCallbacks(soretedTweens, time);
+
+            _currentTime = time;
         }
 
         public Coroutine Play(bool useRealtime = false)
@@ -176,46 +220,56 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
+            return null;
+            //return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
         }
 
-        private IEnumerator PlayTime(bool useRealtime, int loopsCount)
-        {
-            float startTime = 0f;
-            float previousTime = 0f;
-            float endTime = 0f;
-            float timePassed = 0f;
+        //private IEnumerator PlayTime(bool useRealtime, int loopsCount)
+        //{
+        //    HandleStart();
 
-            while (loopsCount != 0)
-            {
-                startTime = GetTime(useRealtime);
-                endTime = startTime + Duration;
-                previousTime = -1f;
 
-                while (GetTime(useRealtime) < endTime)
-                {
-                    yield return null;
+        //}
 
-                    timePassed = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
-                    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
+        //private IEnumerator PlayTime(bool useRealtime, int loopsCount)
+        //{
+        //    HandleStart();
 
-                    previousTime = timePassed;
+        //    float startTime = 0f;
+        //    float previousTime = 0f;
+        //    float endTime = 0f;
+        //    float timePassed = 0f;
 
-                    if (_stopRequested)
-                    {
-                        HandleStop();
-                        yield break;
-                    }
-                }
+        //    while (loopsCount != 0)
+        //    {
+        //        startTime = GetTime(useRealtime);
+        //        endTime = startTime + Duration;
+        //        previousTime = -1f;
 
-                if (loopsCount != -1) --loopsCount;
-            }
+        //        while (GetTime(useRealtime) < endTime)
+        //        {
+        //            yield return null;
 
-            timePassed = endTime - startTime;
-            UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
-            
-            _playTimeRoutine = null;
-        }
+        //            timePassed = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
+        //            UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
+
+        //            previousTime = timePassed;
+
+        //            if (_stopRequested)
+        //            {
+        //                HandleStop();
+        //                yield break;
+        //            }
+        //        }
+
+        //        if (loopsCount != -1) --loopsCount;
+        //    }
+
+        //    timePassed = endTime - startTime;
+        //    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
+
+        //    _playTimeRoutine = null;
+        //}
 
         private float GetTime(bool useRealtime)
         {
@@ -301,6 +355,48 @@ namespace Numba.Tweening
         {
             _stopRequested = false;
             _playTimeRoutine = null;
+
+            _currentTime = -1f;
+
+            HandleComplete();
+
+            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
+        }
+
+        private void HandleStart()
+        {
+            if (Started != null) Started();
+            if (_onStartCallback != null) _onStartCallback();
+        }
+
+        private void HandleUpdate()
+        {
+            if (Updated != null) Updated();
+            if (_onUpdateCallback != null) _onUpdateCallback();
+        }
+
+        private void HandleComplete()
+        {
+            if (Completed != null) Completed();
+            if (_onCompleteCallback != null) _onCompleteCallback();
+        }
+
+        public Sequence OnStart(Action callback)
+        {
+            _onStartCallback = callback;
+            return this;
+        }
+
+        public Sequence OnUpdate(Action callback)
+        {
+            _onUpdateCallback = callback;
+            return this;
+        }
+
+        public Sequence OnComplete(Action callback)
+        {
+            _onCompleteCallback = callback;
+            return this;
         }
         #endregion
     }

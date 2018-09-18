@@ -8,7 +8,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    public class Tween
+    public class Tween : IPlayable
     {
         #region Nested classes
         public class Accessor
@@ -222,11 +222,13 @@ namespace Numba.Tweening
         public event Action Completed;
         #endregion
 
+        #region Callback
         private Action _onStartCallback;
 
         private Action _onUpdateCallback;
         
         private Action _onCompleteCallback;
+        #endregion
         #endregion
 
         #region Constructors
@@ -302,22 +304,20 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Tween SetLoopsCount(int count)
+        public Tween SetLoops(int count)
         {
-            LoopsCount = count;
-            return this;
+            return SetLoops(count, LoopType);
         }
 
-        public Tween SetLoopType(LoopType loopType)
+        public Tween SetLoops(LoopType loopType)
         {
-            LoopType = loopType;
-            return this;
+            return SetLoops(_loopsCount, loopType);
         }
 
         public Tween SetLoops(int count, LoopType loopType)
         {
-            SetLoopsCount(count);
-            SetLoopType(loopType);
+            _loopsCount = count;
+            LoopType = loopType;
 
             return this;
         }
