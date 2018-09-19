@@ -133,9 +133,11 @@ namespace Numba.Tweening
             {
                 switch (value)
                 {
-                    case LoopType.Reversed: _loopType = LoopType.Backward;
+                    case LoopType.Reversed:
+                        _loopType = LoopType.Backward;
                         return;
-                    case LoopType.ReversedYoyo: _loopType = LoopType.Yoyo;
+                    case LoopType.ReversedYoyo:
+                        _loopType = LoopType.Yoyo;
                         return;
                 }
 
@@ -204,10 +206,12 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
+            if (time == _currentTime) return;
+
             time = Mathf.Min(time, Duration);
 
             var soretedTweens = FindTweensAndCallbacksBetween(_currentTime, time);
-            UpdateTweensAndCallbacks(soretedTweens, time);
+            UpdateTweensAndCallbacks(soretedTweens, time, time < _currentTime);
 
             _currentTime = time;
         }
@@ -276,24 +280,30 @@ namespace Numba.Tweening
             return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
         }
 
-        private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float timePassed)
+        private void UpdateTweensAndCallbacks(SortedTweensAndCallbacks sortedTweensAndCallbacks, float time, bool useBackward)
         {
             foreach (var tweenData in sortedTweensAndCallbacks.StartedTweens)
             {
                 _tweenAccessor.CallHandleStart(tweenData.Tween);
-                tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+
+                if (useBackward) tweenData.Tween.SetTime(Mathf.Abs((time - tweenData.StartTime + GetTweenDuration(tweenData.Tween)) / GetTweenDuration(tweenData.Tween)));
+                else tweenData.Tween.SetTime((time - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
             }
 
             foreach (var tweenData in sortedTweensAndCallbacks.ContinuousTweens)
             {
+                if (useBackward) tweenData.Tween.SetTime(Mathf.Abs((time - tweenData.StartTime + GetTweenDuration(tweenData.Tween)) / GetTweenDuration(tweenData.Tween)));
+                else tweenData.Tween.SetTime((time - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+
                 _tweenAccessor.CallHandleUpdate(tweenData.Tween);
-                tweenData.Tween.SetTime((timePassed - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
             }
 
             foreach (var tweenData in sortedTweensAndCallbacks.CompletedTweens)
             {
+                if (useBackward) tweenData.Tween.SetTime(0f);
+                else tweenData.Tween.SetTime(1f);
+
                 _tweenAccessor.CallHandleComplete(tweenData.Tween);
-                tweenData.Tween.SetTime(1f);
             }
 
             foreach (var callbackData in sortedTweensAndCallbacks.CompletedCallbacks) callbackData.Callback();
@@ -301,6 +311,8 @@ namespace Numba.Tweening
 
         private SortedTweensAndCallbacks FindTweensAndCallbacksBetween(float startTime, float endTime)
         {
+            bool isBackward = startTime > endTime;
+
             List<TweenData> startedTweens = new List<TweenData>();
             List<TweenData> continuousTweens = new List<TweenData>();
             List<TweenData> completedTweens = new List<TweenData>();
@@ -308,36 +320,52 @@ namespace Numba.Tweening
 
             foreach (var tweenData in _tweensDatas)
             {
-                float tweenEndTime = tweenData.StartTime + GetTweenDuration(tweenData.Tween);
+                float tweenStartTime = isBackward ? tweenData.StartTime + GetTweenDuration(tweenData.Tween) : tweenData.StartTime;
+                float tweenEndTime = isBackward ? tweenData.StartTime : tweenData.StartTime + GetTweenDuration(tweenData.Tween);
 
                 if (IsValueBetween(tweenEndTime, startTime, endTime) && tweenEndTime != startTime)
                 {
-                    if (tweenData.StartTime > startTime) startedTweens.Add(tweenData);
+                    if (isBackward && (tweenStartTime < startTime)) startedTweens.Add(tweenData);
+                    else if (!isBackward && (tweenStartTime > startTime)) startedTweens.Add(tweenData);
 
                     completedTweens.Add(tweenData);
                     continue;
                 }
 
-                if (tweenEndTime <= startTime || tweenData.StartTime > endTime) continue;
+                if (isBackward && (tweenEndTime >= startTime || tweenStartTime < endTime)) continue;
+                else if (!isBackward && (tweenEndTime <= startTime || tweenStartTime > endTime)) continue;
 
-                if (tweenData.StartTime > startTime && tweenData.StartTime <= endTime) startedTweens.Add(tweenData);
+                if (isBackward && (tweenStartTime < startTime && tweenStartTime >= endTime)) startedTweens.Add(tweenData);
+                else if (!isBackward && (tweenStartTime > startTime && tweenStartTime <= endTime)) startedTweens.Add(tweenData);
                 else continuousTweens.Add(tweenData);
             }
 
             foreach (var callbackData in _callbacksDatas)
                 if (IsValueBetween(callbackData.StartTime, startTime, endTime) && callbackData.StartTime != startTime) completedCallbacks.Add(callbackData);
 
-            startedTweens.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
-            continuousTweens.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
-            completedTweens.Sort((x, y) => (x.StartTime + GetTweenDuration(x.Tween)).CompareTo(y.StartTime + GetTweenDuration(y.Tween)));
-            completedCallbacks.Sort((x, y) => x.StartTime.CompareTo(y.StartTime));
+            Comparison<TweenData> startedAndContinuousComparison;
+            if (isBackward) startedAndContinuousComparison = (x, y) => (x.StartTime + GetTweenDuration(x.Tween)).CompareTo(y.StartTime + GetTweenDuration(y.Tween)) * -1;
+            else startedAndContinuousComparison = (x, y) => x.StartTime.CompareTo(y.StartTime);
+
+            Comparison<TweenData> completedComparison;
+            if (isBackward) completedComparison = (x, y) => x.StartTime.CompareTo(y.StartTime) * -1;
+            else completedComparison = (x, y) => (x.StartTime + GetTweenDuration(x.Tween)).CompareTo(y.StartTime + GetTweenDuration(y.Tween));
+
+            Comparison<CallbackData> callbackComparison;
+            if (isBackward) callbackComparison = (x, y) => x.StartTime.CompareTo(y.StartTime) * -1;
+            else callbackComparison = (x, y) => x.StartTime.CompareTo(y.StartTime);
+
+            startedTweens.Sort(startedAndContinuousComparison);
+            continuousTweens.Sort(startedAndContinuousComparison);
+            completedTweens.Sort(completedComparison);
+            completedCallbacks.Sort(callbackComparison);
 
             return new SortedTweensAndCallbacks(startedTweens, continuousTweens, completedTweens, completedCallbacks);
         }
 
         private bool IsValueBetween(float value, float startTime, float endTime)
         {
-            return value >= startTime && value <= endTime;
+            return startTime < endTime ? value >= startTime && value <= endTime : value >= endTime && value <= startTime;
         }
 
         public void Stop()
