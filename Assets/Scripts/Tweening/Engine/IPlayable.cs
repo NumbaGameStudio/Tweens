@@ -25,6 +25,8 @@ namespace Numba.Tweening.Engine
 
         bool IsPlaying { get; }
 
+        float GetDurationWithLoops();
+
         void SetTime(float time);
 
         Coroutine Play(bool useRealtime = false);

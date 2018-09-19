@@ -204,6 +204,11 @@ namespace Numba.Tweening
             return this;
         }
 
+        public float GetDurationWithLoops()
+        {
+            return Duration * _loopsCount * (LoopType == LoopType.Yoyo ? 2f : 1f);
+        }
+
         public void SetTime(float time)
         {
             SetTime(time, _loopsCount, _loopType);
@@ -212,7 +217,7 @@ namespace Numba.Tweening
         private void SetTime(float time, int loopsCount, LoopType loopType)
         {
             if (loopsCount == -1) loopsCount = 1;
-            time = Mathf.Min(time, Duration * loopsCount);
+            time = Mathf.Min(time, Duration * loopsCount * (loopType == LoopType.Yoyo ? 2f : 1f));
 
             switch (loopType)
             {
@@ -222,13 +227,42 @@ namespace Numba.Tweening
                     break;
                 case LoopType.Backward:
                     time = Engine.Math.WrapCeil(time, Duration);
+                    time = Duration - time;
                     UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, time), time, time < _currentTime);
                     break;
                 case LoopType.Yoyo:
+                    float yoyoDuration = Duration * 2;
+                    float repeatedYoyo = Engine.Math.WrapCeil(time, yoyoDuration);
+
+                    if (repeatedYoyo <= Duration)
+                    {
+                        float repeatedForward = Engine.Math.WrapCeil(repeatedYoyo, Duration);
+                        UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, repeatedForward), repeatedForward, repeatedForward < _currentTime);
+                    }
+                    else
+                    {
+                        float repeatedBackward = Engine.Math.WrapCeil(repeatedYoyo, Duration);
+                        repeatedBackward = Duration - repeatedBackward;
+                        UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, repeatedBackward), repeatedBackward, repeatedBackward < _currentTime);
+                    }
+
                     break;
             }
 
             _currentTime = time;
+        }
+
+        private bool IsYoyoBackward(float time)
+        {
+            float repeated = time / Duration;
+            if (repeated <= 1f) return false;
+
+            int intPart = (int)repeated;
+            float fraction = repeated - intPart;
+
+            bool isEven = intPart % 2 == 0;
+
+            return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
         public Coroutine Play(bool useRealtime = false)
@@ -300,23 +334,19 @@ namespace Numba.Tweening
             foreach (var tweenData in sortedTweensAndCallbacks.StartedTweens)
             {
                 _tweenAccessor.CallHandleStart(tweenData.Tween);
-
-                if (useBackward) tweenData.Tween.SetTime(Mathf.Abs((time - tweenData.StartTime + GetTweenDuration(tweenData.Tween)) / GetTweenDuration(tweenData.Tween)));
-                else tweenData.Tween.SetTime((time - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
+                tweenData.Tween.SetTime(time - tweenData.StartTime);
             }
 
             foreach (var tweenData in sortedTweensAndCallbacks.ContinuousTweens)
             {
-                if (useBackward) tweenData.Tween.SetTime(Mathf.Abs((time - tweenData.StartTime + GetTweenDuration(tweenData.Tween)) / GetTweenDuration(tweenData.Tween)));
-                else tweenData.Tween.SetTime((time - tweenData.StartTime) / GetTweenDuration(tweenData.Tween));
-
+                tweenData.Tween.SetTime(time - tweenData.StartTime);
                 _tweenAccessor.CallHandleUpdate(tweenData.Tween);
             }
 
             foreach (var tweenData in sortedTweensAndCallbacks.CompletedTweens)
             {
                 if (useBackward) tweenData.Tween.SetTime(0f);
-                else tweenData.Tween.SetTime(1f);
+                else tweenData.Tween.SetTime(tweenData.Tween.GetDurationWithLoops());
 
                 _tweenAccessor.CallHandleComplete(tweenData.Tween);
             }

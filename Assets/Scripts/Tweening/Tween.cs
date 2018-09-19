@@ -322,6 +322,14 @@ namespace Numba.Tweening
             return this;
         }
 
+        public float GetDurationWithLoops()
+        {
+            float durationWithLoops = Duration * _loopsCount;
+            if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
+
+            return durationWithLoops;
+        }
+
         public void SetTime(float time)
         {
             SetTime(time, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
@@ -353,7 +361,6 @@ namespace Numba.Tweening
                 case LoopType.Yoyo:
                     if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease, IsYoyoBackward(time));
                     else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve, IsYoyoBackward(time));
-
                     break;
                 case LoopType.ReversedYoyo:
                     if (IsYoyoBackward(time))
@@ -365,8 +372,7 @@ namespace Numba.Tweening
                     {
                         if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
                         else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
-                    }
-                    
+                    }                    
                     break;
             }
         }
