@@ -15,29 +15,23 @@ namespace Namespace
 
         private Sequence _sequence;
 
+        private Tween _tween;
+
         [SerializeField]
-        [Range(0f, 6f)]
+        [Range(0f, 10f)]
         private float _time;
 
 		private void Awake()
 		{
-            _sequence = new Sequence().SetLoops(2, LoopType.Forward);
+            _tween = _cube1.DoPositionX(1.5f, 2f).SetEase(Ease.InExpo).SetLoops(2, LoopType.ReversedYoyo);
 
-            var tween = _cube1.DoPositionZ(1.5f, 1f, Ease.InOutExpo);
-            tween.Started += () => Debug.Log("Start");
-            tween.Updated += () => Debug.Log("Update");
-            tween.Completed += () => Debug.Log("Complete");
-            _sequence.Append(tween);
-            //_sequence.Insert(0f, _cube2.DoPositionZ(-1.5f, 1f, Ease.InOutExpo));
-            //_sequence.Append(_cube1.DoPositionY(-1f, 1f, Ease.InOutExpo));
-            //_sequence.Append(_cube2.DoPositionY(1f, 0.5f, Ease.InOutExpo));
-            //_sequence.Insert(1f, _cube1.DoEulerAngles(45f, 45f, 45, 0.5f, Ease.InOutExpo));
-            //_sequence.Insert(1f, _cube2.DoEulerAngles(45f, 45f, 45, 0.5f, Ease.InOutExpo));
+            //_sequence = new Sequence().SetLoops(2, LoopType.Backward);
+            //_sequence.Append(_cube1.DoPositionX(1.5f, 2f).SetEase(Ease.InOutExpo));
         }
 
         private void Update()
         {
-            _sequence.SetTime(_time);
+            _tween.SetTime(_time);
         }
     }
 }

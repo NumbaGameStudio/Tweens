@@ -322,69 +322,64 @@ namespace Numba.Tweening
             return this;
         }
 
-        public void SetTime(float normalizedTime)
+        public void SetTime(float time)
         {
-            SetTime(normalizedTime, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
+            SetTime(time, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
         }
 
-        private void SetTime(float normalizedTime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private void SetTime(float time, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
             if (loopsCount == -1) loopsCount = 1;
+
+            float fullDuration = Duration * loopsCount;
+            if (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo) fullDuration *= 2f;
+
+            time = Mathf.Min(time, fullDuration);
 
             switch (loopType)
             {
                 case LoopType.Forward:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime * loopsCount), ease);
-                    else Tweak.SetTime(Wrap01(normalizedTime * loopsCount), curve);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
                     break;
                 case LoopType.Backward:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime * loopsCount), ease, true);
-                    else Tweak.SetTime(Wrap01(normalizedTime * loopsCount), curve, true);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease, true);
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve, true);
                     break;
                 case LoopType.Reversed:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Wrap01(normalizedTime * loopsCount), ease);
-                    else Tweak.SetTime(1f - Wrap01(normalizedTime * loopsCount), curve);
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, ease);
+                    else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, curve);
                     break;
                 case LoopType.Yoyo:
-                    normalizedTime = normalizedTime * loopsCount * 2;
-
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(normalizedTime), ease, IsYoyoBackward(normalizedTime));
-                    else Tweak.SetTime(Wrap01(normalizedTime), curve, IsYoyoBackward(normalizedTime));
+                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease, IsYoyoBackward(time));
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve, IsYoyoBackward(time));
 
                     break;
                 case LoopType.ReversedYoyo:
-                    float scaledTime = normalizedTime * loopsCount * 2;
-
-                    if (IsYoyoBackward(scaledTime))
+                    if (IsYoyoBackward(time))
                     {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Wrap01(scaledTime), ease);
-                        else Tweak.SetTime(1f - Wrap01(scaledTime), curve);
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, ease);
+                        else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, curve);
                     }
                     else
                     {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Wrap01(scaledTime), ease);
-                        else Tweak.SetTime(Wrap01(scaledTime), curve);
+                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
+                        else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
                     }
                     
                     break;
             }
         }
 
-        private float Wrap01(float value)
+        private bool IsYoyoBackward(float time)
         {
-            int intPart = (int)value;
-            float fraction = value - intPart;
+            float repeated = time / Duration;
+            if (repeated <= 1f) return false;
 
-            return (intPart != 0 && fraction == 0) ? 1f : fraction;
-        }
+            int intPart = (int)repeated;
+            float fraction = repeated - intPart;
 
-        private bool IsYoyoBackward(float value)
-        {
-            int intPart = (int)value;
-            if (intPart == 0) return false;
-
-            float fraction = value - intPart;
-            bool isEven = (intPart % 2) == 0;
+            bool isEven = intPart % 2 == 0;
 
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
@@ -418,8 +413,8 @@ namespace Numba.Tweening
             {
                 yield return null;
 
-                float normalizedTime = (GetTime(useRealtime) - startTime) / duration;
-                SetTime(normalizedTime, usedEaseType, ease, curve, loopsCount, loopType);
+                float passedTime = GetTime(useRealtime) - startTime;
+                SetTime(passedTime, usedEaseType, ease, curve, loopsCount, loopType);
 
                 HandleUpdate();
 

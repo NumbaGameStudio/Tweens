@@ -80,9 +80,9 @@ namespace Numba.Tweening.Tweaks
         }
         #endregion
 
-        public abstract void SetTime(float normalizedTime, Ease ease, bool swapFromTo = false);
+        public abstract void SetTime(float interpolation, Ease ease, bool swapFromTo = false);
 
-        public abstract void SetTime(float normalizedTime, AnimationCurve curve, bool swapFromTo = false);
+        public abstract void SetTime(float interpolation, AnimationCurve curve, bool swapFromTo = false);
     }
 
     public abstract class Tweak<T> : Tweak
@@ -116,18 +116,18 @@ namespace Numba.Tweening.Tweaks
             if (_setter != null) _setter.Invoke(value);
         }
 
-        protected abstract T Evaluate(float normalizedTime, Ease ease, bool swapFromTo = false);
+        protected abstract T Evaluate(float interpolation, Ease ease, bool swapFromTo = false);
 
-        protected abstract T Evaluate(float normalizedTime, AnimationCurve curve, bool useSwap = false);
+        protected abstract T Evaluate(float interpolation, AnimationCurve curve, bool useSwap = false);
 
-        public sealed override void SetTime(float normalizedTime, Ease ease, bool swapFromTo = false)
+        public sealed override void SetTime(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            CallSetter(Evaluate(normalizedTime, ease, swapFromTo));
+            CallSetter(Evaluate(interpolation, ease, swapFromTo));
         }
 
-        public override void SetTime(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
+        public override void SetTime(float interpolation, AnimationCurve curve, bool swapFromTo = false)
         {
-            CallSetter(Evaluate(normalizedTime, curve, swapFromTo));
+            CallSetter(Evaluate(interpolation, curve, swapFromTo));
         }
 
         protected void GetSwapedFromTo(out T from, out T to, bool swapFromTo)

@@ -206,12 +206,27 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            if (time == _currentTime) return;
+            SetTime(time, _loopsCount, _loopType);
+        }
 
-            time = Mathf.Min(time, Duration);
+        private void SetTime(float time, int loopsCount, LoopType loopType)
+        {
+            if (loopsCount == -1) loopsCount = 1;
+            time = Mathf.Min(time, Duration * loopsCount);
 
-            var soretedTweens = FindTweensAndCallbacksBetween(_currentTime, time);
-            UpdateTweensAndCallbacks(soretedTweens, time, time < _currentTime);
+            switch (loopType)
+            {
+                case LoopType.Forward:
+                    time = Engine.Math.WrapCeil(time, Duration);
+                    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, time), time, time < _currentTime);
+                    break;
+                case LoopType.Backward:
+                    time = Engine.Math.WrapCeil(time, Duration);
+                    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, time), time, time < _currentTime);
+                    break;
+                case LoopType.Yoyo:
+                    break;
+            }
 
             _currentTime = time;
         }
