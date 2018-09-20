@@ -11,7 +11,7 @@ namespace Numba.Tweening
     public class Tween : IPlayable
     {
         #region Nested classes
-        public class Accessor
+        internal class Accessor
         {
             public void CallHandleStart(Tween tween) { tween.HandleStart(); }
 

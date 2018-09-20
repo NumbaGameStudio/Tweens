@@ -32,9 +32,10 @@ namespace Namespace
             //_tween.Stop();
             //_tween.Play();
 
-            _sequence = new Sequence().SetLoops(-1, LoopType.ReversedYoyo);
-            _sequence.Append(_cube1.DoPositionX(1.5f, 2f).SetEase(Ease.InExpo).SetLoops(1, LoopType.ReversedYoyo));
-            _sequence.Insert(1f, _cube2.DoPositionX(1.5f, 1f).SetEase(Ease.InOutExpo).SetLoops(LoopType.Forward));
+            _sequence = new Sequence().SetLoops(-1, LoopType.Forward);
+
+            _sequence.Append(_cube1.DoPositionX(1.5f, 2f, Ease.InExpo, 1, LoopType.Yoyo));
+            _sequence.Insert(1f, _cube2.DoPositionX(1.5f, 1f, Ease.InOutExpo, 1, LoopType.Forward));
 
             _sequence.Play();
 
