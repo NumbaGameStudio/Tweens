@@ -208,8 +208,6 @@ namespace Numba.Tweening
 
         private int _loopsCount = 1;
 
-        private bool _stopRequested;
-
         private Ease _ease;
 
         private AnimationCurve _curve = new AnimationCurve();
@@ -238,7 +236,7 @@ namespace Numba.Tweening
 
         public Tween(string name, Tweak tweak, float duration)
         {
-            Name = name?? "[Noname]";
+            Name = name?? "[noname]";
             Tweak = tweak;
             Duration = Mathf.Max(0f, duration);
         }
@@ -324,7 +322,7 @@ namespace Numba.Tweening
 
         public float GetDurationWithLoops()
         {
-            float durationWithLoops = Duration * _loopsCount;
+            float durationWithLoops = Duration * _loopsCount == -1f ? 1f : _loopsCount;
             if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
 
             return durationWithLoops;
@@ -419,37 +417,26 @@ namespace Numba.Tweening
             {
                 yield return null;
 
-                float passedTime = GetTime(useRealtime) - startTime;
-                SetTime(passedTime, usedEaseType, ease, curve, loopsCount, loopType);
+                float time = GetTime(useRealtime);
 
-                HandleUpdate();
-
-                if (_stopRequested)
-                {
-                    HandleStop();
-                    yield break;
-                }
-
-                while (endTime < GetTime(useRealtime))
+                while (endTime < time)
                 {
                     startTime = endTime;
                     endTime = startTime + duration;
                 }
+                
+                SetTime(time - startTime, usedEaseType, ease, curve, loopsCount, loopType);
+
+                HandleUpdate();
             }
 
             while (GetTime(useRealtime) < endTime)
             {
                 yield return null;
 
-                SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime) / duration, usedEaseType, ease, curve, loopsCount, loopType);
+                SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime), usedEaseType, ease, curve, loopsCount, loopType);
 
                 HandleUpdate();
-
-                if (_stopRequested)
-                {
-                    HandleStop();
-                    yield break;
-                }
             }
 
             HandleStop();
@@ -468,12 +455,12 @@ namespace Numba.Tweening
                 return;
             }
 
-            _stopRequested = true;
+            HandleStop();
         }
 
         private void HandleStop()
         {
-            _stopRequested = false;
+            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
             _playTimeRoutine = null;
 
             HandleComplete();

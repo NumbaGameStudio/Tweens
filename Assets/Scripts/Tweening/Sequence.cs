@@ -69,8 +69,6 @@ namespace Numba.Tweening
 
         private LoopType _loopType;
 
-        private bool _stopRequested;
-
         Tween.Accessor _tweenAccessor = new Tween.Accessor();
 
         private float _currentTime = -1f;
@@ -97,13 +95,15 @@ namespace Numba.Tweening
 
         public Sequence(string name)
         {
-            Name = name;
+            Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
         }
 
-        public Sequence(params Tween[] tweens) : this(string.Empty, tweens) { }
+        public Sequence(params Tween[] tweens) : this(null, tweens) { }
 
         public Sequence(string name, params Tween[] tweens)
         {
+            Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
+
             foreach (var tween in tweens)
             {
                 Insert(0f, tween);
@@ -202,7 +202,7 @@ namespace Numba.Tweening
 
         public float GetDurationWithLoops()
         {
-            return Duration * _loopsCount * (LoopType == LoopType.Yoyo ? 2f : 1f);
+            return Duration * (_loopsCount == -1f ? 1f : _loopsCount) * (LoopType == LoopType.Yoyo  || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
         }
 
         public void SetTime(float time)
@@ -280,7 +280,7 @@ namespace Numba.Tweening
         {
             if (IsPlaying)
             {
-                Debug.LogWarning(string.Format("Sequence with name \"{0}\"is already playing.", Name));
+                Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already playing.", Name));
                 return _playTimeRoutine;
             }
 
@@ -291,8 +291,29 @@ namespace Numba.Tweening
         {
             HandleStart();
 
+            bool isInfinityLoops = loopsCount == -1;
+            if (isInfinityLoops) loopsCount = 1;
+
             float startTime = GetTime(useRealtime);
-            float endTime = startTime + Duration * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f) * loopsCount;
+            float durationWithLoops = GetDurationWithLoops();
+            float endTime = startTime + durationWithLoops;
+
+            while (isInfinityLoops)
+            {
+                yield return null;
+
+                float time = GetTime(useRealtime);
+
+                while (endTime < time)
+                {
+                    startTime = endTime;
+                    endTime = startTime + durationWithLoops;
+                }
+
+                SetTime(time - startTime, loopsCount, _loopType);
+
+                HandleUpdate();
+            }
 
             while (GetTime(useRealtime) < endTime)
             {
@@ -302,12 +323,6 @@ namespace Numba.Tweening
                 SetTime(time - startTime, loopsCount, _loopType);
 
                 HandleUpdate();
-
-                if (_stopRequested)
-                {
-                    HandleStop();
-                    yield break;
-                }
             }
 
             HandleStop();
@@ -406,16 +421,16 @@ namespace Numba.Tweening
         {
             if (!IsPlaying)
             {
-                Debug.LogWarning(string.Format("Sequence with name \"{0}\" already stoped.", Name));
+                Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already stoped.", Name));
                 return;
             }
 
-            _stopRequested = true;
+            HandleStop();
         }
 
         private void HandleStop()
         {
-            _stopRequested = false;
+            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
             _playTimeRoutine = null;
 
             _currentTime = LoopType == LoopType.Forward || LoopType == LoopType.Yoyo ? -1f : GetDurationWithLoops() + 1f;
