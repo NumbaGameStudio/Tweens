@@ -25,6 +25,12 @@ namespace Numba.Tweening.Engine
 
         bool IsPlaying { get; }
 
+        IPlayable SetLoops(int loopsCount);
+
+        IPlayable SetLoops(LoopType loopType);
+
+        IPlayable SetLoops(int loopsCount, LoopType loopType);
+
         float GetDurationWithLoops();
 
         void SetTime(float time);
@@ -32,5 +38,19 @@ namespace Numba.Tweening.Engine
         Coroutine Play(bool useRealtime = false);
 
         void Stop();
+
+        IPlayable OnStart(Action callback);
+
+        IPlayable OnUpdate(Action callback);
+
+        IPlayable OnComplete(Action callback);
+
+        void InvokeStart();
+
+        void InvokeUpdate();
+
+        void InvokeComplete();
+
+        void ClearCallbacks();
     }
 }

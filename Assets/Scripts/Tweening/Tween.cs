@@ -10,17 +10,6 @@ namespace Numba.Tweening
 {
     public class Tween : IPlayable
     {
-        #region Nested classes
-        internal class Accessor
-        {
-            public void CallHandleStart(Tween tween) { tween.HandleStart(); }
-
-            public void CallHandleUpdate(Tween tween) { tween.HandleUpdate(); }
-
-            public void CallHandleComplete(Tween tween) { tween.HandleComplete(); }
-        }
-        #endregion
-
         #region Create
         #region Float
         public static Tween Create(float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -198,7 +187,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return new Tween(name, tweak, duration).SetEase(ease).SetLoops(loopsCount, loopType);
+            return (Tween)new Tween(name, tweak, duration).SetEase(ease).SetLoops(loopsCount, loopType);
         }
         #endregion
         #endregion
@@ -302,9 +291,19 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Tween SetLoops(int count)
+        IPlayable IPlayable.SetLoops(int loopsCount)
         {
-            return SetLoops(count, LoopType);
+            return SetLoops(loopsCount, LoopType);
+        }
+
+        public Tween SetLoops(int loopsCount)
+        {
+            return SetLoops(loopsCount, LoopType);
+        }
+
+        IPlayable IPlayable.SetLoops(LoopType loopType)
+        {
+            return SetLoops(loopType);
         }
 
         public Tween SetLoops(LoopType loopType)
@@ -312,9 +311,14 @@ namespace Numba.Tweening
             return SetLoops(_loopsCount, loopType);
         }
 
-        public Tween SetLoops(int count, LoopType loopType)
+        IPlayable IPlayable.SetLoops(int loopsCount, LoopType loopType)
         {
-            _loopsCount = count;
+            return SetLoops(loopsCount, loopType);
+        }
+
+        public Tween SetLoops(int loopsCount, LoopType loopType)
+        {
+            _loopsCount = loopsCount;
             LoopType = loopType;
 
             return this;
@@ -401,7 +405,7 @@ namespace Numba.Tweening
 
         private IEnumerator PlayTime(bool useRealtime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
-            HandleStart();
+            InvokeStart();
 
             float startTime = GetTime(useRealtime);
 
@@ -427,7 +431,7 @@ namespace Numba.Tweening
                 
                 SetTime(time - startTime, usedEaseType, ease, curve, loopsCount, loopType);
 
-                HandleUpdate();
+                InvokeUpdate();
             }
 
             while (GetTime(useRealtime) < endTime)
@@ -436,7 +440,7 @@ namespace Numba.Tweening
 
                 SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime), usedEaseType, ease, curve, loopsCount, loopType);
 
-                HandleUpdate();
+                InvokeUpdate();
             }
 
             HandleStop();
@@ -463,27 +467,13 @@ namespace Numba.Tweening
             RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
             _playTimeRoutine = null;
 
-            HandleComplete();
-
-            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
+            InvokeComplete();
+            ClearCallbacks();
         }
 
-        private void HandleStart()
+        IPlayable IPlayable.OnStart(Action callback)
         {
-            if (Started != null) Started();
-            if (_onStartCallback != null) _onStartCallback();
-        }
-
-        private void HandleUpdate()
-        {
-            if (Updated != null) Updated();
-            if (_onUpdateCallback != null) _onUpdateCallback();
-        }
-
-        private void HandleComplete()
-        {
-            if (Completed != null) Completed();
-            if (_onCompleteCallback != null) _onCompleteCallback();
+            return OnStart(callback);
         }
 
         public Tween OnStart(Action callback)
@@ -492,16 +482,49 @@ namespace Numba.Tweening
             return this;
         }
 
+        IPlayable IPlayable.OnUpdate(Action callback)
+        {
+            return OnUpdate(callback);
+        }
+
         public Tween OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
+        IPlayable IPlayable.OnComplete(Action callback)
+        {
+            return OnComplete(callback);
+        }
+
         public Tween OnComplete(Action callback)
         {
             _onCompleteCallback = callback;
             return this;
+        }
+
+        public void InvokeStart()
+        {
+            if (Started != null) Started();
+            if (_onStartCallback != null) _onStartCallback();
+        }
+
+        public void InvokeUpdate()
+        {
+            if (Updated != null) Updated();
+            if (_onUpdateCallback != null) _onUpdateCallback();
+        }
+
+        public void InvokeComplete()
+        {
+            if (Completed != null) Completed();
+            if (_onCompleteCallback != null) _onCompleteCallback();
+        }
+
+        public void ClearCallbacks()
+        {
+            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
         }
         #endregion
     }

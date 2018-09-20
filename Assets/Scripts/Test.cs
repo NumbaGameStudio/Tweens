@@ -2,44 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
+using Numba.Tweening.Engine;
 
 namespace Namespace
 {
-	public class Test : MonoBehaviour 
-	{
+    public class Test : MonoBehaviour
+    {
         [SerializeField]
         private Transform _cube1;
 
         [SerializeField]
         private Transform _cube2;
 
-        private Sequence _sequence;
-
-        private Tween _tween;
+        private IPlayable _playable;
 
         [SerializeField]
         [Range(0f, 10f)]
         private float _time;
 
-		private IEnumerator Start()
-		{
-            //_tween = _cube1.DoPositionX(1f, 2f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Forward);
+        private void Start()
+        {
+            //_playable = _cube1.DoPositionX(1f, 2f).OnStart(() => { Debug.Log("Started"); }).SetEase(Ease.InOutExpo).SetLoops(-1, LoopType.Forward);
 
-            //_tween.Play();
+            //_playable.Play();
 
             //yield return new WaitForSeconds(1f);
 
             //_tween.Stop();
             //_tween.Play();
 
-            _sequence = new Sequence().SetLoops(-1, LoopType.Forward);
+            Sequence moveSequence = new Sequence().SetLoops(-1, LoopType.Yoyo)
+                .Append(_cube1.DoPositionX(1.5f, 1f, Ease.InOutExpo))
+                .Insert(0f, _cube2.DoPositionX(-1.5f, 1f, Ease.InOutExpo));
 
-            _sequence.Append(_cube1.DoPositionX(1.5f, 2f, Ease.InExpo, 1, LoopType.Yoyo));
-            _sequence.Insert(1f, _cube2.DoPositionX(1.5f, 1f, Ease.InOutExpo, 1, LoopType.Forward));
+            Sequence rotateSequence = new Sequence().SetLoops(-1, LoopType.Yoyo)
+                .Append(_cube1.DoEulerAnglesY(90f, 1f, Ease.InOutExpo))
+                .Insert(0f, _cube2.DoEulerAnglesY(-90f, 1f, Ease.InOutExpo));
 
-            _sequence.Play();
+            moveSequence.Append(rotateSequence);
 
-            yield return new WaitForSeconds(1f);
+            moveSequence.Play();
+
+            //yield return new WaitForSeconds(1f);
 
             //_sequence.Stop();
             //_sequence.Play();
