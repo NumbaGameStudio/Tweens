@@ -22,31 +22,19 @@ namespace Namespace
 
         private void Start()
         {
-            //_playable = _cube1.DoPositionX(1f, 2f).OnStart(() => { Debug.Log("Started"); }).SetEase(Ease.InOutExpo).SetLoops(-1, LoopType.Forward);
+            var cube1Tween = _cube1.DoPositionX(1.5f, 1f, Ease.InOutExpo, 1, LoopType.Forward)
+                .OnStart(() => { Debug.Log("OnStart cube1."); })
+                .OnUpdate(() => { Debug.Log("OnUpdate cube1."); })
+                .OnComplete(() => { Debug.Log("OnComplete cube1."); });
 
-            //_playable.Play();
+            var cube2Tween = _cube2.DoPositionX(-1.5f, 1f, Ease.InOutExpo, 1, LoopType.Forward)
+                .OnStart(() => { Debug.Log("OnStart cube2."); })
+                .OnUpdate(() => { Debug.Log("OnUpdate cube2."); })
+                .OnComplete(() => { Debug.Log("OnComplete cube2."); });
 
-            //yield return new WaitForSeconds(1f);
-
-            //_tween.Stop();
-            //_tween.Play();
-
-            Sequence moveSequence = new Sequence().SetLoops(-1, LoopType.Yoyo)
-                .Append(_cube1.DoPositionX(1.5f, 1f, Ease.InOutExpo))
-                .Insert(0f, _cube2.DoPositionX(-1.5f, 1f, Ease.InOutExpo));
-
-            Sequence rotateSequence = new Sequence().SetLoops(-1, LoopType.Yoyo)
-                .Append(_cube1.DoEulerAnglesY(90f, 1f, Ease.InOutExpo))
-                .Insert(0f, _cube2.DoEulerAnglesY(-90f, 1f, Ease.InOutExpo));
-
-            moveSequence.Append(rotateSequence);
-
-            moveSequence.Play();
-
-            //yield return new WaitForSeconds(1f);
-
-            //_sequence.Stop();
-            //_sequence.Play();
+            Sequence sequence = new Sequence(cube1Tween);
+            sequence.Insert(0f, cube2Tween, 0);
+            sequence.Play();
         }
 
         private void Update()

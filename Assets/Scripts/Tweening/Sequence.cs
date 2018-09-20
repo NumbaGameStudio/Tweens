@@ -12,12 +12,15 @@ namespace Numba.Tweening
         #region Structures and classes
         private struct PlayableData
         {
-            public IPlayable Playable { get; private set; }
+            public int Order { get; set; }
 
             public float StartTime { get; private set; }
 
-            public PlayableData(IPlayable playable, float startTime)
+            public IPlayable Playable { get; private set; }
+
+            public PlayableData(int order, IPlayable playable, float startTime)
             {
+                Order = order;
                 Playable = playable;
                 StartTime = startTime;
             }
@@ -25,46 +28,62 @@ namespace Numba.Tweening
 
         private struct CallbackData
         {
+            public int Order { get; set; }
+
             public Action Callback { get; private set; }
 
             public float StartTime { get; private set; }
 
-            public CallbackData(Action callback, float startTime)
+            public CallbackData(int order, Action callback, float startTime)
             {
+                Order = order;
                 Callback = callback;
                 StartTime = startTime;
             }
         }
 
-        private struct SortedByPhasePlayableData
+        private struct PhasedData
         {
-            public List<PlayableData> Started { get; set; }
+            public Phase Phase { get; set; }
 
-            public List<PlayableData> Continuous { get; set; }
+            public PlayableData? PlayableData { get; set; }
 
-            public List<PlayableData> Completed { get; set; }
+            public CallbackData? CallbackData { get; set; }
 
-            public List<CallbackData> CompletedCallbacks { get; set; }
-
-            public SortedByPhasePlayableData(List<PlayableData> startedPlayables, List<PlayableData> continuousPlayables, List<PlayableData> completedPlayables, List<CallbackData> completedCallbacks)
+            public PhasedData(Phase phase, PlayableData playableData)
             {
-                Started = startedPlayables;
-                Continuous = continuousPlayables;
-                Completed = completedPlayables;
-                CompletedCallbacks = completedCallbacks;
+                Phase = phase;
+                PlayableData = playableData;
+
+                CallbackData = null;
             }
+
+            public PhasedData(Phase phase, CallbackData callbackData)
+            {
+                Phase = phase;
+                CallbackData = callbackData;
+
+                PlayableData = null;
+            }
+        }
+
+        private enum Phase
+        {
+            Start,
+            Update,
+            Complete
         }
         #endregion
 
         #region Fields
-        private List<PlayableData> _plyableDatas = new List<PlayableData>();
+        private List<PlayableData> _playbleDatas = new List<PlayableData>();
 
         private List<CallbackData> _callbacksDatas = new List<CallbackData>();
 
         private Coroutine _playTimeRoutine;
 
         private Dictionary<IPlayable, float> _playableDurations = new Dictionary<IPlayable, float>();
-        
+
         private int _loopsCount = 1;
 
         private LoopType _loopType;
@@ -95,6 +114,16 @@ namespace Numba.Tweening
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
         }
+
+        public Sequence(params IPlayable[] playables) : this(null, playables) { }
+
+        public Sequence(string name, params IPlayable[] playables) : this(name)
+        {
+            for (int i = 0; i < playables.Length; i++)
+            {
+                Append(playables[i]);
+            }
+        }
         #endregion
 
         #region Properties
@@ -103,6 +132,14 @@ namespace Numba.Tweening
         public float CurrentTime { get { return _currentTime; } }
 
         public float Duration { get; private set; }
+
+        public float DurationWithLoops
+        {
+            get
+            {
+                return Duration * (_loopsCount == -1f ? 1f : _loopsCount) * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
+            }
+        }
 
         public int LoopsCount
         {
@@ -126,12 +163,24 @@ namespace Numba.Tweening
                 _loopType = value;
             }
         }
+
+        public int NextOrder { get; private set; }
         #endregion
 
         #region Methods
         public Sequence Append(IPlayable playable)
         {
-            _plyableDatas.Add(new PlayableData(playable, Duration));
+            _playbleDatas.Add(new PlayableData(NextOrder++, playable, Duration));
+            Duration += CalculateAndCacheDuration(playable);
+
+            return this;
+        }
+
+        public Sequence Append(IPlayable playable, int order)
+        {
+            ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
+
+            _playbleDatas.Add(new PlayableData(order, playable, Duration));
             Duration += CalculateAndCacheDuration(playable);
 
             return this;
@@ -139,13 +188,31 @@ namespace Numba.Tweening
 
         public Sequence Append(Action callback)
         {
-            _callbacksDatas.Add(new CallbackData(callback, Duration));
+            _callbacksDatas.Add(new CallbackData(NextOrder++, callback, Duration));
+            return this;
+        }
+
+        public Sequence Append(Action callback, int order)
+        {
+            ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
+
+            _callbacksDatas.Add(new CallbackData(order, callback, Duration));
             return this;
         }
 
         public Sequence Insert(float time, IPlayable playable)
         {
-            _plyableDatas.Add(new PlayableData(playable, time));
+            _playbleDatas.Add(new PlayableData(NextOrder++, playable, time));
+            Duration = Mathf.Max(Duration, time + CalculateAndCacheDuration(playable));
+
+            return this;
+        }
+
+        public Sequence Insert(float time, IPlayable playable, int order)
+        {
+            ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
+
+            _playbleDatas.Add(new PlayableData(order, playable, time));
             Duration = Mathf.Max(Duration, time + CalculateAndCacheDuration(playable));
 
             return this;
@@ -153,10 +220,45 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback)
         {
-            _callbacksDatas.Add(new CallbackData(callback, time));
+            _callbacksDatas.Add(new CallbackData(NextOrder++, callback, time));
             Duration = Mathf.Max(Duration, time);
 
             return this;
+        }
+
+        public Sequence Insert(float time, Action callback, int order)
+        {
+            ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
+
+            _callbacksDatas.Add(new CallbackData(order, callback, time));
+            Duration = Mathf.Max(Duration, time);
+
+            return this;
+        }
+
+        private void ShiftAllOrdersByOne(int startFromOrder)
+        {
+            for (int i = 0; i < _playbleDatas.Count; i++)
+            {
+                if (_playbleDatas[i].Order >= startFromOrder)
+                {
+                    var playableData = _playbleDatas[i];
+                    playableData.Order += 1;
+                    _playbleDatas[i] = playableData;
+                }
+            }
+
+            for (int i = 0; i < _callbacksDatas.Count; i++)
+            {
+                if (_callbacksDatas[i].Order >= startFromOrder)
+                {
+                    var callbackData = _callbacksDatas[i];
+                    callbackData.Order += 1;
+                    _callbacksDatas[i] = callbackData;
+                }
+            }
+
+            ++NextOrder;
         }
 
         private float CalculateAndCacheDuration(IPlayable playable)
@@ -207,11 +309,6 @@ namespace Numba.Tweening
             LoopType = loopType;
 
             return this;
-        }
-
-        public float GetDurationWithLoops()
-        {
-            return Duration * (_loopsCount == -1f ? 1f : _loopsCount) * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
         }
 
         public void SetTime(float time)
@@ -304,7 +401,7 @@ namespace Numba.Tweening
             if (isInfinityLoops) loopsCount = 1;
 
             float startTime = GetTime(useRealtime);
-            float durationWithLoops = GetDurationWithLoops();
+            float durationWithLoops = DurationWithLoops;
             float endTime = startTime + durationWithLoops;
 
             while (isInfinityLoops)
@@ -342,84 +439,105 @@ namespace Numba.Tweening
             return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
         }
 
-        private void UpdateTweensAndCallbacks(SortedByPhasePlayableData sortedByPhaseData, float time, bool useBackward)
+        private void UpdateTweensAndCallbacks(List<PhasedData> phasedDatas, float time, bool useBackward)
         {
-            foreach (var tweenData in sortedByPhaseData.Started)
+            for (int i = 0; i < phasedDatas.Count; i++)
             {
-                tweenData.Playable.InvokeStart();
-                tweenData.Playable.SetTime(time - tweenData.StartTime);
+                if (phasedDatas[i].PlayableData != null)
+                {
+                    PhasedData phasedData = phasedDatas[i];
+
+                    if (phasedData.Phase == Phase.Start)
+                    {
+                        phasedData.PlayableData.Value.Playable.InvokeStart();
+                        phasedData.PlayableData.Value.Playable.SetTime(time - phasedData.PlayableData.Value.StartTime);
+                    }
+                    else if (phasedData.Phase == Phase.Update)
+                    {
+                        phasedData.PlayableData.Value.Playable.SetTime(time - phasedData.PlayableData.Value.StartTime);
+                        phasedData.PlayableData.Value.Playable.InvokeUpdate();
+                    }
+                    else
+                    {
+                        if (useBackward) phasedData.PlayableData.Value.Playable.SetTime(0f);
+                        else phasedData.PlayableData.Value.Playable.SetTime(phasedData.PlayableData.Value.Playable.DurationWithLoops);
+
+                        phasedData.PlayableData.Value.Playable.InvokeComplete();
+                    }
+                }
+                else phasedDatas[i].CallbackData.Value.Callback();
             }
-
-            foreach (var tweenData in sortedByPhaseData.Continuous)
-            {
-                tweenData.Playable.SetTime(time - tweenData.StartTime);
-                tweenData.Playable.InvokeUpdate();
-            }
-
-            foreach (var tweenData in sortedByPhaseData.Completed)
-            {
-                if (useBackward) tweenData.Playable.SetTime(0f);
-                else tweenData.Playable.SetTime(tweenData.Playable.GetDurationWithLoops());
-
-                tweenData.Playable.InvokeComplete();
-            }
-
-            foreach (var callbackData in sortedByPhaseData.CompletedCallbacks) callbackData.Callback();
         }
 
-        private SortedByPhasePlayableData GetSortedByPhaseData(float startTime, float endTime)
+        private List<PhasedData> GetSortedByPhaseData(float startTime, float endTime)
         {
             bool isBackward = startTime > endTime;
+            List<PhasedData> phasedPlayableDatas = new List<PhasedData>();
 
-            List<PlayableData> startedPlayable = new List<PlayableData>();
-            List<PlayableData> continuousPlayable = new List<PlayableData>();
-            List<PlayableData> completedPlayable = new List<PlayableData>();
-            List<CallbackData> completedCallbacks = new List<CallbackData>();
-
-            foreach (var playableData in _plyableDatas)
+            foreach (var playableData in _playbleDatas)
             {
                 float tweenStartTime = isBackward ? playableData.StartTime + GetPlayableDuration(playableData.Playable) : playableData.StartTime;
                 float tweenEndTime = isBackward ? playableData.StartTime : playableData.StartTime + GetPlayableDuration(playableData.Playable);
 
                 if (IsValueBetween(tweenEndTime, startTime, endTime) && tweenEndTime != startTime)
                 {
-                    if (isBackward && (tweenStartTime < startTime)) startedPlayable.Add(playableData);
-                    else if (!isBackward && (tweenStartTime > startTime)) startedPlayable.Add(playableData);
+                    if (isBackward && (tweenStartTime < startTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
+                    else if (!isBackward && (tweenStartTime > startTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
 
-                    completedPlayable.Add(playableData);
+                    phasedPlayableDatas.Add(new PhasedData(Phase.Complete, playableData));
                     continue;
                 }
 
                 if (isBackward && (tweenEndTime >= startTime || tweenStartTime < endTime)) continue;
                 else if (!isBackward && (tweenEndTime <= startTime || tweenStartTime > endTime)) continue;
 
-                if (isBackward && (tweenStartTime < startTime && tweenStartTime >= endTime)) startedPlayable.Add(playableData);
-                else if (!isBackward && (tweenStartTime > startTime && tweenStartTime <= endTime)) startedPlayable.Add(playableData);
-                else continuousPlayable.Add(playableData);
+                if (isBackward && (tweenStartTime < startTime && tweenStartTime >= endTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
+                else if (!isBackward && (tweenStartTime > startTime && tweenStartTime <= endTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
+                else phasedPlayableDatas.Add(new PhasedData(Phase.Update, playableData));
             }
 
-            foreach (var callbackData in _callbacksDatas) if (IsValueBetween(callbackData.StartTime, startTime, endTime) && callbackData.StartTime != startTime) completedCallbacks.Add(callbackData);
+            for (int i = 0; i < _callbacksDatas.Count; i++)
+                if (IsValueBetween(_callbacksDatas[i].StartTime, startTime, endTime) && _callbacksDatas[i].StartTime != startTime)
+                    phasedPlayableDatas.Add(new PhasedData(Phase.Start, _callbacksDatas[i]));
 
-            #region Comparisons
-            Comparison<PlayableData> startedAndContinuousComparison;
-            if (isBackward) startedAndContinuousComparison = (x, y) => (x.StartTime + GetPlayableDuration(x.Playable)).CompareTo(y.StartTime + GetPlayableDuration(y.Playable)) * -1;
-            else startedAndContinuousComparison = (x, y) => x.StartTime.CompareTo(y.StartTime);
+            phasedPlayableDatas.Sort((p1, p2) =>
+            {
+                if (p1.Phase == Phase.Update && p2.Phase != Phase.Update) return 1;
+                else if (p2.Phase == Phase.Update && p1.Phase != Phase.Update) return -1;
+                else return p1.PlayableData.Value.Order.CompareTo(p1.PlayableData.Value.Order);
+            });
 
-            Comparison<PlayableData> completedComparison;
-            if (isBackward) completedComparison = (x, y) => x.StartTime.CompareTo(y.StartTime) * -1;
-            else completedComparison = (x, y) => (x.StartTime + GetPlayableDuration(x.Playable)).CompareTo(y.StartTime + GetPlayableDuration(y.Playable));
+            for (int i = 0; i < phasedPlayableDatas.Count - 1; i++)
+            {
+                if (phasedPlayableDatas[i].Phase == Phase.Update) break;
+                
+                float originTime = GetPhasedDataTimeForSorting(phasedPlayableDatas[i]);
 
-            Comparison<CallbackData> callbackComparison;
-            if (isBackward) callbackComparison = (x, y) => x.StartTime.CompareTo(y.StartTime) * -1;
-            else callbackComparison = (x, y) => x.StartTime.CompareTo(y.StartTime);
-            #endregion
+                int j = i + 1;
+                for (; j < phasedPlayableDatas.Count; j++) if (GetPhasedDataTimeForSorting(phasedPlayableDatas[j]) != originTime) break;
 
-            startedPlayable.Sort(startedAndContinuousComparison);
-            continuousPlayable.Sort(startedAndContinuousComparison);
-            completedPlayable.Sort(completedComparison);
-            completedCallbacks.Sort(callbackComparison);
+                if (j - i == 1) continue;
 
-            return new SortedByPhasePlayableData(startedPlayable, continuousPlayable, completedPlayable, completedCallbacks);
+                phasedPlayableDatas.SortPart(i, j - i, (p1, p2) => GetPhasedDataOrder(p1).CompareTo(GetPhasedDataOrder(p2)));
+                i = j - 1;
+            }
+
+            return phasedPlayableDatas;
+        }
+
+        private float GetPhasedDataTimeForSorting(PhasedData phasedData)
+        {
+            if (phasedData.PlayableData != null)
+            {
+                if (phasedData.Phase == Phase.Start) return phasedData.PlayableData.Value.StartTime;
+                else return phasedData.PlayableData.Value.StartTime + phasedData.PlayableData.Value.Playable.DurationWithLoops;
+            }
+            else return phasedData.CallbackData.Value.StartTime;
+        }
+
+        private int GetPhasedDataOrder(PhasedData phasedData)
+        {
+            return phasedData.PlayableData != null ? phasedData.PlayableData.Value.Order : phasedData.CallbackData.Value.Order;
         }
 
         private bool IsValueBetween(float value, float startTime, float endTime)
@@ -443,7 +561,7 @@ namespace Numba.Tweening
             RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
             _playTimeRoutine = null;
 
-            _currentTime = LoopType == LoopType.Forward || LoopType == LoopType.Yoyo ? -1f : GetDurationWithLoops() + 1f;
+            _currentTime = LoopType == LoopType.Forward || LoopType == LoopType.Yoyo ? -1f : DurationWithLoops + 1f;
 
             InvokeComplete();
             ClearCallbacks();

@@ -19,6 +19,8 @@ namespace Numba.Tweening.Engine
 
         float Duration { get; }
 
+        float DurationWithLoops { get; }
+
         int LoopsCount { get; set; }
 
         LoopType LoopType { get; set; }
@@ -30,8 +32,6 @@ namespace Numba.Tweening.Engine
         IPlayable SetLoops(LoopType loopType);
 
         IPlayable SetLoops(int loopsCount, LoopType loopType);
-
-        float GetDurationWithLoops();
 
         void SetTime(float time);
 

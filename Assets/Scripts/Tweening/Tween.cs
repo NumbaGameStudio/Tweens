@@ -205,7 +205,7 @@ namespace Numba.Tweening
         public event Action Started;
 
         public event Action Updated;
-        
+
         public event Action Completed;
         #endregion
 
@@ -213,7 +213,7 @@ namespace Numba.Tweening
         private Action _onStartCallback;
 
         private Action _onUpdateCallback;
-        
+
         private Action _onCompleteCallback;
         #endregion
         #endregion
@@ -225,7 +225,7 @@ namespace Numba.Tweening
 
         public Tween(string name, Tweak tweak, float duration)
         {
-            Name = name?? "[noname]";
+            Name = name ?? "[noname]";
             Tweak = tweak;
             Duration = Mathf.Max(0f, duration);
         }
@@ -244,6 +244,17 @@ namespace Numba.Tweening
         public bool IsPlaying { get { return _playTimeRoutine != null; } }
 
         public float Duration { get; private set; }
+
+        public float DurationWithLoops
+        {
+            get
+            {
+                float durationWithLoops = Duration * (_loopsCount == -1f ? 1f : _loopsCount);
+                if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
+
+                return durationWithLoops;
+            }
+        }
 
         public EaseType UsedEaseType { get; set; }
 
@@ -324,14 +335,6 @@ namespace Numba.Tweening
             return this;
         }
 
-        public float GetDurationWithLoops()
-        {
-            float durationWithLoops = Duration * (_loopsCount == -1f ? 1f : _loopsCount);
-            if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
-
-            return durationWithLoops;
-        }
-
         public void SetTime(float time)
         {
             SetTime(time, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
@@ -374,7 +377,7 @@ namespace Numba.Tweening
                     {
                         if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
                         else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
-                    }                    
+                    }
                     break;
             }
         }
@@ -428,7 +431,7 @@ namespace Numba.Tweening
                     startTime = endTime;
                     endTime = startTime + duration;
                 }
-                
+
                 SetTime(time - startTime, usedEaseType, ease, curve, loopsCount, loopType);
 
                 InvokeUpdate();
