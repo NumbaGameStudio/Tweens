@@ -273,56 +273,34 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return null;
-            //return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
         }
 
-        //private IEnumerator PlayTime(bool useRealtime, int loopsCount)
-        //{
-        //    HandleStart();
+        private IEnumerator PlayTime(bool useRealtime, int loopsCount)
+        {
+            HandleStart();
 
+            float startTime = GetTime(useRealtime);
+            float endTime = startTime + Duration * (LoopType == LoopType.Yoyo ? 2f : 1f) * loopsCount;
 
-        //}
+            while (GetTime(useRealtime) < endTime)
+            {
+                yield return null;
 
-        //private IEnumerator PlayTime(bool useRealtime, int loopsCount)
-        //{
-        //    HandleStart();
+                float time = Mathf.Min(GetTime(useRealtime), endTime);
+                SetTime(time - startTime, loopsCount, _loopType);
 
-        //    float startTime = 0f;
-        //    float previousTime = 0f;
-        //    float endTime = 0f;
-        //    float timePassed = 0f;
+                HandleUpdate();
 
-        //    while (loopsCount != 0)
-        //    {
-        //        startTime = GetTime(useRealtime);
-        //        endTime = startTime + Duration;
-        //        previousTime = -1f;
+                if (_stopRequested)
+                {
+                    HandleStop();
+                    yield break;
+                }
+            }
 
-        //        while (GetTime(useRealtime) < endTime)
-        //        {
-        //            yield return null;
-
-        //            timePassed = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
-        //            UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
-
-        //            previousTime = timePassed;
-
-        //            if (_stopRequested)
-        //            {
-        //                HandleStop();
-        //                yield break;
-        //            }
-        //        }
-
-        //        if (loopsCount != -1) --loopsCount;
-        //    }
-
-        //    timePassed = endTime - startTime;
-        //    UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(previousTime, timePassed), timePassed);
-
-        //    _playTimeRoutine = null;
-        //}
+            HandleStop();
+        }
 
         private float GetTime(bool useRealtime)
         {
