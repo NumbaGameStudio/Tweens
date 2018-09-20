@@ -131,14 +131,10 @@ namespace Numba.Tweening
             get { return _loopType; }
             set
             {
-                switch (value)
+                if (value == LoopType.Reversed)
                 {
-                    case LoopType.Reversed:
-                        _loopType = LoopType.Backward;
-                        return;
-                    case LoopType.ReversedYoyo:
-                        _loopType = LoopType.Yoyo;
-                        return;
+                    _loopType = LoopType.Backward;
+                    return;
                 }
 
                 _loopType = value;
@@ -217,7 +213,7 @@ namespace Numba.Tweening
         private void SetTime(float time, int loopsCount, LoopType loopType)
         {
             if (loopsCount == -1) loopsCount = 1;
-            time = Mathf.Min(time, Duration * loopsCount * (loopType == LoopType.Yoyo ? 2f : 1f));
+            time = Mathf.Min(time, Duration * loopsCount * (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo ? 2f : 1f));
 
             switch (loopType)
             {
@@ -245,7 +241,22 @@ namespace Numba.Tweening
                         repeatedBackward = Duration - repeatedBackward;
                         UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, repeatedBackward), repeatedBackward, repeatedBackward < _currentTime);
                     }
+                    break;
+                case LoopType.ReversedYoyo:
+                    float reversedYoyoDuration = Duration * 2;
+                    float repeatedRevYoyo = Engine.Math.WrapCeil(time, reversedYoyoDuration);
 
+                    if (repeatedRevYoyo <= Duration)
+                    {
+                        float repeatedBackward = Engine.Math.WrapCeil(repeatedRevYoyo, Duration);
+                        repeatedBackward = Duration - repeatedBackward;
+                        UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, repeatedBackward), repeatedBackward, repeatedBackward < _currentTime);
+                    }
+                    else
+                    {
+                        float repeatedForward = Engine.Math.WrapCeil(repeatedRevYoyo, Duration);
+                        UpdateTweensAndCallbacks(FindTweensAndCallbacksBetween(_currentTime, repeatedForward), repeatedForward, repeatedForward < _currentTime);
+                    }
                     break;
             }
 
@@ -281,7 +292,7 @@ namespace Numba.Tweening
             HandleStart();
 
             float startTime = GetTime(useRealtime);
-            float endTime = startTime + Duration * (LoopType == LoopType.Yoyo ? 2f : 1f) * loopsCount;
+            float endTime = startTime + Duration * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f) * loopsCount;
 
             while (GetTime(useRealtime) < endTime)
             {
@@ -407,7 +418,7 @@ namespace Numba.Tweening
             _stopRequested = false;
             _playTimeRoutine = null;
 
-            _currentTime = -1f;
+            _currentTime = LoopType == LoopType.Forward || LoopType == LoopType.Yoyo ? -1f : GetDurationWithLoops() + 1f;
 
             HandleComplete();
 
