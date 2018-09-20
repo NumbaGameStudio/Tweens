@@ -322,7 +322,7 @@ namespace Numba.Tweening
 
         public float GetDurationWithLoops()
         {
-            float durationWithLoops = Duration * _loopsCount == -1f ? 1f : _loopsCount;
+            float durationWithLoops = Duration * (_loopsCount == -1f ? 1f : _loopsCount);
             if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
 
             return durationWithLoops;

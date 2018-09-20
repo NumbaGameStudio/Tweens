@@ -21,24 +21,24 @@ namespace Namespace
         [Range(0f, 10f)]
         private float _time;
 
-		private void Start()
+		private IEnumerator Start()
 		{
-            _tween = _cube1.DoPositionX(1f, 2f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Forward);
+            //_tween = _cube1.DoPositionX(1f, 2f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Forward);
 
-            _tween.Play();
+            //_tween.Play();
 
             //yield return new WaitForSeconds(1f);
 
             //_tween.Stop();
             //_tween.Play();
 
-            //_sequence = new Sequence().SetLoops(-1, LoopType.Forward);
-            //_sequence.Append(_cube1.DoPositionX(1.5f, 2f).SetEase(Ease.Linear).SetLoops(1, LoopType.Forward));
-            //_sequence.Insert(0f, _cube2.DoPositionX(1.5f, 2f).SetEase(Ease.InOutExpo));
+            _sequence = new Sequence().SetLoops(-1, LoopType.ReversedYoyo);
+            _sequence.Append(_cube1.DoPositionX(1.5f, 2f).SetEase(Ease.InExpo).SetLoops(1, LoopType.ReversedYoyo));
+            _sequence.Insert(1f, _cube2.DoPositionX(1.5f, 1f).SetEase(Ease.InOutExpo).SetLoops(LoopType.Forward));
 
-            //_sequence.Play();
+            _sequence.Play();
 
-            //yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
             //_sequence.Stop();
             //_sequence.Play();
