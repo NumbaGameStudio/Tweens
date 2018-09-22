@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Numba.Tweening.Tweaks;
 
-namespace Numba.Tweening.Tweaks
+namespace Numba.Tweening
 {
     public abstract class Tweak
     {

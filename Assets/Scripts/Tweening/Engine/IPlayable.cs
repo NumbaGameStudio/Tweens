@@ -25,6 +25,8 @@ namespace Numba.Tweening.Engine
 
         LoopType LoopType { get; set; }
 
+        Settings Settings { get; set; }
+
         bool IsPlaying { get; }
 
         IPlayable SetLoops(int loopsCount);
@@ -34,6 +36,8 @@ namespace Numba.Tweening.Engine
         IPlayable SetLoops(int loopsCount, LoopType loopType);
 
         void SetTime(float time);
+
+        IPlayable SetSettings(Settings settings);
 
         Coroutine Play(bool useRealtime = false);
 

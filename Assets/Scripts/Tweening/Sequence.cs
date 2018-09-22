@@ -84,9 +84,7 @@ namespace Numba.Tweening
 
         private Dictionary<IPlayable, float> _playableDurations = new Dictionary<IPlayable, float>();
 
-        private int _loopsCount = 1;
-
-        private LoopType _loopType;
+        private Settings _settings;
 
         private float _currentTime = -1f;
 
@@ -110,19 +108,50 @@ namespace Numba.Tweening
         #region Constructors
         public Sequence() : this(string.Empty) { }
 
-        public Sequence(string name)
+        public Sequence(int loopsCount) : this(new Settings(loopsCount, LoopType.Forward)) { }
+
+        public Sequence(LoopType loopType) : this(new Settings(1, loopType)) { }
+
+        public Sequence(int loopsCount, LoopType loopType) : this(new Settings(loopsCount, loopType)) { }
+
+        public Sequence(string name, int loopsCount, LoopType loopType) : this(name, new Settings(loopsCount, loopType)) { }
+
+        public Sequence(Settings settings) : this(string.Empty, settings) { }
+
+        public Sequence(string name) : this(name, new Settings(1, LoopType.Forward)) { }
+
+        public Sequence(string name, Settings settings)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
+            _settings = settings;
         }
 
         public Sequence(params IPlayable[] playables) : this(null, playables) { }
 
-        public Sequence(string name, params IPlayable[] playables) : this(name)
+        public Sequence(int loopsCount, params IPlayable[] playables) : this(new Settings(loopsCount, LoopType.Forward), playables) { }
+
+        public Sequence(LoopType loopType, params IPlayable[] playables) : this(new Settings(1, loopType), playables) { }
+
+        public Sequence(int loopsCount, LoopType loopType, params IPlayable[] playables) : this(new Settings(loopsCount, loopType), playables) { }
+
+        public Sequence(Settings settings, params IPlayable[] playables) : this(null, settings, playables) { }
+
+        public Sequence(string name, params IPlayable[] playables) : this(name, new Settings(1, LoopType.Forward), playables) { }
+
+        public Sequence(string name, int loopsCount, params IPlayable[] playables) : this(name, new Settings(loopsCount, LoopType.Forward), playables) { }
+
+        public Sequence(string name, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(1, loopType), playables) { }
+
+        public Sequence(string name, int loopsCount, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(loopsCount, loopType), playables) { }
+
+        public Sequence(string name, Settings settings, params IPlayable[] playables)
         {
             for (int i = 0; i < playables.Length; i++)
             {
                 Append(playables[i]);
             }
+
+            _settings = settings;
         }
         #endregion
 
@@ -137,30 +166,40 @@ namespace Numba.Tweening
         {
             get
             {
-                return Duration * (_loopsCount == -1f ? 1f : _loopsCount) * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
+                return Duration * (LoopsCount == -1f ? 1f : LoopsCount) * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
             }
         }
 
         public int LoopsCount
         {
-            get { return _loopsCount; }
-            set { _loopsCount = Mathf.Max(value, -1); }
+            get { return _settings.LoopsCount; }
+            set { _settings.LoopsCount = Mathf.Max(value, -1); }
         }
 
         public bool IsPlaying { get { return _playTimeRoutine != null; } }
 
         public LoopType LoopType
         {
-            get { return _loopType; }
+            get { return _settings.LoopType; }
             set
             {
                 if (value == LoopType.Reversed)
                 {
-                    _loopType = LoopType.Backward;
+                    _settings.LoopType = LoopType.Backward;
                     return;
                 }
 
-                _loopType = value;
+                _settings.LoopType = value;
+            }
+        }
+
+        public Settings Settings
+        {
+            get { return _settings; }
+            set
+            {
+                _settings = value;
+                _settings.Ease = Ease.Linear;
             }
         }
 
@@ -295,7 +334,7 @@ namespace Numba.Tweening
 
         public Sequence SetLoops(LoopType loopType)
         {
-            return SetLoops(_loopsCount, loopType);
+            return SetLoops(LoopsCount, loopType);
         }
 
         IPlayable IPlayable.SetLoops(int loopsCount, LoopType loopType)
@@ -305,7 +344,7 @@ namespace Numba.Tweening
 
         public Sequence SetLoops(int loopsCount, LoopType loopType)
         {
-            _loopsCount = loopsCount;
+            LoopsCount = loopsCount;
             LoopType = loopType;
 
             return this;
@@ -313,15 +352,15 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            SetTime(time, _loopsCount, _loopType);
+            SetTime(time, _settings);
         }
 
-        private void SetTime(float time, int loopsCount, LoopType loopType)
+        private void SetTime(float time, Settings settings)
         {
-            if (loopsCount == -1) loopsCount = 1;
-            time = Mathf.Min(time, Duration * loopsCount * (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo ? 2f : 1f));
+            if (settings.LoopsCount == -1) settings.LoopsCount = 1;
+            time = Mathf.Clamp(time, 0f, Duration * settings.LoopsCount * (settings.LoopType == LoopType.Yoyo || settings.LoopType == LoopType.ReversedYoyo ? 2f : 1f));
 
-            switch (loopType)
+            switch (settings.LoopType)
             {
                 case LoopType.Forward:
                     time = Engine.Math.WrapCeil(time, Duration);
@@ -382,6 +421,18 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
+        IPlayable IPlayable.SetSettings(Settings settings)
+        {
+            Settings = settings;
+            return this;
+        }
+
+        public Sequence SetSettings(Settings settings)
+        {
+            _settings = settings;
+            return this;
+        }
+
         public Coroutine Play(bool useRealtime = false)
         {
             if (IsPlaying)
@@ -390,15 +441,15 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, LoopsCount));
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
         }
 
-        private IEnumerator PlayTime(bool useRealtime, int loopsCount)
+        private IEnumerator PlayTime(bool useRealtime, Settings settings)
         {
             InvokeStart();
 
-            bool isInfinityLoops = loopsCount == -1;
-            if (isInfinityLoops) loopsCount = 1;
+            bool isInfinityLoops = settings.LoopsCount == -1;
+            if (isInfinityLoops) settings.LoopsCount = 1;
 
             float startTime = GetTime(useRealtime);
             float durationWithLoops = DurationWithLoops;
@@ -416,7 +467,7 @@ namespace Numba.Tweening
                     endTime = startTime + durationWithLoops;
                 }
 
-                SetTime(time - startTime, loopsCount, _loopType);
+                SetTime(time - startTime, settings);
 
                 InvokeUpdate();
             }
@@ -426,7 +477,7 @@ namespace Numba.Tweening
                 yield return null;
 
                 float time = Mathf.Min(GetTime(useRealtime), endTime);
-                SetTime(time - startTime, loopsCount, _loopType);
+                SetTime(time - startTime, settings);
 
                 InvokeUpdate();
             }
@@ -510,7 +561,7 @@ namespace Numba.Tweening
             for (int i = 0; i < phasedPlayableDatas.Count - 1; i++)
             {
                 if (phasedPlayableDatas[i].Phase == Phase.Update) break;
-                
+
                 float originTime = GetPhasedDataTimeForSorting(phasedPlayableDatas[i]);
 
                 int j = i + 1;

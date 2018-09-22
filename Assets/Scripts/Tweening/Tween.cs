@@ -195,11 +195,7 @@ namespace Numba.Tweening
         #region Fields
         private Coroutine _playTimeRoutine;
 
-        private int _loopsCount = 1;
-
-        private Ease _ease;
-
-        private AnimationCurve _curve = new AnimationCurve();
+        private Settings _settings;
 
         #region Events
         public event Action Started;
@@ -221,13 +217,56 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
-        public Tween(Tweak tweak, float duration) : this(null, tweak, duration) { }
+        public Tween(Tweak tweak, float duration) : this(tweak, duration, new Settings(1, LoopType.Forward, Ease.Linear)) { }
 
-        public Tween(string name, Tweak tweak, float duration)
+        public Tween(Tweak tweak, float duration, int loopsCount) : this(tweak, duration, new Settings(loopsCount, LoopType.Forward, Ease.Linear)) { }
+
+        public Tween(Tweak tweak, float duration, LoopType loopType) : this(tweak, duration, new Settings(1, loopType, Ease.Linear)) { }
+
+        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType) : this(tweak, duration, new Settings(loopsCount, loopType, Ease.Linear)) { }
+
+        public Tween(Tweak tweak, float duration, Ease ease) : this(tweak, duration, new Settings(1, LoopType.Forward, ease)) { }
+
+        public Tween(Tweak tweak, float duration, int loopsCount, Ease ease) : this(tweak, duration, new Settings(loopsCount, LoopType.Forward, ease)) { }
+
+        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType, Ease ease) : this(tweak, duration, new Settings(loopsCount, loopType, ease)) { }
+
+        public Tween(Tweak tweak, float duration, AnimationCurve curve) : this(tweak, duration, new Settings(1, LoopType.Forward, curve)) { }
+
+        public Tween(Tweak tweak, float duration, int loopsCount, AnimationCurve curve) : this(tweak, duration, new Settings(loopsCount, LoopType.Forward, curve)) { }
+
+        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType, AnimationCurve curve) : this(tweak, duration, new Settings(loopsCount, loopType, curve)) { }
+
+        public Tween(Tweak tweak, float duration, Settings settings) : this(null, tweak, duration, settings) { }
+
+        public Tween(string name, Tweak tweak, float duration) : this(name, tweak, duration, new Settings(1, LoopType.Forward, Ease.Linear)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount) : this(name, tweak, duration, new Settings(loopsCount, LoopType.Forward, Ease.Linear)) { }
+
+        public Tween(string name, Tweak tweak, float duration, LoopType loopType) : this(name, tweak, duration, new Settings(1, loopType, Ease.Linear)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType) : this(name, tweak, duration, new Settings(loopsCount, loopType, Ease.Linear)) { }
+
+        public Tween(string name, Tweak tweak, float duration, Ease ease) : this(name, tweak, duration, new Settings(1, LoopType.Forward, ease)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount, Ease ease) : this(name, tweak, duration, new Settings(loopsCount, LoopType.Forward, ease)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType, Ease ease) : this(name, tweak, duration, new Settings(loopsCount, loopType, ease)) { }
+
+        public Tween(string name, Tweak tweak, float duration, AnimationCurve curve) : this(name, tweak, duration, new Settings(1, LoopType.Forward, curve)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount, AnimationCurve curve) : this(name, tweak, duration, new Settings(loopsCount, LoopType.Forward, curve)) { }
+
+        public Tween(string name, Tweak tweak, float duration, LoopType loopType, AnimationCurve curve) : this(name, tweak, duration, new Settings(1, loopType, curve)) { }
+
+        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType, AnimationCurve curve) : this(name, tweak, duration, new Settings(loopsCount, loopType, curve)) { }
+
+        public Tween(string name, Tweak tweak, float duration, Settings settings)
         {
             Name = name ?? "[noname]";
             Tweak = tweak;
             Duration = Mathf.Max(0f, duration);
+            _settings = settings;
         }
 
         static Tween()
@@ -249,42 +288,40 @@ namespace Numba.Tweening
         {
             get
             {
-                float durationWithLoops = Duration * (_loopsCount == -1f ? 1f : _loopsCount);
+                float durationWithLoops = Duration * (_settings.LoopsCount == -1f ? 1f : _settings.LoopsCount);
                 if (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo) durationWithLoops *= 2f;
 
                 return durationWithLoops;
             }
         }
 
-        public EaseType UsedEaseType { get; set; }
+        public EaseType EaseType { get { return _settings.EaseType; } }
 
         public Ease Ease
         {
-            get { return _ease; }
-            set
-            {
-                _ease = value;
-                UsedEaseType = EaseType.Formula;
-            }
+            get { return _settings.Ease; }
+            set { _settings.Ease = value; }
         }
 
         public AnimationCurve Curve
         {
-            get { return _curve; }
-            set
-            {
-                _curve.keys = value.keys;
-                UsedEaseType = EaseType.Curve;
-            }
+            get { return _settings.Curve; }
+            set { _settings.Curve = value; }
         }
 
         public int LoopsCount
         {
-            get { return _loopsCount; }
-            set { _loopsCount = Mathf.Max(value, -1); }
+            get { return _settings.LoopsCount; }
+            set { _settings.LoopsCount = value; }
         }
 
         public LoopType LoopType { get; set; }
+
+        public Settings Settings
+        {
+            get { return _settings; }
+            set { _settings = value; }
+        }
 
         public static Engine.Time Time { get; private set; }
         #endregion
@@ -319,7 +356,7 @@ namespace Numba.Tweening
 
         public Tween SetLoops(LoopType loopType)
         {
-            return SetLoops(_loopsCount, loopType);
+            return SetLoops(LoopsCount, loopType);
         }
 
         IPlayable IPlayable.SetLoops(int loopsCount, LoopType loopType)
@@ -329,7 +366,7 @@ namespace Numba.Tweening
 
         public Tween SetLoops(int loopsCount, LoopType loopType)
         {
-            _loopsCount = loopsCount;
+            LoopsCount = loopsCount;
             LoopType = loopType;
 
             return this;
@@ -337,46 +374,52 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            SetTime(time, UsedEaseType, Ease, _curve, _loopsCount, LoopType);
+            SetTime(time, _settings);
         }
 
-        private void SetTime(float time, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private void SetTime(float time, Settings settings)
         {
-            if (loopsCount == -1) loopsCount = 1;
+            if (settings.LoopsCount == -1) settings.LoopsCount = 1;
 
-            float fullDuration = Duration * loopsCount;
-            if (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo) fullDuration *= 2f;
+            if (time == 0f || Duration == 0f || LoopsCount == 0)
+            {
+                if (settings.LoopType == LoopType.Forward) Tweak.SetTime(1f, settings.Ease);
+                else Tweak.SetTime(0f, settings.Ease);
+            }
 
-            time = Mathf.Min(time, fullDuration);
+            float fullDuration = Duration * settings.LoopsCount;
+            if (settings.LoopType == LoopType.Yoyo || settings.LoopType == LoopType.ReversedYoyo) fullDuration *= 2f;
 
-            switch (loopType)
+            time = Mathf.Clamp(time, 0f, fullDuration);
+
+            switch (settings.LoopType)
             {
                 case LoopType.Forward:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
-                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
+                    if (settings.EaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease);
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve);
                     break;
                 case LoopType.Backward:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease, true);
-                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve, true);
+                    if (settings.EaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease, true);
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve, true);
                     break;
                 case LoopType.Reversed:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, ease);
-                    else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, curve);
+                    if (settings.EaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease);
+                    else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve);
                     break;
                 case LoopType.Yoyo:
-                    if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease, IsYoyoBackward(time));
-                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve, IsYoyoBackward(time));
+                    if (settings.EaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease, IsYoyoBackward(time));
+                    else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve, IsYoyoBackward(time));
                     break;
                 case LoopType.ReversedYoyo:
                     if (IsYoyoBackward(time))
                     {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, ease);
-                        else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, curve);
+                        if (settings.EaseType == EaseType.Formula) Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease);
+                        else Tweak.SetTime(1f - Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve);
                     }
                     else
                     {
-                        if (usedEaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, ease);
-                        else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, curve);
+                        if (settings.EaseType == EaseType.Formula) Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Ease);
+                        else Tweak.SetTime(Engine.Math.WrapCeil(time, Duration) / Duration, settings.Curve);
                     }
                     break;
             }
@@ -395,6 +438,18 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
+        IPlayable IPlayable.SetSettings(Settings settings)
+        {
+            _settings = settings;
+            return this;
+        }
+
+        public Tween SetSettings(Settings settings)
+        {
+            Settings = settings;
+            return this;
+        }
+
         public Coroutine Play(bool useRealtime = false)
         {
             if (IsPlaying)
@@ -403,21 +458,20 @@ namespace Numba.Tweening
                 return _playTimeRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, UsedEaseType, Ease, new AnimationCurve(_curve.keys), LoopsCount, LoopType));
+            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
         }
 
-        private IEnumerator PlayTime(bool useRealtime, EaseType usedEaseType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(bool useRealtime, Settings settings)
         {
             InvokeStart();
 
+            bool isInfinityLoops = settings.LoopsCount == -1;
+            if (isInfinityLoops) settings.LoopsCount = 1;
+
+            float duration = Duration * settings.LoopsCount;
+            if (settings.LoopType == LoopType.Yoyo || settings.LoopType == LoopType.ReversedYoyo) duration *= 2f;
+
             float startTime = GetTime(useRealtime);
-
-            bool isInfinityLoops = loopsCount == -1;
-            if (isInfinityLoops) loopsCount = 1;
-
-            float duration = Duration * loopsCount;
-            if (loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo) duration *= 2f;
-
             float endTime = startTime + duration;
 
             while (isInfinityLoops)
@@ -432,7 +486,7 @@ namespace Numba.Tweening
                     endTime = startTime + duration;
                 }
 
-                SetTime(time - startTime, usedEaseType, ease, curve, loopsCount, loopType);
+                SetTime(time - startTime, _settings);
 
                 InvokeUpdate();
             }
@@ -441,7 +495,7 @@ namespace Numba.Tweening
             {
                 yield return null;
 
-                SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime), usedEaseType, ease, curve, loopsCount, loopType);
+                SetTime((Mathf.Min(GetTime(useRealtime), endTime) - startTime), _settings);
 
                 InvokeUpdate();
             }
@@ -467,8 +521,11 @@ namespace Numba.Tweening
 
         private void HandleStop()
         {
-            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
-            _playTimeRoutine = null;
+            if (_playTimeRoutine != null)
+            {
+                RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
+                _playTimeRoutine = null;
+            }
 
             InvokeComplete();
             ClearCallbacks();
