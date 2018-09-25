@@ -497,6 +497,13 @@ namespace Numba.Tweening
             {
                 yield return null;
 
+                if (duration == 0f)
+                {
+                    SetTime(currentTime, 0f, duration, durationWithLoops, loopType);
+                    InvokeUpdate();
+                    continue;
+                }
+
                 float time = GetTime(useRealtime);
 
                 while (endTime < time)
@@ -512,15 +519,23 @@ namespace Numba.Tweening
                 InvokeUpdate();
             }
 
-            while (GetTime(useRealtime) < endTime)
+            if (duration == 0f)
             {
                 yield return null;
+                SetTime(currentTime, 0f, duration, durationWithLoops, loopType);
+            }
+            else
+            {
+                while (GetTime(useRealtime) < endTime)
+                {
+                    yield return null;
 
-                float time = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
-                SetTime(currentTime, time, duration, durationWithLoops, loopType);
-                currentTime = time;
+                    float time = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
+                    SetTime(currentTime, time, duration, durationWithLoops, loopType);
+                    currentTime = time;
 
-                InvokeUpdate();
+                    InvokeUpdate();
+                }
             }
 
             HandleStop();

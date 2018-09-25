@@ -532,7 +532,7 @@ namespace Numba.Tweening
                 InvokeUpdate();
             }
 
-            if (Duration == 0f)
+            if (duration == 0f)
             {
                 yield return null;
 

@@ -26,7 +26,7 @@ namespace Namespace
 
             //tween1.Duration = 2f;
 
-            Sequence sequence = new Sequence(tween1).SetLoops(-1, LoopType.Forward);
+            Sequence sequence = new Sequence(tween1).SetLoops(2, LoopType.Forward);
             sequence.Play();
         }
     }
