@@ -24,8 +24,8 @@ namespace Numba.Tweening.Engine
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void CreateInstance()
         {
-            Instance = new GameObject("RoutineHelper(Tween)").AddComponent<RoutineHelper>();
-            //Instance.gameObject.hideFlags = HideFlags.HideInHierarchy;
+            Instance = new GameObject("RoutineHelper(Tweens)").AddComponent<RoutineHelper>();
+            Instance.gameObject.hideFlags = HideFlags.HideInHierarchy;
 
             DontDestroyOnLoad(Instance.gameObject);
         }

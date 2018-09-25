@@ -12,10 +12,19 @@ namespace Namespace
         [SerializeField]
         private Transform _cube1;
 
-        private void Start()
+        private IEnumerator Start()
         {
-            var cube1Tween = _cube1.DoPositionX(1.5f, 0f, Ease.InOutExpo, 1);
-            cube1Tween.Play();
+            var tween1 = _cube1.DoPositionX(1.5f, 1f, Ease.InOutExpo, 2);
+
+            tween1.Started += () => Debug.Log("Started");
+            tween1.Updated += () => Debug.Log("Updated");
+            tween1.Completed += () => Debug.Log("Completed");
+
+            tween1.Play();
+
+            yield return new WaitForSeconds(0.5f);
+
+            //tween1.Duration = 1f;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Engine
+namespace Numba.Tweening
 {
     public interface IPlayable
     {
@@ -39,7 +39,7 @@ namespace Numba.Tweening.Engine
 
         IPlayable SetSettings(Settings settings);
 
-        Coroutine Play(bool useRealtime = false);
+        PlayRoutine Play(bool useRealtime = false);
 
         void Stop();
 

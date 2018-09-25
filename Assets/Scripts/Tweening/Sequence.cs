@@ -82,6 +82,10 @@ namespace Numba.Tweening
 
         private Coroutine _playTimeRoutine;
 
+        private PlayRoutine _playRoutine;
+
+        private Action _playRoutineOnStopCallback;
+
         private Dictionary<IPlayable, float> _playableDurations = new Dictionary<IPlayable, float>();
 
         private Settings _settings;
@@ -433,15 +437,16 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Coroutine Play(bool useRealtime = false)
+        public PlayRoutine Play(bool useRealtime = false)
         {
             if (IsPlaying)
             {
                 Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already playing.", Name));
-                return _playTimeRoutine;
+                return _playRoutine;
             }
 
-            return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
+            return null;
+            //return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
         }
 
         private IEnumerator PlayTime(bool useRealtime, Settings settings)
