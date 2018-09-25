@@ -6,13 +6,35 @@ namespace Numba.Tweening
 {
     public struct Settings
     {
-        #region Fields
+        private int _loopsCount;
+
+        public int LoopsCount
+        {
+            get { return _loopsCount; }
+            set { _loopsCount = Mathf.Max(value, -1); }
+        }
+
+        public LoopType LoopType { get; set; }
+
+        public Settings(int loopsCount, LoopType loopType)
+        {
+            _loopsCount = loopsCount;
+            LoopType = loopType;
+        }
+
+        public static implicit operator EasedSettings(Settings settings)
+        {
+            return new EasedSettings(settings._loopsCount, settings.LoopType, Ease.Linear);
+        }
+    }
+
+    public struct EasedSettings
+    {
         private int _loopsCount;
 
         private Ease _ease;
 
         private AnimationCurve _curve;
-        #endregion
 
         public int LoopsCount
         {
@@ -44,17 +66,8 @@ namespace Numba.Tweening
                 EaseType = EaseType.Curve;
             }
         }
-
-        public Settings(int loopsCount, LoopType loopType)
-        {
-            _loopsCount = loopsCount;
-            LoopType = loopType;
-            EaseType = EaseType.Formula;
-            _ease = Ease.Linear;
-            _curve = null;
-        }
-
-        public Settings(int loopsCount, LoopType loopType, Ease ease)
+        
+        public EasedSettings(int loopsCount, LoopType loopType, Ease ease)
         {
             _loopsCount = loopsCount;
             LoopType = loopType;
@@ -63,13 +76,18 @@ namespace Numba.Tweening
             _curve = null;
         }
 
-        public Settings(int loopsCount, LoopType loopType, AnimationCurve curve)
+        public EasedSettings(int loopsCount, LoopType loopType, AnimationCurve curve)
         {
             _loopsCount = loopsCount;
             LoopType = loopType;
             EaseType = EaseType.Curve;
             _ease = Ease.Linear;
             _curve = curve;
+        }
+
+        public static implicit operator Settings(EasedSettings easedSettings)
+        {
+            return new Settings(easedSettings._loopsCount, easedSettings.LoopType);
         }
     }
 }

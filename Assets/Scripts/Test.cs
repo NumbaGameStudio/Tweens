@@ -14,8 +14,8 @@ namespace Namespace
 
         private IEnumerator Start()
         {
-            var tween1 = _cube1.DoPositionX(1.5f, 1f, Ease.InOutExpo, 2);
-
+            var tween1 = _cube1.DoPositionX(1.5f, 1f, Ease.Linear, 2);
+            
             tween1.Started += () => Debug.Log("Started");
             tween1.Updated += () => Debug.Log("Updated");
             tween1.Completed += () => Debug.Log("Completed");
@@ -24,7 +24,7 @@ namespace Namespace
 
             yield return new WaitForSeconds(0.5f);
 
-            //tween1.Duration = 1f;
+            tween1.Duration = 2f;
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Numba.Tweening
 
         private Dictionary<IPlayable, float> _playableDurations = new Dictionary<IPlayable, float>();
 
-        private Settings _settings;
+        private EasedSettings _settings;
 
         private float _currentTime = -1f;
 
@@ -120,11 +120,11 @@ namespace Numba.Tweening
 
         public Sequence(string name, int loopsCount, LoopType loopType) : this(name, new Settings(loopsCount, loopType)) { }
 
-        public Sequence(Settings settings) : this(string.Empty, settings) { }
+        public Sequence(EasedSettings settings) : this(string.Empty, settings) { }
 
         public Sequence(string name) : this(name, new Settings(1, LoopType.Forward)) { }
 
-        public Sequence(string name, Settings settings)
+        public Sequence(string name, EasedSettings settings)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
             _settings = settings;
@@ -138,7 +138,7 @@ namespace Numba.Tweening
 
         public Sequence(int loopsCount, LoopType loopType, params IPlayable[] playables) : this(new Settings(loopsCount, loopType), playables) { }
 
-        public Sequence(Settings settings, params IPlayable[] playables) : this(null, settings, playables) { }
+        public Sequence(EasedSettings settings, params IPlayable[] playables) : this(null, settings, playables) { }
 
         public Sequence(string name, params IPlayable[] playables) : this(name, new Settings(1, LoopType.Forward), playables) { }
 
@@ -148,7 +148,7 @@ namespace Numba.Tweening
 
         public Sequence(string name, int loopsCount, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(loopsCount, loopType), playables) { }
 
-        public Sequence(string name, Settings settings, params IPlayable[] playables)
+        public Sequence(string name, EasedSettings settings, params IPlayable[] playables)
         {
             for (int i = 0; i < playables.Length; i++)
             {
@@ -197,7 +197,7 @@ namespace Numba.Tweening
             }
         }
 
-        public Settings Settings
+        public EasedSettings Settings
         {
             get { return _settings; }
             set
@@ -359,7 +359,7 @@ namespace Numba.Tweening
             SetTime(time, _settings);
         }
 
-        private void SetTime(float time, Settings settings)
+        private void SetTime(float time, EasedSettings settings)
         {
             if (settings.LoopsCount == -1) settings.LoopsCount = 1;
             time = Mathf.Clamp(time, 0f, Duration * settings.LoopsCount * (settings.LoopType == LoopType.Yoyo || settings.LoopType == LoopType.ReversedYoyo ? 2f : 1f));
@@ -425,12 +425,6 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
-        IPlayable IPlayable.SetSettings(Settings settings)
-        {
-            Settings = settings;
-            return this;
-        }
-
         public Sequence SetSettings(Settings settings)
         {
             _settings = settings;
@@ -449,7 +443,7 @@ namespace Numba.Tweening
             //return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
         }
 
-        private IEnumerator PlayTime(bool useRealtime, Settings settings)
+        private IEnumerator PlayTime(bool useRealtime, EasedSettings settings)
         {
             InvokeStart();
 
