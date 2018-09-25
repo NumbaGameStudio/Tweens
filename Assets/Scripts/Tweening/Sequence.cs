@@ -86,9 +86,13 @@ namespace Numba.Tweening
 
         private Action _playRoutineOnStopCallback;
 
-        private Dictionary<IPlayable, float> _playableDurations = new Dictionary<IPlayable, float>();
+        private int _loopsCount = 1;
 
-        private EasedSettings _settings;
+        private LoopType _loopType;
+
+        private float _duration;
+
+        private float _durationWithLoops;
 
         private float _currentTime = -1f;
 
@@ -124,10 +128,10 @@ namespace Numba.Tweening
 
         public Sequence(string name) : this(name, new Settings(1, LoopType.Forward)) { }
 
-        public Sequence(string name, EasedSettings settings)
+        public Sequence(string name, Settings settings)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
-            _settings = settings;
+            Settings = settings;
         }
 
         public Sequence(params IPlayable[] playables) : this(null, playables) { }
@@ -148,62 +152,74 @@ namespace Numba.Tweening
 
         public Sequence(string name, int loopsCount, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(loopsCount, loopType), playables) { }
 
-        public Sequence(string name, EasedSettings settings, params IPlayable[] playables)
+        public Sequence(string name, Settings settings, params IPlayable[] playables)
         {
             for (int i = 0; i < playables.Length; i++)
             {
                 Append(playables[i]);
             }
 
-            _settings = settings;
+            Settings = settings;
         }
         #endregion
 
         #region Properties
         public string Name { get; private set; }
 
-        public float CurrentTime { get { return _currentTime; } }
-
-        public float Duration { get; private set; }
-
-        public float DurationWithLoops
+        public float CurrentTime
         {
-            get
+            get { return _currentTime; }
+            set { _currentTime = value; }
+        }
+
+        public float Duration
+        {
+            get { return _duration; }
+            private set
             {
-                return Duration * (LoopsCount == -1f ? 1f : LoopsCount) * (LoopType == LoopType.Yoyo || LoopType == LoopType.ReversedYoyo ? 2f : 1f);
+                _duration = value;
+                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                ResetCurrentTime();
             }
         }
 
+        public float DurationWithLoops { get { return _durationWithLoops; } }
+
         public int LoopsCount
         {
-            get { return _settings.LoopsCount; }
-            set { _settings.LoopsCount = Mathf.Max(value, -1); }
+            get { return _loopsCount; }
+            set
+            {
+                _loopsCount = Mathf.Max(value, -1);
+                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                ResetCurrentTime();
+            }
         }
 
         public bool IsPlaying { get { return _playTimeRoutine != null; } }
 
         public LoopType LoopType
         {
-            get { return _settings.LoopType; }
+            get { return _loopType; }
             set
             {
                 if (value == LoopType.Reversed)
-                {
-                    _settings.LoopType = LoopType.Backward;
-                    return;
-                }
+                    _loopType = LoopType.Backward;
+                else
+                    _loopType = value;
 
-                _settings.LoopType = value;
+                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                ResetCurrentTime();
             }
         }
 
-        public EasedSettings Settings
+        public Settings Settings
         {
-            get { return _settings; }
+            get { return new Settings(_loopsCount, _loopType); }
             set
             {
-                _settings = value;
-                _settings.Ease = Ease.Linear;
+                LoopsCount = value.LoopsCount;
+                LoopType = value.LoopType;
             }
         }
 
@@ -214,7 +230,7 @@ namespace Numba.Tweening
         public Sequence Append(IPlayable playable)
         {
             _playbleDatas.Add(new PlayableData(NextOrder++, playable, Duration));
-            Duration += CalculateAndCacheDuration(playable);
+            Duration += playable.DurationWithLoops;
 
             return this;
         }
@@ -224,7 +240,7 @@ namespace Numba.Tweening
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
             _playbleDatas.Add(new PlayableData(order, playable, Duration));
-            Duration += CalculateAndCacheDuration(playable);
+            Duration += playable.DurationWithLoops;
 
             return this;
         }
@@ -245,24 +261,30 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, IPlayable playable)
         {
+            time = Mathf.Max(0f, time);
+
             _playbleDatas.Add(new PlayableData(NextOrder++, playable, time));
-            Duration = Mathf.Max(Duration, time + CalculateAndCacheDuration(playable));
+            Duration = Mathf.Max(Duration, time + playable.DurationWithLoops);
 
             return this;
         }
 
         public Sequence Insert(float time, IPlayable playable, int order)
         {
+            time = Mathf.Max(0f, time);
+
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
             _playbleDatas.Add(new PlayableData(order, playable, time));
-            Duration = Mathf.Max(Duration, time + CalculateAndCacheDuration(playable));
+            Duration = Mathf.Max(Duration, time + playable.DurationWithLoops);
 
             return this;
         }
 
         public Sequence Insert(float time, Action callback)
         {
+            time = Mathf.Max(0f, time);
+
             _callbacksDatas.Add(new CallbackData(NextOrder++, callback, time));
             Duration = Mathf.Max(Duration, time);
 
@@ -271,12 +293,23 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback, int order)
         {
+            time = Mathf.Max(0f, time);
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
             _callbacksDatas.Add(new CallbackData(order, callback, time));
             Duration = Mathf.Max(Duration, time);
 
             return this;
+        }
+
+        public void ResetCurrentTime()
+        {
+            _currentTime = GetCurrentTimeInitialPosition();
+        }
+
+        private float GetCurrentTimeInitialPosition()
+        {
+            return (LoopType == LoopType.Forward || LoopType == LoopType.Yoyo) ? -1f : DurationWithLoops + 1f;
         }
 
         private void ShiftAllOrdersByOne(int startFromOrder)
@@ -302,23 +335,6 @@ namespace Numba.Tweening
             }
 
             ++NextOrder;
-        }
-
-        private float CalculateAndCacheDuration(IPlayable playable)
-        {
-            int loopsCount = playable.LoopsCount == -1 ? 1 : playable.LoopsCount;
-
-            float duration = loopsCount * playable.Duration;
-            duration *= (playable.LoopType == LoopType.Yoyo || playable.LoopType == LoopType.ReversedYoyo ? 2f : 1f);
-
-            _playableDurations.Add(playable, duration);
-
-            return duration;
-        }
-
-        private float GetPlayableDuration(IPlayable playable)
-        {
-            return _playableDurations[playable];
         }
 
         IPlayable IPlayable.SetLoops(int loopsCount)
@@ -356,60 +372,84 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            SetTime(time, _settings);
+            SetTime(_currentTime, time, Duration, DurationWithLoops, LoopType);
         }
 
-        private void SetTime(float time, EasedSettings settings)
+        private void SetTime(float currentTime, float time, float duration, float durationWithLoops, LoopType loopType)
         {
-            if (settings.LoopsCount == -1) settings.LoopsCount = 1;
-            time = Mathf.Clamp(time, 0f, Duration * settings.LoopsCount * (settings.LoopType == LoopType.Yoyo || settings.LoopType == LoopType.ReversedYoyo ? 2f : 1f));
+            time = Mathf.Clamp(time, 0f, durationWithLoops);
 
-            switch (settings.LoopType)
+            if (loopType == LoopType.Forward)
             {
-                case LoopType.Forward:
-                    time = Engine.Math.WrapCeil(time, Duration);
-                    UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, time), time, time < _currentTime);
-                    break;
-                case LoopType.Backward:
-                    time = Engine.Math.WrapCeil(time, Duration);
-                    time = Duration - time;
-                    UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, time), time, time < _currentTime);
-                    break;
-                case LoopType.Yoyo:
-                    float yoyoDuration = Duration * 2;
-                    float repeatedYoyo = Engine.Math.WrapCeil(time, yoyoDuration);
-
-                    if (repeatedYoyo <= Duration)
-                    {
-                        float repeatedForward = Engine.Math.WrapCeil(repeatedYoyo, Duration);
-                        UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, repeatedForward), repeatedForward, repeatedForward < _currentTime);
-                    }
-                    else
-                    {
-                        float repeatedBackward = Engine.Math.WrapCeil(repeatedYoyo, Duration);
-                        repeatedBackward = Duration - repeatedBackward;
-                        UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, repeatedBackward), repeatedBackward, repeatedBackward < _currentTime);
-                    }
-                    break;
-                case LoopType.ReversedYoyo:
-                    float reversedYoyoDuration = Duration * 2;
-                    float repeatedRevYoyo = Engine.Math.WrapCeil(time, reversedYoyoDuration);
-
-                    if (repeatedRevYoyo <= Duration)
-                    {
-                        float repeatedBackward = Engine.Math.WrapCeil(repeatedRevYoyo, Duration);
-                        repeatedBackward = Duration - repeatedBackward;
-                        UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, repeatedBackward), repeatedBackward, repeatedBackward < _currentTime);
-                    }
-                    else
-                    {
-                        float repeatedForward = Engine.Math.WrapCeil(repeatedRevYoyo, Duration);
-                        UpdateTweensAndCallbacks(GetSortedByPhaseData(_currentTime, repeatedForward), repeatedForward, repeatedForward < _currentTime);
-                    }
-                    break;
+                UpdatePlayables(currentTime, () => Engine.Math.WrapCeil(time, duration));
+                //time = Engine.Math.WrapCeil(time, duration);
+                //UpdatePlayables(GetSortedByPhaseData(currentTime, time), time, time < currentTime);
             }
+            else if (loopType == LoopType.Backward)
+            {
+                UpdatePlayables(currentTime, () => duration - Engine.Math.WrapCeil(time, duration));
+                //time = Engine.Math.WrapCeil(time, duration);
+                //time = duration - time;
 
-            _currentTime = time;
+                //UpdatePlayables(GetSortedByPhaseData(currentTime, time), time, time < currentTime);
+            }
+            else if (loopType == LoopType.Yoyo)
+            {
+                float repeatedYoyo = Engine.Math.WrapCeil(time, duration * 2);
+
+                if (repeatedYoyo <= duration)
+                {
+                    UpdatePlayables(currentTime, () => Engine.Math.WrapCeil(repeatedYoyo, duration));
+                    //float repeatedForward = Engine.Math.WrapCeil(repeatedYoyo, duration);
+                    //UpdatePlayables(GetSortedByPhaseData(currentTime, repeatedForward), repeatedForward, repeatedForward < currentTime);
+                }
+                else
+                {
+                    UpdatePlayables(currentTime, () => duration - Engine.Math.WrapCeil(repeatedYoyo, duration));
+                    //float repeatedBackward = Engine.Math.WrapCeil(repeatedYoyo, duration);
+                    //repeatedBackward = duration - repeatedBackward;
+                    //UpdatePlayables(GetSortedByPhaseData(currentTime, repeatedBackward), repeatedBackward, repeatedBackward < currentTime);
+                }
+            }
+            else
+            {
+                float repeatedRevYoyo = Engine.Math.WrapCeil(time, duration * 2);
+
+                if (repeatedRevYoyo <= duration)
+                {
+                    UpdatePlayables(currentTime, () => duration - Engine.Math.WrapCeil(repeatedRevYoyo, duration));
+                    //float repeatedBackward = Engine.Math.WrapCeil(repeatedRevYoyo, duration);
+                    //repeatedBackward = duration - repeatedBackward;
+                    //UpdatePlayables(GetSortedByPhaseData(currentTime, repeatedBackward), repeatedBackward, repeatedBackward < currentTime);
+                }
+                else
+                {
+                    UpdatePlayables(currentTime, () => Engine.Math.WrapCeil(repeatedRevYoyo, duration));
+                    //float repeatedForward = Engine.Math.WrapCeil(repeatedRevYoyo, duration);
+                    //UpdatePlayables(GetSortedByPhaseData(currentTime, repeatedForward), repeatedForward, repeatedForward < currentTime);
+                }
+            }
+        }
+
+        private void UpdatePlayables(float currentTime, Func<float> timeGetter)
+        {
+            float time = timeGetter();
+            UpdatePlayables(GetSortedByPhaseData(currentTime, time), time, time < currentTime);
+        }
+
+        private float CalculateDurationWithLoops(float duration, int loopsCount, LoopType loopType)
+        {
+            return duration * GetLoopTypeDurationMultiplier(loopType) * Mathf.Abs(loopsCount);
+        }
+
+        private float GetLoopTypeDurationMultiplier(LoopType loopType)
+        {
+            return IsYoyoTypedLoopType(loopType) ? 2f : 1f;
+        }
+
+        private bool IsYoyoTypedLoopType(LoopType loopType)
+        {
+            return loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo;
         }
 
         private bool IsYoyoBackward(float time)
@@ -427,7 +467,7 @@ namespace Numba.Tweening
 
         public Sequence SetSettings(Settings settings)
         {
-            _settings = settings;
+            Settings = settings;
             return this;
         }
 
@@ -439,22 +479,21 @@ namespace Numba.Tweening
                 return _playRoutine;
             }
 
-            return null;
-            //return _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, _settings));
+            if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
+
+            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, GetCurrentTimeInitialPosition(), Duration, DurationWithLoops, LoopsCount, LoopType));
+
+            return PlayRoutine.Create(out _playRoutineOnStopCallback);
         }
 
-        private IEnumerator PlayTime(bool useRealtime, EasedSettings settings)
+        private IEnumerator PlayTime(bool useRealtime, float currentTime, float duration, float durationWithLoops, int loopsCount, LoopType loopType)
         {
             InvokeStart();
 
-            bool isInfinityLoops = settings.LoopsCount == -1;
-            if (isInfinityLoops) settings.LoopsCount = 1;
-
             float startTime = GetTime(useRealtime);
-            float durationWithLoops = DurationWithLoops;
             float endTime = startTime + durationWithLoops;
 
-            while (isInfinityLoops)
+            while (loopsCount == -1)
             {
                 yield return null;
 
@@ -466,7 +505,9 @@ namespace Numba.Tweening
                     endTime = startTime + durationWithLoops;
                 }
 
-                SetTime(time - startTime, settings);
+                time -= startTime;
+                SetTime(currentTime, time, duration, durationWithLoops, LoopType);
+                currentTime = time;
 
                 InvokeUpdate();
             }
@@ -475,8 +516,9 @@ namespace Numba.Tweening
             {
                 yield return null;
 
-                float time = Mathf.Min(GetTime(useRealtime), endTime);
-                SetTime(time - startTime, settings);
+                float time = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
+                SetTime(currentTime, time, duration, durationWithLoops, loopType);
+                currentTime = time;
 
                 InvokeUpdate();
             }
@@ -489,7 +531,7 @@ namespace Numba.Tweening
             return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
         }
 
-        private void UpdateTweensAndCallbacks(List<PhasedData> phasedDatas, float time, bool useBackward)
+        private void UpdatePlayables(List<PhasedData> phasedDatas, float time, bool useBackward)
         {
             for (int i = 0; i < phasedDatas.Count; i++)
             {
@@ -526,8 +568,8 @@ namespace Numba.Tweening
 
             foreach (var playableData in _playbleDatas)
             {
-                float tweenStartTime = isBackward ? playableData.StartTime + GetPlayableDuration(playableData.Playable) : playableData.StartTime;
-                float tweenEndTime = isBackward ? playableData.StartTime : playableData.StartTime + GetPlayableDuration(playableData.Playable);
+                float tweenStartTime = isBackward ? playableData.StartTime + playableData.Playable.DurationWithLoops : playableData.StartTime;
+                float tweenEndTime = isBackward ? playableData.StartTime : playableData.StartTime + playableData.Playable.DurationWithLoops;
 
                 if (IsValueBetween(tweenEndTime, startTime, endTime) && tweenEndTime != startTime)
                 {
@@ -611,7 +653,10 @@ namespace Numba.Tweening
             RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
             _playTimeRoutine = null;
 
-            _currentTime = LoopType == LoopType.Forward || LoopType == LoopType.Yoyo ? -1f : DurationWithLoops + 1f;
+            _playRoutineOnStopCallback();
+            _playRoutine = null;
+
+            ResetCurrentTime();
 
             InvokeComplete();
             ClearCallbacks();

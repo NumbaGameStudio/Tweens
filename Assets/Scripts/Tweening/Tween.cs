@@ -429,13 +429,12 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            float durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
-            SetTime(Tweak, time, Duration, durationWithLoops, EaseType, Ease, Curve, LoopType);
+            SetTime(Tweak, time, Duration, DurationWithLoops, EaseType, Ease, Curve, LoopType);
         }
 
         public void SetTime(Tweak tweak, float time, float duration, float durationWithLoops, EaseType easeType, Ease ease, AnimationCurve curve, LoopType loopType)
         {
-            if (Duration == 0f)
+            if (duration == 0f)
             {
                 SetTweakTime(tweak, easeType, ease, curve, () => LoopType == LoopType.Forward ? 1f : 0f);
                 return;
@@ -498,22 +497,18 @@ namespace Numba.Tweening
 
             if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
 
-            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, Tweak, Duration, EaseType, Ease, Curve, LoopsCount, LoopType));
+            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, Tweak, Duration, DurationWithLoops, EaseType, Ease, Curve, LoopsCount, LoopType));
             return _playRoutine = PlayRoutine.Create(out _playRoutineOnStopCallback);
         }
 
-        private IEnumerator PlayTime(bool useRealtime, Tweak tweak, float duration, EaseType easeType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(bool useRealtime, Tweak tweak, float duration, float durationWithLoops, EaseType easeType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
         {
             InvokeStart();
 
-            bool isInfinityLoops = loopsCount == -1;
-
             float startTime = GetTime(useRealtime);
-
-            float durationWithLoops = CalculateDurationWithLoops(duration, loopsCount, loopType);
             float endTime = startTime + durationWithLoops;
 
-            while (isInfinityLoops)
+            while (loopsCount == -1)
             {
                 yield return null;
 
@@ -521,7 +516,7 @@ namespace Numba.Tweening
 
                 if (duration == 0f)
                 {
-                    SetTime(tweak, time, duration, durationWithLoops, easeType, ease, curve, loopType);
+                    SetTime(tweak, 0f, duration, durationWithLoops, easeType, ease, curve, loopType);
                 }
                 else
                 {
@@ -576,13 +571,10 @@ namespace Numba.Tweening
 
         private void HandleStop()
         {
-            if (_playTimeRoutine != null)
-            {
-                RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
-                _playRoutineOnStopCallback();
-                _playTimeRoutine = null;
-                _playRoutine = null;
-            }
+            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
+            _playTimeRoutine = null;
+            _playRoutineOnStopCallback();
+            _playRoutine = null;
 
             InvokeComplete();
         }
