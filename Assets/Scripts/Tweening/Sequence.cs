@@ -73,12 +73,90 @@ namespace Numba.Tweening
             Update,
             Complete
         }
+
+        private struct PlayableDataToAppend
+        {
+            public int Order { get; set; }
+
+            public IPlayable Playable { get; set; }
+
+            public PlayableDataToAppend(int order, IPlayable playable)
+            {
+                Order = order;
+                Playable = playable;
+            }
+        }
+
+        private struct CallbackDataToAppend
+        {
+            public int Order { get; set; }
+
+            public Action Callback { get; set; }
+
+            public CallbackDataToAppend(int order, Action callback)
+            {
+                Order = order;
+                Callback = callback;
+            }
+        }
+
+        private struct PlayableDataToInsert
+        {
+            public int Order { get; set; }
+
+            public float Time { get; set; }
+
+            public IPlayable Playable { get; set; }
+
+            public PlayableDataToInsert(int order, float time, IPlayable playable)
+            {
+                Order = order;
+                Time = time;
+                Playable = playable;
+            }
+        }
+
+        private struct CallbackDataToInsert
+        {
+            public int Order { get; set; }
+
+            public float Time { get; set; }
+
+            public Action Callback { get; set; }
+
+            public CallbackDataToInsert(int order, float time, Action callback)
+            {
+                Order = order;
+                Time = time;
+                Callback = callback;
+            }
+        }
+
+        private enum AddType
+        {
+            AppendPlayable,
+            AppendCallback,
+            InsertPlayable,
+            InsertCallback
+        }
         #endregion
 
         #region Fields
+        #region Data containers
         private List<PlayableData> _playbleDatas = new List<PlayableData>();
 
         private List<CallbackData> _callbacksDatas = new List<CallbackData>();
+
+        private Queue<PlayableDataToAppend> _playableDatasToAppend = new Queue<PlayableDataToAppend>(0);
+
+        private Queue<CallbackDataToAppend> _callbackDatasToAppend = new Queue<CallbackDataToAppend>(0);
+
+        private Queue<PlayableDataToInsert> _playableDatasToInsert = new Queue<PlayableDataToInsert>(0);
+
+        private Queue<CallbackDataToInsert> _callbackDatasToInsert = new Queue<CallbackDataToInsert>(0);
+
+        private Queue<AddType> _addQueue = new Queue<AddType>(0);
+        #endregion
 
         private Coroutine _playTimeRoutine;
 
@@ -91,10 +169,6 @@ namespace Numba.Tweening
         private LoopType _loopType;
 
         private float _duration;
-
-        private float _durationWithLoops;
-
-        private float _previousTime = -1f;
 
         #region Events
         public event Action Started;
@@ -119,6 +193,7 @@ namespace Numba.Tweening
         public Sequence(string name)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
+            ResetCurrentTime();
         }
 
         public Sequence(Settings settings) : this(null, settings) { }
@@ -132,24 +207,18 @@ namespace Numba.Tweening
         #region Properties
         public string Name { get; private set; }
 
-        public float CurrentTime
-        {
-            get { return _previousTime; }
-            set { _previousTime = value; }
-        }
-
         public float Duration
         {
             get { return _duration; }
             private set
             {
                 _duration = value;
-                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
                 ResetCurrentTime();
             }
         }
 
-        public float DurationWithLoops { get { return _durationWithLoops; } }
+        public float DurationWithLoops { get; private set; }
 
         public int LoopsCount
         {
@@ -157,12 +226,11 @@ namespace Numba.Tweening
             set
             {
                 _loopsCount = Mathf.Max(value, -1);
-                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+
+                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
                 ResetCurrentTime();
             }
         }
-
-        public bool IsPlaying { get { return _playTimeRoutine != null; } }
 
         public LoopType LoopType
         {
@@ -174,7 +242,7 @@ namespace Numba.Tweening
                 else
                     _loopType = value;
 
-                _durationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
                 ResetCurrentTime();
             }
         }
@@ -190,11 +258,22 @@ namespace Numba.Tweening
         }
 
         public int NextOrder { get; private set; }
+
+        public float CurrentTime { get; set; }
+
+        public bool IsPlaying { get { return _playTimeRoutine != null; } }
         #endregion
 
         #region Methods
         public Sequence Append(IPlayable playable)
         {
+            if (IsPlaying)
+            {
+                _playableDatasToAppend.Enqueue(new PlayableDataToAppend(-1, playable));
+                _addQueue.Enqueue(AddType.AppendPlayable);
+                return this;
+            }
+
             _playbleDatas.Add(new PlayableData(NextOrder++, playable, Duration));
             Duration += playable.DurationWithLoops;
 
@@ -203,6 +282,13 @@ namespace Numba.Tweening
 
         public Sequence Append(IPlayable playable, int order)
         {
+            if (IsPlaying)
+            {
+                _playableDatasToAppend.Enqueue(new PlayableDataToAppend(order, playable));
+                _addQueue.Enqueue(AddType.AppendPlayable);
+                return this;
+            }
+
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
             _playbleDatas.Add(new PlayableData(order, playable, Duration));
@@ -213,12 +299,26 @@ namespace Numba.Tweening
 
         public Sequence Append(Action callback)
         {
+            if (IsPlaying)
+            {
+                _callbackDatasToAppend.Enqueue(new CallbackDataToAppend(-1, callback));
+                _addQueue.Enqueue(AddType.AppendCallback);
+                return this;
+            }
+
             _callbacksDatas.Add(new CallbackData(NextOrder++, callback, Duration));
             return this;
         }
 
         public Sequence Append(Action callback, int order)
         {
+            if (IsPlaying)
+            {
+                _callbackDatasToAppend.Enqueue(new CallbackDataToAppend(order, callback));
+                _addQueue.Enqueue(AddType.AppendCallback);
+                return this;
+            }
+
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
             _callbacksDatas.Add(new CallbackData(order, callback, Duration));
@@ -227,6 +327,13 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, IPlayable playable)
         {
+            if (IsPlaying)
+            {
+                _playableDatasToInsert.Enqueue(new PlayableDataToInsert(-1, time, playable));
+                _addQueue.Enqueue(AddType.InsertPlayable);
+                return this;
+            }
+
             time = Mathf.Max(0f, time);
 
             _playbleDatas.Add(new PlayableData(NextOrder++, playable, time));
@@ -237,6 +344,13 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, IPlayable playable, int order)
         {
+            if (IsPlaying)
+            {
+                _playableDatasToInsert.Enqueue(new PlayableDataToInsert(order, time, playable));
+                _addQueue.Enqueue(AddType.InsertPlayable);
+                return this;
+            }
+
             time = Mathf.Max(0f, time);
 
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
@@ -249,6 +363,13 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback)
         {
+            if (IsPlaying)
+            {
+                _callbackDatasToInsert.Enqueue(new CallbackDataToInsert(-1, time, callback));
+                _addQueue.Enqueue(AddType.InsertCallback);
+                return this;
+            }
+
             time = Mathf.Max(0f, time);
 
             _callbacksDatas.Add(new CallbackData(NextOrder++, callback, time));
@@ -259,6 +380,13 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback, int order)
         {
+            if (IsPlaying)
+            {
+                _callbackDatasToInsert.Enqueue(new CallbackDataToInsert(order, time, callback));
+                _addQueue.Enqueue(AddType.InsertCallback);
+                return this;
+            }
+
             time = Mathf.Max(0f, time);
             ShiftAllOrdersByOne(Mathf.Clamp(order, 0, NextOrder));
 
@@ -270,7 +398,7 @@ namespace Numba.Tweening
 
         public void ResetCurrentTime()
         {
-            _previousTime = GetPreviousTimeInitialPosition(LoopType);
+            CurrentTime = GetPreviousTimeInitialPosition(LoopType);
         }
 
         private float GetPreviousTimeInitialPosition(LoopType loopType)
@@ -338,7 +466,7 @@ namespace Numba.Tweening
 
         public void SetTime(float currentTime)
         {
-            SetTime(_previousTime, currentTime, Duration, DurationWithLoops, LoopType);
+            SetTime(CurrentTime, currentTime, Duration, DurationWithLoops, LoopType);
         }
 
         private void SetTime(float previousTime, float currentTime, float duration, float durationWithLoops, LoopType loopType)
@@ -634,7 +762,49 @@ namespace Numba.Tweening
             ResetCurrentTime();
 
             InvokeComplete();
-            ClearCallbacks();
+
+            AddSavedDatasToSequence();
+        }
+
+        private void AddSavedDatasToSequence()
+        {
+            while (_addQueue.Count > 0)
+            {
+                AddType addType = _addQueue.Dequeue();
+
+                if (addType == AddType.AppendPlayable)
+                {
+                    var playableDataToAppend = _playableDatasToAppend.Dequeue();
+                    if (playableDataToAppend.Order == -1)
+                        Append(playableDataToAppend.Playable);
+                    else
+                        Append(playableDataToAppend.Playable, playableDataToAppend.Order);
+                }
+                else if (addType == AddType.AppendCallback)
+                {
+                    var callbackDataToAppend = _callbackDatasToAppend.Dequeue();
+                    if (callbackDataToAppend.Order == -1)
+                        Append(callbackDataToAppend.Callback);
+                    else
+                        Append(callbackDataToAppend.Callback, callbackDataToAppend.Order);
+                }
+                else if (addType == AddType.InsertPlayable)
+                {
+                    var playableDataToInsert = _playableDatasToInsert.Dequeue();
+                    if (playableDataToInsert.Order == -1)
+                        Insert(playableDataToInsert.Time, playableDataToInsert.Playable);
+                    else
+                        Insert(playableDataToInsert.Time, playableDataToInsert.Playable, playableDataToInsert.Order);
+                }
+                else
+                {
+                    var callbackDataToInsert = _callbackDatasToInsert.Dequeue();
+                    if (callbackDataToInsert.Order == -1)
+                        Insert(callbackDataToInsert.Time, callbackDataToInsert.Callback);
+                    else
+                        Insert(callbackDataToInsert.Time, callbackDataToInsert.Callback, callbackDataToInsert.Order);
+                }
+            }
         }
 
         IPlayable IPlayable.OnStart(Action callback)

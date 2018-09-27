@@ -84,14 +84,16 @@ namespace Numba.Tweening
         public abstract void SetTime(float interpolation, Ease ease, bool swapFromTo = false);
 
         public abstract void SetTime(float interpolation, AnimationCurve curve, bool swapFromTo = false);
+
+        public Tweak<T> As<T>() { return (Tweak<T>)this; }
     }
 
     public abstract class Tweak<T> : Tweak
 	{
         #region Properties
-        public T From { get; protected set; }
+        public T From { get; set; }
 
-        public T To { get; protected set; }
+        public T To { get; set; }
 
         protected Action<T> _setter;
         #endregion
