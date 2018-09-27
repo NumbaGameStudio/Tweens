@@ -231,57 +231,26 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
-        public Tween(Tweak tweak, float duration) : this(tweak, duration, new EasedSettings(1, LoopType.Forward, Ease.Linear)) { }
+        #region Ease
+        public Tween(Tweak tweak, float duration) : this(null, tweak, duration) { }
 
-        public Tween(Tweak tweak, float duration, int loopsCount) : this(tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, Ease.Linear)) { }
+        public Tween(string name, Tweak tweak, float duration)
+        {
+            ConstructBase(name, tweak, duration, 1, LoopType.Forward);
+        }
+        #endregion
 
-        public Tween(Tweak tweak, float duration, LoopType loopType) : this(tweak, duration, new EasedSettings(1, loopType, Ease.Linear)) { }
-
-        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType) : this(tweak, duration, new EasedSettings(loopsCount, loopType, Ease.Linear)) { }
-
-        public Tween(Tweak tweak, float duration, Ease ease) : this(tweak, duration, new EasedSettings(1, LoopType.Forward, ease)) { }
-
-        public Tween(Tweak tweak, float duration, int loopsCount, Ease ease) : this(tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, ease)) { }
-
-        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType, Ease ease) : this(tweak, duration, new EasedSettings(loopsCount, loopType, ease)) { }
-
-        public Tween(Tweak tweak, float duration, AnimationCurve curve) : this(tweak, duration, new EasedSettings(1, LoopType.Forward, curve)) { }
-
-        public Tween(Tweak tweak, float duration, int loopsCount, AnimationCurve curve) : this(tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, curve)) { }
-
-        public Tween(Tweak tweak, float duration, int loopsCount, LoopType loopType, AnimationCurve curve) : this(tweak, duration, new EasedSettings(loopsCount, loopType, curve)) { }
-
+        #region Settings
         public Tween(Tweak tweak, float duration, EasedSettings settings) : this(null, tweak, duration, settings) { }
-
-        public Tween(string name, Tweak tweak, float duration) : this(name, tweak, duration, new EasedSettings(1, LoopType.Forward, Ease.Linear)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount) : this(name, tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, Ease.Linear)) { }
-
-        public Tween(string name, Tweak tweak, float duration, LoopType loopType) : this(name, tweak, duration, new EasedSettings(1, loopType, Ease.Linear)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType) : this(name, tweak, duration, new EasedSettings(loopsCount, loopType, Ease.Linear)) { }
-
-        public Tween(string name, Tweak tweak, float duration, Ease ease) : this(name, tweak, duration, new EasedSettings(1, LoopType.Forward, ease)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount, Ease ease) : this(name, tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, ease)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType, Ease ease) : this(name, tweak, duration, new EasedSettings(loopsCount, loopType, ease)) { }
-
-        public Tween(string name, Tweak tweak, float duration, AnimationCurve curve) : this(name, tweak, duration, new EasedSettings(1, LoopType.Forward, curve)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount, AnimationCurve curve) : this(name, tweak, duration, new EasedSettings(loopsCount, LoopType.Forward, curve)) { }
-
-        public Tween(string name, Tweak tweak, float duration, LoopType loopType, AnimationCurve curve) : this(name, tweak, duration, new EasedSettings(1, loopType, curve)) { }
-
-        public Tween(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType, AnimationCurve curve) : this(name, tweak, duration, new EasedSettings(loopsCount, loopType, curve)) { }
 
         public Tween(string name, Tweak tweak, float duration, EasedSettings settings)
         {
-            Name = name ?? "[noname]";
-            Tweak = tweak;
-            Duration = Mathf.Max(0f, duration);
-            Settings = settings;
+            ConstructBase(name, tweak, duration, settings.LoopsCount, settings.LoopType);
+
+            if (settings.EaseType == EaseType.Formula) Ease = settings.Ease;
+            else Curve = settings.Curve;
         }
+        #endregion
 
         static Tween()
         {
@@ -372,6 +341,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Methods
+        private void ConstructBase(string name, Tweak tweak, float duration, int loopsCount, LoopType loopType)
+        {
+            Name = name ?? "[noname]";
+            Tweak = tweak;
+            Duration = Mathf.Max(0f, duration);
+
+            LoopsCount = loopsCount;
+            LoopType = loopType;
+        }
+
         private bool IsYoyoTypedLoopType(LoopType loopType)
         {
             return loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo;

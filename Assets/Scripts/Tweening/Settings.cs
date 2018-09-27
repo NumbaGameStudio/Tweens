@@ -66,7 +66,7 @@ namespace Numba.Tweening
                 EaseType = EaseType.Curve;
             }
         }
-        
+
         public EasedSettings(int loopsCount, LoopType loopType, Ease ease)
         {
             _loopsCount = loopsCount;

@@ -116,49 +116,15 @@ namespace Numba.Tweening
         #region Constructors
         public Sequence() : this(string.Empty) { }
 
-        public Sequence(int loopsCount) : this(new Settings(loopsCount, LoopType.Forward)) { }
-
-        public Sequence(LoopType loopType) : this(new Settings(1, loopType)) { }
-
-        public Sequence(int loopsCount, LoopType loopType) : this(new Settings(loopsCount, loopType)) { }
-
-        public Sequence(string name, int loopsCount, LoopType loopType) : this(name, new Settings(loopsCount, loopType)) { }
-
-        public Sequence(EasedSettings settings) : this(string.Empty, settings) { }
-
-        public Sequence(string name) : this(name, new Settings(1, LoopType.Forward)) { }
-
-        public Sequence(string name, Settings settings)
+        public Sequence(string name)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
-            Settings = settings;
         }
 
-        public Sequence(params IPlayable[] playables) : this(null, playables) { }
+        public Sequence(Settings settings) : this(null, settings) { }
 
-        public Sequence(int loopsCount, params IPlayable[] playables) : this(new Settings(loopsCount, LoopType.Forward), playables) { }
-
-        public Sequence(LoopType loopType, params IPlayable[] playables) : this(new Settings(1, loopType), playables) { }
-
-        public Sequence(int loopsCount, LoopType loopType, params IPlayable[] playables) : this(new Settings(loopsCount, loopType), playables) { }
-
-        public Sequence(EasedSettings settings, params IPlayable[] playables) : this(null, settings, playables) { }
-
-        public Sequence(string name, params IPlayable[] playables) : this(name, new Settings(1, LoopType.Forward), playables) { }
-
-        public Sequence(string name, int loopsCount, params IPlayable[] playables) : this(name, new Settings(loopsCount, LoopType.Forward), playables) { }
-
-        public Sequence(string name, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(1, loopType), playables) { }
-
-        public Sequence(string name, int loopsCount, LoopType loopType, params IPlayable[] playables) : this(name, new Settings(loopsCount, loopType), playables) { }
-
-        public Sequence(string name, Settings settings, params IPlayable[] playables)
+        public Sequence(string name, Settings settings) : this(name)
         {
-            for (int i = 0; i < playables.Length; i++)
-            {
-                Append(playables[i]);
-            }
-
             Settings = settings;
         }
         #endregion
@@ -520,7 +486,7 @@ namespace Numba.Tweening
             while (loopsCount == -1)
             {
                 yield return null;
-                    
+
                 if (duration == 0f)
                 {
                     SetTime(previousTime, 0f, duration, durationWithLoops, loopType);
