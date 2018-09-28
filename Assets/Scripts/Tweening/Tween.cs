@@ -203,7 +203,7 @@ namespace Numba.Tweening
 
         private Ease _ease;
 
-        private AnimationCurve _curve;
+        private Formula _formula;
 
         private int _loopsCount;
 
@@ -242,8 +242,8 @@ namespace Numba.Tweening
         {
             ConstructBase(name, tweak, duration, settings.LoopsCount, settings.LoopType);
 
-            if (settings.EaseType == EaseType.Formula) Ease = settings.Ease;
-            else Curve = settings.Curve;
+            if (settings.EaseType == EaseType.Integrated) Ease = settings.Ease;
+            else Formula = settings.Formula;
         }
 
         static Tween()
@@ -277,18 +277,18 @@ namespace Numba.Tweening
             set
             {
                 _ease = value;
-                EaseType = EaseType.Formula;
-                _curve = null;
+                EaseType = EaseType.Integrated;
+                _formula = null;
             }
         }
 
-        public AnimationCurve Curve
+        public Formula Formula
         {
-            get { return _curve; }
+            get { return _formula; }
             set
             {
-                _curve = value;
-                EaseType = EaseType.Curve;
+                _formula = value;
+                EaseType = EaseType.Custom;
             }
         }
 
@@ -316,16 +316,16 @@ namespace Numba.Tweening
         {
             get
             {
-                if (EaseType == EaseType.Formula) return new EasedSettings(_loopsCount, _loopType, _ease);
-                else return new EasedSettings(_loopsCount, _loopType, _curve);
+                if (EaseType == EaseType.Integrated) return new EasedSettings(_loopsCount, _loopType, _ease);
+                else return new EasedSettings(_loopsCount, _loopType, _formula);
             }
             set
             {
                 LoopsCount = value.LoopsCount;
                 LoopType = value.LoopType;
 
-                if (value.EaseType == EaseType.Formula) Ease = value.Ease;
-                else Curve = value.Curve;
+                if (value.EaseType == EaseType.Integrated) Ease = value.Ease;
+                else Formula = value.Formula;
             }
         }
 
@@ -361,9 +361,9 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Tween SetEase(AnimationCurve curve)
+        public Tween SetEase(Formula formula)
         {
-            Curve = curve;
+            Formula = formula;
             return this;
         }
 
@@ -402,40 +402,40 @@ namespace Numba.Tweening
 
         public void SetTime(float time)
         {
-            SetTime(Tweak, time, Duration, DurationWithLoops, EaseType, Ease, Curve, LoopType);
+            SetTime(Tweak, time, Duration, DurationWithLoops, EaseType, Ease, Formula, LoopType);
         }
 
-        public void SetTime(Tweak tweak, float time, float duration, float durationWithLoops, EaseType easeType, Ease ease, AnimationCurve curve, LoopType loopType)
+        public void SetTime(Tweak tweak, float time, float duration, float durationWithLoops, EaseType easeType, Ease ease, Formula formula, LoopType loopType)
         {
             if (duration == 0f)
             {
-                SetTweakTime(tweak, easeType, ease, curve, () => LoopType == LoopType.Forward ? 1f : 0f);
+                SetTweakTime(tweak, easeType, ease, formula, () => LoopType == LoopType.Forward ? 1f : 0f);
                 return;
             }
 
             time = Mathf.Clamp(time, 0f, durationWithLoops);
 
             if (loopType == LoopType.Forward)
-                SetTweakTime(tweak, easeType, ease, curve, () => Engine.Math.WrapCeil(time, duration) / duration);
+                SetTweakTime(tweak, easeType, ease, formula, () => Engine.Math.WrapCeil(time, duration) / duration);
             else if (loopType == LoopType.Backward)
-                SetTweakTime(tweak, easeType, ease, curve, () => Engine.Math.WrapCeil(time, duration) / duration, true);
+                SetTweakTime(tweak, easeType, ease, formula, () => Engine.Math.WrapCeil(time, duration) / duration, true);
             else if (loopType == LoopType.Reversed)
-                SetTweakTime(tweak, easeType, ease, curve, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
+                SetTweakTime(tweak, easeType, ease, formula, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
             else if (loopType == LoopType.Yoyo)
-                SetTweakTime(tweak, easeType, ease, curve, () => Engine.Math.WrapCeil(time, duration) / duration, IsYoyoBackward(time, duration));
+                SetTweakTime(tweak, easeType, ease, formula, () => Engine.Math.WrapCeil(time, duration) / duration, IsYoyoBackward(time, duration));
             else
             {
-                if (IsYoyoBackward(time, duration)) SetTweakTime(tweak, easeType, ease, curve, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
-                else SetTweakTime(tweak, easeType, ease, curve, () => Engine.Math.WrapCeil(time, duration) / duration);
+                if (IsYoyoBackward(time, duration)) SetTweakTime(tweak, easeType, ease, formula, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
+                else SetTweakTime(tweak, easeType, ease, formula, () => Engine.Math.WrapCeil(time, duration) / duration);
             }
         }
 
-        private void SetTweakTime(Tweak tweak, EaseType easeType, Ease ease, AnimationCurve curve, Func<float> timeGetter, bool swapFromTo = false)
+        private void SetTweakTime(Tweak tweak, EaseType easeType, Ease ease, Formula formula, Func<float> timeGetter, bool swapFromTo = false)
         {
             if (tweak == null) return;
 
-            if (easeType == EaseType.Formula) tweak.SetTime(timeGetter(), ease, swapFromTo);
-            else tweak.SetTime(timeGetter(), curve, swapFromTo);
+            if (easeType == EaseType.Integrated) tweak.SetTime(timeGetter(), ease, swapFromTo);
+            else tweak.SetTime(timeGetter(), formula, swapFromTo);
         }
 
         private float CalculateDurationWithLoops(float duration, int loopsCount, LoopType loopType)
@@ -472,11 +472,11 @@ namespace Numba.Tweening
 
             if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
 
-            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, Tweak, Duration, DurationWithLoops, EaseType, Ease, Curve, LoopsCount, LoopType));
+            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, Tweak, Duration, DurationWithLoops, EaseType, Ease, Formula, LoopsCount, LoopType));
             return _playRoutine = PlayRoutine.Create(out _playRoutineOnStopCallback);
         }
 
-        private IEnumerator PlayTime(bool useRealtime, Tweak tweak, float duration, float durationWithLoops, EaseType easeType, Ease ease, AnimationCurve curve, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(bool useRealtime, Tweak tweak, float duration, float durationWithLoops, EaseType easeType, Ease ease, Formula formula, int loopsCount, LoopType loopType)
         {
             InvokeStart();
 
@@ -491,7 +491,7 @@ namespace Numba.Tweening
 
                 if (duration == 0f)
                 {
-                    SetTime(tweak, 0f, duration, durationWithLoops, easeType, ease, curve, loopType);
+                    SetTime(tweak, 0f, duration, durationWithLoops, easeType, ease, formula, loopType);
                 }
                 else
                 {
@@ -501,7 +501,7 @@ namespace Numba.Tweening
                         endTime = startTime + durationWithLoops;
                     }
 
-                    SetTime(tweak, time - startTime, duration, durationWithLoops, easeType, ease, curve, loopType);
+                    SetTime(tweak, time - startTime, duration, durationWithLoops, easeType, ease, formula, loopType);
                 }
 
                 InvokeUpdate();
@@ -511,7 +511,7 @@ namespace Numba.Tweening
             {
                 yield return null;
 
-                SetTime(tweak, 0f, duration, durationWithLoops, easeType, ease, curve, loopType);
+                SetTime(tweak, 0f, duration, durationWithLoops, easeType, ease, formula, loopType);
             }
             else
             {
@@ -519,7 +519,7 @@ namespace Numba.Tweening
                 {
                     yield return null;
 
-                    SetTime(tweak, (Mathf.Min(GetTime(useRealtime), endTime) - startTime), duration, durationWithLoops, easeType, ease, curve, loopType);
+                    SetTime(tweak, (Mathf.Min(GetTime(useRealtime), endTime) - startTime), duration, durationWithLoops, easeType, ease, formula, loopType);
 
                     InvokeUpdate();
                 }

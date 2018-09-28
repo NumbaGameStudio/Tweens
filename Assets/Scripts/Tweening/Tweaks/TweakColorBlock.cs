@@ -12,29 +12,29 @@ namespace Numba.Tweening.Tweaks
 
         public TweakColorBlock(ColorBlock from, ColorBlock to, Action<ColorBlock> setter) : base(from, to, setter) { }
 
-        protected override ColorBlock Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
+        protected override ColorBlock Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
         {
             return Evaluate(swapFromTo, (from, to) => new ColorBlock()
             {
-                colorMultiplier = Easing.Ease(From.colorMultiplier, To.colorMultiplier, normalizedPassedTime, ease),
-                disabledColor = Easing.Ease(From.disabledColor, To.disabledColor, normalizedPassedTime, ease),
-                fadeDuration = Easing.Ease(From.fadeDuration, To.fadeDuration, normalizedPassedTime, ease),
-                highlightedColor = Easing.Ease(From.highlightedColor, To.highlightedColor, normalizedPassedTime, ease),
-                normalColor = Easing.Ease(From.normalColor, To.normalColor, normalizedPassedTime, ease),
-                pressedColor = Easing.Ease(From.pressedColor, To.pressedColor, normalizedPassedTime, ease)
+                colorMultiplier = Easing.Ease(From.colorMultiplier, To.colorMultiplier, interpolation, ease),
+                disabledColor = Easing.Ease(From.disabledColor, To.disabledColor, interpolation, ease),
+                fadeDuration = Easing.Ease(From.fadeDuration, To.fadeDuration, interpolation, ease),
+                highlightedColor = Easing.Ease(From.highlightedColor, To.highlightedColor, interpolation, ease),
+                normalColor = Easing.Ease(From.normalColor, To.normalColor, interpolation, ease),
+                pressedColor = Easing.Ease(From.pressedColor, To.pressedColor, interpolation, ease)
             });
         }
 
-        protected override ColorBlock Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
+        protected override ColorBlock Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
             return Evaluate(swapFromTo, (from, to) => new ColorBlock()
             {
-                colorMultiplier = Easing.Ease(From.colorMultiplier, To.colorMultiplier, normalizedTime, curve),
-                disabledColor = Easing.Ease(From.disabledColor, To.disabledColor, normalizedTime, curve),
-                fadeDuration = Easing.Ease(From.fadeDuration, To.fadeDuration, normalizedTime, curve),
-                highlightedColor = Easing.Ease(From.highlightedColor, To.highlightedColor, normalizedTime, curve),
-                normalColor = Easing.Ease(From.normalColor, To.normalColor, normalizedTime, curve),
-                pressedColor = Easing.Ease(From.pressedColor, To.pressedColor, normalizedTime, curve)
+                colorMultiplier = Easing.Ease(From.colorMultiplier, To.colorMultiplier, interpolation, formula),
+                disabledColor = Easing.Ease(From.disabledColor, To.disabledColor, interpolation, formula),
+                fadeDuration = Easing.Ease(From.fadeDuration, To.fadeDuration, interpolation, formula),
+                highlightedColor = Easing.Ease(From.highlightedColor, To.highlightedColor, interpolation, formula),
+                normalColor = Easing.Ease(From.normalColor, To.normalColor, interpolation, formula),
+                pressedColor = Easing.Ease(From.pressedColor, To.pressedColor, interpolation, formula)
             });
         }
     }

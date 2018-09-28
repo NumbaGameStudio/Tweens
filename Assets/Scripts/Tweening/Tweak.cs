@@ -83,7 +83,7 @@ namespace Numba.Tweening
 
         public abstract void SetTime(float interpolation, Ease ease, bool swapFromTo = false);
 
-        public abstract void SetTime(float interpolation, AnimationCurve curve, bool swapFromTo = false);
+        public abstract void SetTime(float interpolation, Formula formula, bool swapFromTo = false);
 
         public Tweak<T> As<T>() { return (Tweak<T>)this; }
     }
@@ -121,16 +121,16 @@ namespace Numba.Tweening
 
         protected abstract T Evaluate(float interpolation, Ease ease, bool swapFromTo = false);
 
-        protected abstract T Evaluate(float interpolation, AnimationCurve curve, bool useSwap = false);
+        protected abstract T Evaluate(float interpolation, Formula formula, bool useSwap = false);
 
         public sealed override void SetTime(float interpolation, Ease ease, bool swapFromTo = false)
         {
             CallSetter(Evaluate(interpolation, ease, swapFromTo));
         }
 
-        public override void SetTime(float interpolation, AnimationCurve curve, bool swapFromTo = false)
+        public override void SetTime(float interpolation, Formula formula, bool swapFromTo = false)
         {
-            CallSetter(Evaluate(interpolation, curve, swapFromTo));
+            CallSetter(Evaluate(interpolation, formula, swapFromTo));
         }
 
         protected void GetSwapedFromTo(out T from, out T to, bool swapFromTo)

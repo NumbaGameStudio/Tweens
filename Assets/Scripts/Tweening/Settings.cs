@@ -34,7 +34,7 @@ namespace Numba.Tweening
 
         private Ease _ease;
 
-        private AnimationCurve _curve;
+        private Formula _formula;
 
         public int LoopsCount
         {
@@ -52,18 +52,18 @@ namespace Numba.Tweening
             set
             {
                 _ease = value;
-                EaseType = EaseType.Formula;
-                _curve = null;
+                EaseType = EaseType.Integrated;
+                _formula = null;
             }
         }
 
-        public AnimationCurve Curve
+        public Formula Formula
         {
-            get { return _curve; }
+            get { return _formula; }
             set
             {
-                _curve = value;
-                EaseType = EaseType.Curve;
+                _formula = value;
+                EaseType = EaseType.Custom;
             }
         }
 
@@ -71,18 +71,18 @@ namespace Numba.Tweening
         {
             _loopsCount = loopsCount;
             LoopType = loopType;
-            EaseType = EaseType.Formula;
+            EaseType = EaseType.Integrated;
             _ease = ease;
-            _curve = null;
+            _formula = null;
         }
 
-        public EasedSettings(int loopsCount, LoopType loopType, AnimationCurve curve)
+        public EasedSettings(int loopsCount, LoopType loopType, Formula formula)
         {
             _loopsCount = loopsCount;
             LoopType = loopType;
-            EaseType = EaseType.Curve;
+            EaseType = EaseType.Custom;
             _ease = Ease.Linear;
-            _curve = curve;
+            _formula = formula;
         }
 
         public static implicit operator Settings(EasedSettings easedSettings)

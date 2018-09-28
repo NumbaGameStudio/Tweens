@@ -11,14 +11,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakFloat(float from, float to, Action<float> setter) : base(from, to, setter) { }
 
-        protected override float Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
+        protected override float Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedPassedTime, ease));
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, ease));
         }
 
-        protected override float Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
+        protected override float Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedTime, curve));
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
         }
     }
 }

@@ -18,25 +18,15 @@ namespace Namespace
         [SerializeField]
         private Transform _cube3;
 
-        private IEnumerator Start()
+        private void Start()
         {
-            var tween1 = _cube1.DoLocalPositionX(1f, 1f);
-            var tween2 = _cube2.DoLocalPositionX(1f, 1f);
-            var tween3 = _cube3.DoLocalPositionX(1f, 1f);
+            //Tween.Create(0f, 1f, (i) =>
+            //{
+            //    float x = Easing.Ease(0f, 1f, i, new QuadraticInFormula());
+            //    _cube1.position = new Vector3(x, 0f, 0f);
+            //}, 1f).Play();
 
-            Sequence sequence = new Sequence();
-            sequence.Append(tween1);
-            var player = sequence.Play();
-
-            sequence.Append(tween2);
-
-            yield return new WaitForSeconds(0.5f);
-
-            sequence.Insert(0.5f, tween3);
-
-            yield return player;
-
-            sequence.Play();
+            _cube1.DoPositionX(1f, 1f, Ease.InQuad).Play();
         }
     }
 }

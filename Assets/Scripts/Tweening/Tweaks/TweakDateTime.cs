@@ -11,14 +11,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakDateTime(DateTime from, DateTime to, Action<DateTime> setter) : base(from, to, setter) { }
 
-        protected override DateTime Evaluate(float normalizedPassedTime, Ease ease, bool swapFromTo = false)
+        protected override DateTime Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedPassedTime, ease));
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, ease));
         }
 
-        protected override DateTime Evaluate(float normalizedTime, AnimationCurve curve, bool swapFromTo = false)
+        protected override DateTime Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, normalizedTime, curve));
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
         }
     }
 }
