@@ -20,13 +20,13 @@ namespace Namespace
 
         private void Start()
         {
-            //Tween.Create(0f, 1f, (i) =>
-            //{
-            //    float x = Easing.Ease(0f, 1f, i, new QuadraticInFormula());
-            //    _cube1.position = new Vector3(x, 0f, 0f);
-            //}, 1f).Play();
+            Tween.Create(0f, 1f, (i) =>
+            {
+                float x = Easing.Ease(0f, 4f, i, new QuadraticInOutFormula());
+                _cube1.position = new Vector3(x, 0f, 0f);
+            }, 1f).Play();
 
-            _cube1.DoPositionX(1f, 1f, Ease.InQuad).Play();
+            //_cube1.DoPositionX(1f, 1f, Ease.InQuad).Play();
         }
     }
 }
