@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
 
-namespace Namespace
+namespace Numba.Tweening
 {
-    public class QuadraticInOutFormula : Formula
+    internal class QuadraticInOutFormula : InternalFormula
     {
+        public override Ease Ease { get { return Ease.InOutQuad; } }
+
         public override float Calculate(float interpolation)
         {
             if (interpolation == 0f) return 0f;

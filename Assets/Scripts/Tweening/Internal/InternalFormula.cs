@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace Numba.Tweening
 {
-    public enum EaseType
-    {
-        Integrated,
-        Custom
-    }
+	internal abstract class InternalFormula : Formula 
+	{
+        public abstract new Ease Ease { get; }
+	}
 }

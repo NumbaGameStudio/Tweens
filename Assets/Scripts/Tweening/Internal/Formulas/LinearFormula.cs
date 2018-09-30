@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
 
-namespace Namespace
+namespace Numba.Tweening
 {
-    public class LinearFormula : Formula
+    internal class LinearFormula : InternalFormula
     {
+        public override Ease Ease { get { return Ease.Linear; } }
+
         public override float Calculate(float interpolation)
         {
             return interpolation;

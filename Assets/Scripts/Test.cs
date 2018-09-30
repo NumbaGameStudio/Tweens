@@ -18,15 +18,27 @@ namespace Namespace
         [SerializeField]
         private Transform _cube3;
 
+        //private Tweak _tweak;
+
+        //[SerializeField]
+        //[Range(0f, 1f)]
+        //private float _interpolation;
+
         private void Start()
         {
-            Tween.Create(0f, 1f, (i) =>
-            {
-                float x = Easing.Ease(0f, 4f, i, new QuadraticInOutFormula());
-                _cube1.position = new Vector3(x, 0f, 0f);
-            }, 1f).Play();
+            //_tweak = Tweak.Create(0f, 1f, (x) => Debug.Log(x));
 
-            //_cube1.DoPositionX(1f, 1f, Ease.InQuad).Play();
+            //var tween1 = _cube1.DoPositionX(1f, 1f, FormulasUtility.InOutExpo, 2, LoopType.Yoyo);
+            //var tween2 = _cube2.DoPositionX(1f, 1f, FormulasUtility.Linear, 2, LoopType.Yoyo);
+
+            //new Sequence().Append(tween1).Insert(0.5f, tween2).Play();
+
+            Tween.Create(0f, 1f, (x) => _cube1.position = new Vector3(x, 0f, 0f), 1f).SetEase(FormulasUtility.InOutSine).Play();
         }
+
+        //private void Update()
+        //{
+        //    _tweak.SetTo(_interpolation, null);
+        //}
     }
 }

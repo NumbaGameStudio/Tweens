@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening.Tweaks
 {
@@ -11,14 +12,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakDateTime(DateTime from, DateTime to, Action<DateTime> setter) : base(from, to, setter) { }
 
-        protected override DateTime Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
-        {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, ease));
-        }
-
-        protected override DateTime Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
+        public override DateTime Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
             return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
+        }
+
+        public override DateTime Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
+        {
+            return Evaluate(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
         }
     }
 }

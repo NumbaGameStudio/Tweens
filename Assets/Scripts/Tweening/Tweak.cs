@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using Numba.Tweening.Tweaks;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening
 {
@@ -81,9 +82,9 @@ namespace Numba.Tweening
         }
         #endregion
 
-        public abstract void SetTime(float interpolation, Ease ease, bool swapFromTo = false);
+        public abstract void SetTo(float interpolation, Formula formula, bool swapFromTo = false);
 
-        public abstract void SetTime(float interpolation, Formula formula, bool swapFromTo = false);
+        public abstract void SetTo(float interpolation, Ease ease, bool swapFromTo = false);
 
         public Tweak<T> As<T>() { return (Tweak<T>)this; }
     }
@@ -119,18 +120,18 @@ namespace Numba.Tweening
             if (_setter != null) _setter.Invoke(value);
         }
 
-        protected abstract T Evaluate(float interpolation, Ease ease, bool swapFromTo = false);
+        public abstract T Evaluate(float interpolation, Formula formula, bool useSwap = false);
 
-        protected abstract T Evaluate(float interpolation, Formula formula, bool useSwap = false);
+        public abstract T Evaluate(float interpolation, Ease ease, bool swapFromTo = false);
 
-        public sealed override void SetTime(float interpolation, Ease ease, bool swapFromTo = false)
-        {
-            CallSetter(Evaluate(interpolation, ease, swapFromTo));
-        }
-
-        public override void SetTime(float interpolation, Formula formula, bool swapFromTo = false)
+        public override void SetTo(float interpolation, Formula formula, bool swapFromTo = false)
         {
             CallSetter(Evaluate(interpolation, formula, swapFromTo));
+        }
+
+        public sealed override void SetTo(float interpolation, Ease ease, bool swapFromTo = false)
+        {
+            SetTo(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
         }
 
         protected void GetSwapedFromTo(out T from, out T to, bool swapFromTo)

@@ -27,6 +27,7 @@ namespace Numba.Tweening
         InOutExpo,
         InCirc,
         OutCirc,
-        InOutCirc
+        InOutCirc,
+        Other
     }
 }

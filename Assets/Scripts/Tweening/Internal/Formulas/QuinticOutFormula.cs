@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
 
-namespace Namespace
+namespace Numba.Tweening
 {
-    public class QuadraticInFormula : Formula
+    internal class QuinticOutFormula : InternalFormula
     {
+        public override Ease Ease { get { return Ease.OutQuint; } }
+
         public override float Calculate(float interpolation)
         {
             if (interpolation == 0f) return 0f;
             if (interpolation == 1f) return 1f;
 
-            return interpolation * interpolation;
+            --interpolation;
+            return interpolation * interpolation * interpolation * interpolation * interpolation + 1f;
         }
     }
 }

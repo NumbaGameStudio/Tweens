@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening.Tweaks
 {
@@ -11,14 +12,14 @@ namespace Numba.Tweening.Tweaks
 
         public TweakInt(int from, int to, Action<int> setter) : base(from, to, setter) { }
 
-        protected override int Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
-        {
-            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, ease));
-        }
-        
-        protected override int Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
+        public override int Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
             return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
+        }
+
+        public override int Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
+        {
+            return Evaluate(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
         }
     }
 }
