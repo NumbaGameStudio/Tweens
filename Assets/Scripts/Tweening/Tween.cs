@@ -319,6 +319,18 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region Settings
+        public static Tween Create(Tweak tweak, float duration, FormulaSettings settings)
+        {
+            return Create(null, tweak, duration, settings.Formula, settings.LoopsCount, settings.LoopType);
+        }
+
+        public static Tween Create(string name, Tweak tweak, float duration, FormulaSettings settings)
+        {
+            return Create(name, tweak, duration, settings.Formula, settings.LoopsCount, settings.LoopType);
+        }
+        #endregion
+
         #region Tweak
         public static Tween Create(Tweak tweak, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -428,8 +440,8 @@ namespace Numba.Tweening
 
         public Ease Ease
         {
-            get { return Formula.Ease; }
-            set { Formula = FormulasUtility.GetFormula(value); }
+            get { return _formula.Ease; }
+            set { _formula = FormulasUtility.GetFormula(value); }
         }
 
         public int LoopsCount

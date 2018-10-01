@@ -32,7 +32,6 @@ namespace Namespace
             //var tween2 = _cube2.DoPositionX(1f, 1f, FormulasUtility.Linear, 2, LoopType.Yoyo);
 
             //new Sequence().Append(tween1).Insert(0.5f, tween2).Play();
-
             
             Tween.Create(0f, 1f, (x) => _cube1.position = new Vector3(x, 0f, 0f), 1f).SetEase(FormulasUtility.InOutSine).Play();
         }

@@ -1,4 +1,5 @@
 ﻿using Numba.Tweening.Engine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,8 @@ namespace Numba.Tweening
     {
         private int _loopsCount;
 
+        private Formula _formula;
+
         public int LoopsCount
         {
             get { return _loopsCount; }
@@ -41,13 +44,29 @@ namespace Numba.Tweening
 
         public LoopType LoopType { get; set; }
 
-        public Formula Formula { get; set; }
+        public Formula Formula
+        {
+            get { return _formula; }
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value", "Formula can not be a null");
+                _formula = value;
+            }
+        }
+
+        public Ease Ease
+        {
+            get { return _formula.Ease; }
+            set { _formula = FormulasUtility.GetFormula(value); }
+        }
 
         public FormulaSettings(int loopsCount, LoopType loopType, Formula formula)
         {
             _loopsCount = loopsCount;
             LoopType = loopType;
-            Formula = formula;
+
+            if (formula == null) throw new ArgumentNullException("value", "Formula can not be a null");
+            _formula = formula;
         }
 
         public FormulaSettings(int loopsCount, LoopType loopType, Ease ease) : this(loopsCount, loopType, FormulasUtility.GetFormula(ease)) { }
