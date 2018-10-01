@@ -7,7 +7,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    public class Sequence : IPlayable
+    public sealed class Sequence : IPlayable
     {
         #region Structures and classes
         private struct PlayableData
@@ -139,6 +139,16 @@ namespace Numba.Tweening
             InsertPlayable,
             InsertCallback
         }
+        #endregion
+
+        #region Create
+        public static Sequence Create() { return new Sequence(); }
+
+        public static Sequence Create(string name) { return new Sequence(name); }
+
+        public static Sequence Create(Settings settings) { return new Sequence(settings); }
+
+        public static Sequence Create(string name, Settings settings) { return new Sequence(settings); }
         #endregion
 
         #region Fields

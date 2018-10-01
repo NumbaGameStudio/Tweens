@@ -8,7 +8,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    public class Tween : IPlayable
+    public sealed class Tween : IPlayable
     {
         #region Create
         #region Float

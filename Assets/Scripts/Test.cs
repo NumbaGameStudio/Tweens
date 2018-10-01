@@ -33,6 +33,7 @@ namespace Namespace
 
             //new Sequence().Append(tween1).Insert(0.5f, tween2).Play();
 
+            
             Tween.Create(0f, 1f, (x) => _cube1.position = new Vector3(x, 0f, 0f), 1f).SetEase(FormulasUtility.InOutSine).Play();
         }
 

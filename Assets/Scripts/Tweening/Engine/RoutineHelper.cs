@@ -8,7 +8,7 @@ namespace Numba.Tweening.Engine
     /// Help run coroutines. 
     /// Auto created, not destroyable and not visible in hierarchy.
     /// </summary>
-    public class RoutineHelper : MonoBehaviour
+    public sealed class RoutineHelper : MonoBehaviour
     {
         /// <summary>
         /// Return instance of this class (singleton pattern).

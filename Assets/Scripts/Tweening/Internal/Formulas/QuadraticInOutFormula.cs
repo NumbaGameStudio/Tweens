@@ -5,7 +5,7 @@ using Numba.Tweening;
 
 namespace Numba.Tweening
 {
-    internal class QuadraticInOutFormula : InternalFormula
+    internal sealed class QuadraticInOutFormula : InternalFormula
     {
         public override Ease Ease { get { return Ease.InOutQuad; } }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Numba.Tweening.Engine
 {
-    public static class FormulasUtility
+    internal static class FormulasUtility
     {
         private static Formula[] _formulas = new Formula[22];
 

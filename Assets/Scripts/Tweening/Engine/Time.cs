@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Numba.Tweening.Engine
 {
-	public class Time
+	public sealed class Time
     {
 		public Tween DoTimeScale(float timeScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {

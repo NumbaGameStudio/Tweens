@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Numba.Tweening
 {
-    public class PlayRoutine : CustomYieldInstruction
+    public sealed class PlayRoutine : CustomYieldInstruction
     {
         private bool _keepWaiting = true;
 

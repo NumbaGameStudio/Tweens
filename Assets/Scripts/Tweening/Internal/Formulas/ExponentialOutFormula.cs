@@ -5,7 +5,7 @@ using Numba.Tweening;
 
 namespace Numba.Tweening
 {
-    internal class ExponentialOutFormula : InternalFormula
+    internal sealed class ExponentialOutFormula : InternalFormula
     {
         public override Ease Ease { get { return Ease.OutExpo; } }
 

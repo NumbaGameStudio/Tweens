@@ -5,7 +5,7 @@ using Numba.Tweening;
 
 namespace Numba.Tweening
 {
-    internal class QuinticOutFormula : InternalFormula
+    internal sealed class QuinticOutFormula : InternalFormula
     {
         public override Ease Ease { get { return Ease.OutQuint; } }
 

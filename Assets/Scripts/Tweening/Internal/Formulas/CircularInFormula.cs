@@ -5,7 +5,7 @@ using Numba.Tweening;
 
 namespace Numba.Tweening
 {
-    internal class CircularInFormula : InternalFormula
+    internal sealed class CircularInFormula : InternalFormula
     {
         public override Ease Ease { get { return Ease.InCirc; } }
 
