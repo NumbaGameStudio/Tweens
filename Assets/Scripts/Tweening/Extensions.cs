@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Numba.Tweening.Tweaks;
+using Numba.Tweening.Engine;
 
 namespace Numba.Tweening
 {
@@ -11,57 +12,123 @@ namespace Numba.Tweening
         #region Transform
         #region Move
         #region Global
+        #region X axis
         public static Tween DoPositionX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.x, (px) => ChangeTransformPosition(transform, Space.World, 0, px), x, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoPositionX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPositionX(transform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Y axis
         public static Tween DoPositionY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.y, (py) => ChangeTransformPosition(transform, Space.World, 1, py), y, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoPositionY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPositionY(transform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Z axis
         public static Tween DoPositionZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.z, (pz) => ChangeTransformPosition(transform, Space.World, 2, pz), z, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoPositionZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPositionZ(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region XYZ axis
         public static Tween DoPosition(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.World, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPosition(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPosition(transform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoPosition(this Transform transform, Vector3 position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.World, position, duration, formula, loopsCount, loopType);
         }
+
+        public static Tween DoPosition(this Transform transform, Vector3 position, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPosition(transform, position, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
 
         #region Local
+        #region X axis
         public static Tween DoLocalPositionX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.x, (lpx) => ChangeTransformPosition(transform, Space.Self, 0, lpx), x, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalPositionX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalPositionX(transform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Y axis
         public static Tween DoLocalPositionY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.y, (lpy) => ChangeTransformPosition(transform, Space.Self, 1, lpy), y, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalPositionY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalPositionY(transform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Z axis
         public static Tween DoLocalPositionZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.z, (lpz) => ChangeTransformPosition(transform, Space.Self, 2, lpz), z, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalPositionZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalPositionZ(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region XYZ axis
         public static Tween DoLocalPosition(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.Self, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoLocalPosition(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalPosition(transform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoLocalPosition(this Transform transform, Vector3 localPosition, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.Self, localPosition, duration, formula, loopsCount, loopType);
         }
+
+        public static Tween DoLocalPosition(this Transform transform, Vector3 localPosition, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalPosition(transform, localPosition, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
 
         private static Tween DoPosition(Transform transform, Space space, Vector3 position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -86,24 +153,51 @@ namespace Numba.Tweening
 
         #region Rotation
         #region Global
+        #region X axis
         public static Tween DoEulerAnglesX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.x, x, (eax) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 0, eax), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoEulerAnglesX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEulerAnglesX(transform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Y axis
         public static Tween DoEulerAnglesY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.y, y, (eay) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 1, eay), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoEulerAnglesY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEulerAnglesY(transform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Z axis
         public static Tween DoEulerAnglesZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.z, z, (eaz) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 2, eaz), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoEulerAnglesZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEulerAnglesZ(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region XYZ axis
         public static Tween DoEulerAngles(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.World, Quaternion.Euler(x, y, z), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEulerAngles(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEulerAngles(transform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoEulerAngles(this Transform transform, Vector3 eulerAngles, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -111,31 +205,69 @@ namespace Numba.Tweening
             return DoRotation(transform, Space.World, Quaternion.Euler(eulerAngles), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoEulerAngles(this Transform transform, Vector3 eulerAngles, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEulerAngles(transform, eulerAngles, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoRotation(this Transform transform, Quaternion rotation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.World, rotation, duration, formula, loopsCount, loopType);
         }
+
+        public static Tween DoRotation(this Transform transform, Quaternion rotation, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRotation(transform, rotation, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
 
         #region Local
+        #region X axis
         public static Tween DoLocalEulerAnglesX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.x, x, (leax) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 0, leax), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalEulerAnglesX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalEulerAnglesX(transform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Y axis
         public static Tween DoLocalEulerAnglesY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.y, y, (leay) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 1, leay), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalEulerAnglesY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalEulerAnglesY(transform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Z axis
         public static Tween DoLocalEulerAnglesZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.z, z, (leaz) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 2, leaz), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalEulerAnglesZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalEulerAnglesZ(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region XYZ axis
         public static Tween DoLocalEulerAngles(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.Self, Quaternion.Euler(x, y, z), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoLocalEulerAngles(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalEulerAngles(transform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoLocalEulerAngles(this Transform transform, Vector3 localEulerAngles, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -143,10 +275,21 @@ namespace Numba.Tweening
             return DoRotation(transform, Space.Self, Quaternion.Euler(localEulerAngles), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalEulerAngles(this Transform transform, Vector3 localEulerAngles, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalEulerAngles(transform, localEulerAngles, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoLocalRotation(this Transform transform, Quaternion localRotation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.Self, localRotation, duration, formula, loopsCount, loopType);
         }
+
+        public static Tween DoLocalRotation(this Transform transform, Quaternion localRotation, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalRotation(transform, localRotation, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
 
         private static Tween DoRotateAroundAxis(Func<float> angleGetter, float axisValue, Action<float> angleSetter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -164,24 +307,51 @@ namespace Numba.Tweening
         #endregion
 
         #region Scale
+        #region X axis
         public static Tween DoLocalScaleX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.x, x, (lsx) => transform.localScale = SetVectorValue(transform.localScale, 0, lsx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalScaleX(this Transform transform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScaleX(transform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Y axis
         public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.y, y, (lsy) => transform.localScale = SetVectorValue(transform.localScale, 1, lsy), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScaleY(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Z axis
         public static Tween DoLocalScaleZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.z, z, (lsz) => transform.localScale = SetVectorValue(transform.localScale, 2, lsz), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalScaleZ(this Transform transform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScaleZ(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region XYZ axis
         public static Tween DoLocalScale(this Transform transform, float uniformScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoLocalScale(transform, new Vector3(uniformScale, uniformScale, uniformScale), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoLocalScale(this Transform transform, float uniformScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScale(transform, uniformScale, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoLocalScale(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -189,10 +359,21 @@ namespace Numba.Tweening
             return DoLocalScale(transform, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoLocalScale(this Transform transform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScale(transform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoLocalScale(this Transform transform, Vector3 localScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale, localScale, (ls) => transform.localScale = ls, duration, formula, loopsCount, loopType);
         }
+
+        public static Tween DoLocalScale(this Transform transform, Vector3 localScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLocalScale(transform, localScale, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
         #endregion
 
