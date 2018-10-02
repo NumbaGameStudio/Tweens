@@ -168,7 +168,7 @@ namespace Numba.Tweening
         private Queue<AddType> _addQueue = new Queue<AddType>(0);
         #endregion
 
-        private Coroutine _playTimeRoutine;
+        private IEnumerator _playTimeEnumerator;
 
         private PlayRoutine _playRoutine;
 
@@ -179,6 +179,16 @@ namespace Numba.Tweening
         private LoopType _loopType;
 
         private float _duration;
+
+        #region Playing
+        private float _playStartTime;
+
+        private float _playEndTime;
+
+        private float _playCurrentTime;
+
+        private bool _useRealtime;
+        #endregion
 
         #region Events
         public event Action Started;
@@ -271,13 +281,14 @@ namespace Numba.Tweening
 
         public float CurrentTime { get; set; }
 
-        public bool IsPlaying { get { return _playTimeRoutine != null; } }
+        public PlayState PlayState { get; private set; }
         #endregion
 
         #region Methods
+        #region Append and Insert
         public Sequence Append(IPlayable playable)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _playableDatasToAppend.Enqueue(new PlayableDataToAppend(-1, playable));
                 _addQueue.Enqueue(AddType.AppendPlayable);
@@ -292,7 +303,7 @@ namespace Numba.Tweening
 
         public Sequence Append(IPlayable playable, int order)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _playableDatasToAppend.Enqueue(new PlayableDataToAppend(order, playable));
                 _addQueue.Enqueue(AddType.AppendPlayable);
@@ -309,7 +320,7 @@ namespace Numba.Tweening
 
         public Sequence Append(Action callback)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _callbackDatasToAppend.Enqueue(new CallbackDataToAppend(-1, callback));
                 _addQueue.Enqueue(AddType.AppendCallback);
@@ -322,7 +333,7 @@ namespace Numba.Tweening
 
         public Sequence Append(Action callback, int order)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _callbackDatasToAppend.Enqueue(new CallbackDataToAppend(order, callback));
                 _addQueue.Enqueue(AddType.AppendCallback);
@@ -337,7 +348,7 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, IPlayable playable)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _playableDatasToInsert.Enqueue(new PlayableDataToInsert(-1, time, playable));
                 _addQueue.Enqueue(AddType.InsertPlayable);
@@ -354,7 +365,7 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, IPlayable playable, int order)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _playableDatasToInsert.Enqueue(new PlayableDataToInsert(order, time, playable));
                 _addQueue.Enqueue(AddType.InsertPlayable);
@@ -373,7 +384,7 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _callbackDatasToInsert.Enqueue(new CallbackDataToInsert(-1, time, callback));
                 _addQueue.Enqueue(AddType.InsertCallback);
@@ -390,7 +401,7 @@ namespace Numba.Tweening
 
         public Sequence Insert(float time, Action callback, int order)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 _callbackDatasToInsert.Enqueue(new CallbackDataToInsert(order, time, callback));
                 _addQueue.Enqueue(AddType.InsertCallback);
@@ -405,6 +416,7 @@ namespace Numba.Tweening
 
             return this;
         }
+        #endregion
 
         public void ResetCurrentTime()
         {
@@ -601,25 +613,44 @@ namespace Numba.Tweening
 
         public PlayRoutine Play(bool useRealtime = false)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already playing.", Name));
                 return _playRoutine;
             }
 
+            if (PlayState == PlayState.Pause)
+            {
+                float currentTime = GetTime(_useRealtime);
+
+                _playStartTime = currentTime - (_playCurrentTime - _playStartTime);
+                _playEndTime = currentTime + (_playEndTime - _playCurrentTime);
+
+                PlayState = PlayState.Play;
+                RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
+
+                return _playRoutine;
+            }
+
             if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
 
-            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, GetPreviousTimeInitialPosition(LoopType), Duration, DurationWithLoops, LoopsCount, LoopType));
+            PlayState = PlayState.Play;
+
+            _useRealtime = useRealtime;
+
+            _playTimeEnumerator = PlayTime(GetPreviousTimeInitialPosition(LoopType), Duration, DurationWithLoops, LoopsCount, LoopType);
+            RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
 
             return PlayRoutine.Create(out _playRoutineOnStopCallback);
         }
 
-        private IEnumerator PlayTime(bool useRealtime, float previousTime, float duration, float durationWithLoops, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(float previousTime, float duration, float durationWithLoops, int loopsCount, LoopType loopType)
         {
             InvokeStart();
 
-            float startTime = GetTime(useRealtime);
-            float endTime = startTime + durationWithLoops;
+            _playStartTime = GetTime(_useRealtime);
+            _playCurrentTime = _playStartTime;
+            _playEndTime = _playStartTime + durationWithLoops;
 
             while (loopsCount == -1)
             {
@@ -632,17 +663,17 @@ namespace Numba.Tweening
                     continue;
                 }
 
-                float time = GetTime(useRealtime);
+                _playCurrentTime = GetTime(_useRealtime);
 
-                while (endTime < time)
+                while (_playEndTime < _playCurrentTime)
                 {
-                    startTime = endTime;
-                    endTime = startTime + durationWithLoops;
+                    _playStartTime = _playEndTime;
+                    _playEndTime = _playStartTime + durationWithLoops;
                 }
 
-                time -= startTime;
-                SetTime(previousTime, time, duration, durationWithLoops, LoopType);
-                previousTime = time;
+                _playCurrentTime -= _playStartTime;
+                SetTime(previousTime, _playCurrentTime, duration, durationWithLoops, LoopType);
+                previousTime = _playCurrentTime;
 
                 InvokeUpdate();
             }
@@ -654,11 +685,13 @@ namespace Numba.Tweening
             }
             else
             {
-                while (GetTime(useRealtime) < endTime)
+                while (_playCurrentTime < _playEndTime)
                 {
                     yield return null;
 
-                    float time = Mathf.Min(GetTime(useRealtime), endTime) - startTime;
+                    _playCurrentTime = GetTime(_useRealtime);
+
+                    float time = Mathf.Min(_playCurrentTime, _playEndTime) - _playStartTime;
                     SetTime(previousTime, time, duration, durationWithLoops, loopType);
                     previousTime = time;
 
@@ -752,7 +785,7 @@ namespace Numba.Tweening
 
         public void Stop()
         {
-            if (!IsPlaying)
+            if (PlayState == PlayState.Stop)
             {
                 Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already stoped.", Name));
                 return;
@@ -763,17 +796,31 @@ namespace Numba.Tweening
 
         private void HandleStop()
         {
-            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
-            _playTimeRoutine = null;
+            if (PlayState != PlayState.Pause) RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
+            _playTimeEnumerator = null;
 
             _playRoutineOnStopCallback();
             _playRoutine = null;
 
             ResetCurrentTime();
 
+            PlayState = PlayState.Stop;
+
             InvokeComplete();
 
             AddSavedDatasToSequence();
+        }
+
+        public void Pause()
+        {
+            if (PlayState != PlayState.Play)
+            {
+                Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped or paused.", Name));
+                return;
+            }
+
+            RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
+            PlayState = PlayState.Pause;
         }
 
         private void AddSavedDatasToSequence()

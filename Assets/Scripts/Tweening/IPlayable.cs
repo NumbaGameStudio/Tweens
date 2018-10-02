@@ -25,7 +25,7 @@ namespace Numba.Tweening
 
         LoopType LoopType { get; set; }
 
-        bool IsPlaying { get; }
+        PlayState PlayState { get; }
 
         IPlayable SetLoops(int loopsCount);
 
@@ -38,6 +38,8 @@ namespace Numba.Tweening
         PlayRoutine Play(bool useRealtime = false);
 
         void Stop();
+
+        void Pause();
 
         IPlayable OnStart(Action callback);
 

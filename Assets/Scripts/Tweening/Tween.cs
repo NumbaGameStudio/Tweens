@@ -355,7 +355,7 @@ namespace Numba.Tweening
         #endregion
 
         #region Fields
-        private Coroutine _playTimeRoutine;
+        private IEnumerator _playTimeEnumerator;
 
         private PlayRoutine _playRoutine;
 
@@ -368,6 +368,16 @@ namespace Numba.Tweening
         private int _loopsCount;
 
         private LoopType _loopType;
+
+        #region Playing
+        private float _playStartTime;
+
+        private float _playEndTime;
+
+        private float _playCurrentTime;
+
+        private bool _useRealtime;
+        #endregion
 
         #region Events
         public event Action Started;
@@ -484,7 +494,7 @@ namespace Numba.Tweening
             }
         }
 
-        public bool IsPlaying { get { return _playTimeRoutine != null; } }
+        public PlayState PlayState { get; private set; }
 
         public static Engine.Time Time { get; private set; }
         #endregion
@@ -616,32 +626,57 @@ namespace Numba.Tweening
             return this;
         }
 
+        private float GetTime(bool useRealtime)
+        {
+            return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
+        }
+
         public PlayRoutine Play(bool useRealtime = false)
         {
-            if (IsPlaying)
+            if (PlayState == PlayState.Play)
             {
                 Debug.LogWarning(string.Format("Tween with name \"{0}\" already playing.", Name));
                 return _playRoutine;
             }
 
+            if (PlayState == PlayState.Pause)
+            {
+                float currentTime = GetTime(_useRealtime);
+
+                _playStartTime = currentTime - (_playCurrentTime - _playStartTime);
+                _playEndTime = currentTime + (_playEndTime - _playCurrentTime);
+
+                PlayState = PlayState.Play;
+                RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
+
+                return _playRoutine;
+            }
+
             if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
 
-            _playTimeRoutine = RoutineHelper.Instance.StartCoroutine(PlayTime(useRealtime, Tweak, Duration, DurationWithLoops, Formula, LoopsCount, LoopType));
+            PlayState = PlayState.Play;
+
+            _useRealtime = useRealtime;
+
+            _playTimeEnumerator = PlayTime(Tweak, Duration, DurationWithLoops, Formula, LoopsCount, LoopType);
+            RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
+
             return _playRoutine = PlayRoutine.Create(out _playRoutineOnStopCallback);
         }
 
-        private IEnumerator PlayTime(bool useRealtime, Tweak tweak, float duration, float durationWithLoops, Formula formula, int loopsCount, LoopType loopType)
+        private IEnumerator PlayTime(Tweak tweak, float duration, float durationWithLoops, Formula formula, int loopsCount, LoopType loopType)
         {
             InvokeStart();
 
-            float startTime = GetTime(useRealtime);
-            float endTime = startTime + durationWithLoops;
+            _playStartTime = GetTime(_useRealtime);
+            _playCurrentTime = _playStartTime;
+            _playEndTime = _playStartTime + durationWithLoops;
 
             while (loopsCount == -1)
             {
                 yield return null;
 
-                float time = GetTime(useRealtime);
+                _playCurrentTime = GetTime(_useRealtime);
 
                 if (duration == 0f)
                 {
@@ -649,13 +684,13 @@ namespace Numba.Tweening
                 }
                 else
                 {
-                    while (endTime < time)
+                    while (_playEndTime < _playCurrentTime)
                     {
-                        startTime = endTime;
-                        endTime = startTime + durationWithLoops;
+                        _playStartTime = _playEndTime;
+                        _playEndTime = _playStartTime + durationWithLoops;
                     }
 
-                    SetTime(tweak, time - startTime, duration, durationWithLoops, formula, loopType);
+                    SetTime(tweak, _playCurrentTime - _playStartTime, duration, durationWithLoops, formula, loopType);
                 }
 
                 InvokeUpdate();
@@ -669,11 +704,12 @@ namespace Numba.Tweening
             }
             else
             {
-                while (GetTime(useRealtime) < endTime)
+                while (_playCurrentTime < _playEndTime)
                 {
                     yield return null;
 
-                    SetTime(tweak, (Mathf.Min(GetTime(useRealtime), endTime) - startTime), duration, durationWithLoops, formula, loopType);
+                    _playCurrentTime = GetTime(_useRealtime);
+                    SetTime(tweak, (Mathf.Min(_playCurrentTime, _playEndTime) - _playStartTime), duration, durationWithLoops, formula, loopType);
 
                     InvokeUpdate();
                 }
@@ -682,14 +718,9 @@ namespace Numba.Tweening
             HandleStop();
         }
 
-        private float GetTime(bool useRealtime)
-        {
-            return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
-        }
-
         public void Stop()
         {
-            if (!IsPlaying)
+            if (PlayState == PlayState.Stop)
             {
                 Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped.", Name));
                 return;
@@ -700,12 +731,26 @@ namespace Numba.Tweening
 
         private void HandleStop()
         {
-            RoutineHelper.Instance.StopCoroutine(_playTimeRoutine);
-            _playTimeRoutine = null;
+            if (PlayState != PlayState.Pause) RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
+            _playTimeEnumerator = null;
+
             _playRoutineOnStopCallback();
             _playRoutine = null;
+            PlayState = PlayState.Stop;
 
             InvokeComplete();
+        }
+
+        public void Pause()
+        {
+            if (PlayState != PlayState.Play)
+            {
+                Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped or paused.", Name));
+                return;
+            }
+
+            RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
+            PlayState = PlayState.Pause;
         }
 
         IPlayable IPlayable.OnStart(Action callback)
