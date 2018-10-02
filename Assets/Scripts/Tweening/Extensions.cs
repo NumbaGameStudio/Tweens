@@ -327,7 +327,7 @@ namespace Numba.Tweening
 
         public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoLocalScaleY(transform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return DoLocalScaleY(transform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
