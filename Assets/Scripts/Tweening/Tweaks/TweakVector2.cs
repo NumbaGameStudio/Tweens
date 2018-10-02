@@ -19,7 +19,7 @@ namespace Numba.Tweening.Tweaks
 
         public override Vector2 Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            return Evaluate(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
+            return Evaluate(interpolation, Formulas.GetFormula(ease), swapFromTo);
         }
     }
 }

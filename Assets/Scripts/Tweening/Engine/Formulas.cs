@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Numba.Tweening.Engine
 {
-    internal static class FormulasUtility
+    internal static class Formulas
     {
         private static Formula[] _formulas = new Formula[22];
 
@@ -55,7 +55,7 @@ namespace Numba.Tweening.Engine
         internal static CircularInOutFormula InOutCirc { get; private set; }
         #endregion
 
-        static FormulasUtility()
+        static Formulas()
         {
             _formulas[0] = Linear = new LinearFormula();
             _formulas[1] = InQuad = new QuadraticInFormula();

@@ -29,7 +29,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -51,7 +51,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, double from, double to, Action<double> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -73,7 +73,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, int from, int to, Action<int> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -95,7 +95,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, long from, long to, Action<long> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -117,7 +117,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -139,7 +139,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -161,7 +161,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -183,7 +183,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -205,7 +205,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Color from, Color to, Action<Color> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -227,7 +227,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Color32 from, Color32 to, Action<Color32> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -249,7 +249,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, DateTime from, DateTime to, Action<DateTime> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -271,7 +271,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -293,7 +293,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Bounds from, Bounds to, Action<Bounds> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -315,7 +315,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, from, to, setter, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -349,7 +349,7 @@ namespace Numba.Tweening
 
         public static Tween Create(string name, Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Create(name, tweak, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return Create(name, tweak, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
         #endregion
@@ -363,7 +363,7 @@ namespace Numba.Tweening
 
         private float _duration;
 
-        private Formula _formula = FormulasUtility.Linear;
+        private Formula _formula = Formulas.Linear;
 
         private int _loopsCount;
 
@@ -404,7 +404,7 @@ namespace Numba.Tweening
         public Tween(string name, Tweak tweak, float duration)
         {
             ConstructBase(name, tweak, duration, 1, LoopType.Forward);
-            Formula = FormulasUtility.Linear;
+            Formula = Formulas.Linear;
         }
 
         public Tween(Tweak tweak, float duration, FormulaSettings settings) : this(null, tweak, duration, settings) { }
@@ -451,7 +451,7 @@ namespace Numba.Tweening
         public Ease Ease
         {
             get { return _formula.Ease; }
-            set { _formula = FormulasUtility.GetFormula(value); }
+            set { _formula = Formulas.GetFormula(value); }
         }
 
         public int LoopsCount

@@ -131,7 +131,7 @@ namespace Numba.Tweening
 
         public sealed override void SetTo(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            SetTo(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
+            SetTo(interpolation, Formulas.GetFormula(ease), swapFromTo);
         }
 
         protected void GetSwapedFromTo(out T from, out T to, bool swapFromTo)

@@ -23,7 +23,7 @@ namespace Numba.Tweening
 
         public static int Ease(int from, int to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -36,7 +36,7 @@ namespace Numba.Tweening
 
         public static long Ease(long from, long to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -49,7 +49,7 @@ namespace Numba.Tweening
 
         public static float Ease(float from, float to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -62,7 +62,7 @@ namespace Numba.Tweening
 
         public static double Ease(double from, double to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -75,7 +75,7 @@ namespace Numba.Tweening
 
         public static DateTime Ease(DateTime from, DateTime to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -88,7 +88,7 @@ namespace Numba.Tweening
 
         public static Vector2 Ease(Vector2 from, Vector2 to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -101,7 +101,7 @@ namespace Numba.Tweening
 
         public static Vector3 Ease(Vector3 from, Vector3 to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -114,7 +114,7 @@ namespace Numba.Tweening
 
         public static Vector4 Ease(Vector4 from, Vector4 to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -127,7 +127,7 @@ namespace Numba.Tweening
 
         public static Quaternion Ease(Quaternion from, Quaternion to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -140,7 +140,7 @@ namespace Numba.Tweening
 
         public static Rect Ease(Rect from, Rect to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -153,7 +153,7 @@ namespace Numba.Tweening
 
         public static Color Ease(Color from, Color to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
 
@@ -166,7 +166,7 @@ namespace Numba.Tweening
 
         public static Color32 Ease(Color32 from, Color32 to, float interpolation, Ease ease)
         {
-            return Ease(from, to, interpolation, FormulasUtility.GetFormula(ease));
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
         #endregion

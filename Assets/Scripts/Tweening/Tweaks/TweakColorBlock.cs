@@ -28,7 +28,7 @@ namespace Numba.Tweening.Tweaks
 
         public override ColorBlock Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
         {
-            return Evaluate(interpolation, FormulasUtility.GetFormula(ease), swapFromTo);
+            return Evaluate(interpolation, Formulas.GetFormula(ease), swapFromTo);
         }
     }
 }

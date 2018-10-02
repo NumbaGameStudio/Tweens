@@ -26,7 +26,7 @@ namespace Numba.Tweening
 
         public static implicit operator FormulaSettings(Settings settings)
         {
-            return new FormulaSettings(settings._loopsCount, settings.LoopType, FormulasUtility.Linear);
+            return new FormulaSettings(settings._loopsCount, settings.LoopType, Formulas.Linear);
         }
     }
 
@@ -57,7 +57,7 @@ namespace Numba.Tweening
         public Ease Ease
         {
             get { return _formula.Ease; }
-            set { _formula = FormulasUtility.GetFormula(value); }
+            set { _formula = Formulas.GetFormula(value); }
         }
 
         public FormulaSettings(int loopsCount, LoopType loopType, Formula formula)
@@ -69,7 +69,7 @@ namespace Numba.Tweening
             _formula = formula;
         }
 
-        public FormulaSettings(int loopsCount, LoopType loopType, Ease ease) : this(loopsCount, loopType, FormulasUtility.GetFormula(ease)) { }
+        public FormulaSettings(int loopsCount, LoopType loopType, Ease ease) : this(loopsCount, loopType, Formulas.GetFormula(ease)) { }
 
         public static implicit operator Settings(FormulaSettings easedSettings)
         {

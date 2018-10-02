@@ -13,7 +13,7 @@ namespace Numba.Tweening.Engine
 
         public Tween DoTimeScale(float timeScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoTimeScale(timeScale, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+            return DoTimeScale(timeScale, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
     }
 }
