@@ -4,6 +4,7 @@ using UnityEngine;
 using Numba.Tweening;
 using Numba.Tweening.Engine;
 using Numba.Tweening.Tweaks;
+using UnityEngine.UI;
 
 namespace Namespace
 {
@@ -20,7 +21,8 @@ namespace Namespace
 
         private void Start()
         {
-            
+            ScrollRect scrollRect = null;
+            scrollRect.DoHorizontalNormalizedPosition(1f, 1f, Ease.InOutExpo, 2, LoopType.Reversed).Play();
         }
     }
 }
