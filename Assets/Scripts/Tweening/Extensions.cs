@@ -384,9 +384,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchoredPosition.x, x, (apx) => rectTransform.anchoredPosition = SetVectorValue(rectTransform.anchoredPosition, 0, apx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchoredPositionX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPositionX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchoredPositionY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition.y, y, (apy) => rectTransform.anchoredPosition = SetVectorValue(rectTransform.anchoredPosition, 1, apy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchoredPositionY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPositionY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoAnchoredPosition(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -394,9 +404,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchoredPosition, new Vector2(x, y), (ap) => rectTransform.anchoredPosition = ap, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchoredPosition(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchoredPosition(this RectTransform rectTransform, Vector2 anchoredPosition, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition, anchoredPosition, (ap) => rectTransform.anchoredPosition = ap, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchoredPosition(this RectTransform rectTransform, Vector2 anchoredPosition, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition(rectTransform, anchoredPosition, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -406,9 +426,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchoredPosition3D.x, x, (ap3dx) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 0, ap3dx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchoredPosition3DX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition3DX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchoredPosition3DY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D.y, y, (ap3dy) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 1, ap3dy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchoredPosition3DY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition3DY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoAnchoredPosition3DZ(this RectTransform rectTransform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -416,14 +446,29 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchoredPosition3D.z, z, (ap3dz) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 2, ap3dz), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchoredPosition3DZ(this RectTransform rectTransform, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition3DZ(rectTransform, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D, new Vector3(x, y, z), (ap3d) => rectTransform.anchoredPosition3D = ap3d, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, float x, float y, float z, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition3D(rectTransform, x, y, z, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, Vector3 anchoredPosition3D, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D, anchoredPosition3D, (ap3d) => rectTransform.anchoredPosition3D = ap3d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, Vector3 anchoredPosition3D, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchoredPosition3D(rectTransform, anchoredPosition3D, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -433,9 +478,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchorMax.x, x, (amx) => rectTransform.anchorMax = SetVectorValue(rectTransform.anchorMax, 0, amx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchorMaxX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMaxX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchorMaxY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax.y, y, (amy) => rectTransform.anchorMax = SetVectorValue(rectTransform.anchorMax, 1, amy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchorMaxY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMaxY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoAnchorMax(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -443,9 +498,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchorMax, new Vector2(x, y), (am) => rectTransform.anchorMax = am, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchorMax(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMax(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchorMax(this RectTransform rectTransform, Vector2 anchorMax, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax, anchorMax, (am) => rectTransform.anchorMax = am, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchorMax(this RectTransform rectTransform, Vector2 anchorMax, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMax(rectTransform, anchorMax, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -455,9 +520,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchorMin.x, x, (amx) => rectTransform.anchorMin = SetVectorValue(rectTransform.anchorMin, 0, amx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchorMinX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMinX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchorMinY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin.y, y, (amy) => rectTransform.anchorMin = SetVectorValue(rectTransform.anchorMin, 1, amy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchorMinY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMinY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoAnchorMin(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -465,9 +540,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.anchorMin, new Vector2(x, y), (am) => rectTransform.anchorMin = am, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoAnchorMin(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMin(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoAnchorMin(this RectTransform rectTransform, Vector2 anchorMin, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin, anchorMin, (am) => rectTransform.anchorMin = am, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAnchorMin(this RectTransform rectTransform, Vector2 anchorMin, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAnchorMin(rectTransform, anchorMin, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -477,9 +562,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.offsetMax.x, x, (omx) => rectTransform.offsetMax = SetVectorValue(rectTransform.offsetMax, 0, omx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoOffsetMaxX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMaxX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoOffsetMaxY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax.y, y, (omy) => rectTransform.offsetMax = SetVectorValue(rectTransform.offsetMax, 1, omy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOffsetMaxY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMaxY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoOffsetMax(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -487,9 +582,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.offsetMax, new Vector2(x, y), (om) => rectTransform.offsetMax = om, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoOffsetMax(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMax(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoOffsetMax(this RectTransform rectTransform, Vector2 offsetMax, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax, offsetMax, (om) => rectTransform.offsetMax = om, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOffsetMax(this RectTransform rectTransform, Vector2 offsetMax, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMax(rectTransform, offsetMax, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -499,9 +604,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.offsetMin.x, x, (omx) => rectTransform.offsetMin = SetVectorValue(rectTransform.offsetMin, 0, omx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoOffsetMinX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMinX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoOffsetMinY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin.y, y, (omy) => rectTransform.offsetMin = SetVectorValue(rectTransform.offsetMin, 1, omy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOffsetMinY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMinY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoOffsetMin(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -509,9 +624,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.offsetMin, new Vector2(x, y), (om) => rectTransform.offsetMin = om, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoOffsetMin(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMin(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoOffsetMin(this RectTransform rectTransform, Vector2 offsetMin, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin, offsetMin, (om) => rectTransform.offsetMin = om, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOffsetMin(this RectTransform rectTransform, Vector2 offsetMin, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffsetMin(rectTransform, offsetMin, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -521,9 +646,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.pivot.x, x, (px) => rectTransform.pivot = SetVectorValue(rectTransform.pivot, 0, px), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoPivotX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPivotX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoPivotY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot.y, y, (py) => rectTransform.pivot = SetVectorValue(rectTransform.pivot, 1, py), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPivotY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPivotY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoPivot(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -531,9 +666,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.pivot, new Vector2(x, y), (p) => rectTransform.pivot = p, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoPivot(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPivot(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoPivot(this RectTransform rectTransform, Vector2 pivot, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot, pivot, (p) => rectTransform.pivot = p, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPivot(this RectTransform rectTransform, Vector2 pivot, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPivot(rectTransform, pivot, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -543,9 +688,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.sizeDelta.x, x, (sdx) => rectTransform.sizeDelta = SetVectorValue(rectTransform.sizeDelta, 0, sdx), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoSizeDeltaX(this RectTransform rectTransform, float x, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSizeDeltaX(rectTransform, x, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoSizeDeltaY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta.y, y, (sdy) => rectTransform.sizeDelta = SetVectorValue(rectTransform.sizeDelta, 1, sdy), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSizeDeltaY(this RectTransform rectTransform, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSizeDeltaY(rectTransform, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoSizeDelta(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -553,9 +708,19 @@ namespace Numba.Tweening
             return Tween.Create(rectTransform.sizeDelta, new Vector2(x, y), (sd) => rectTransform.sizeDelta = sd, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoSizeDelta(this RectTransform rectTransform, float x, float y, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSizeDelta(rectTransform, x, y, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoSizeDelta(this RectTransform rectTransform, Vector2 sizeDelta, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta, sizeDelta, (sd) => rectTransform.sizeDelta = sd, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSizeDelta(this RectTransform rectTransform, Vector2 sizeDelta, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSizeDelta(rectTransform, sizeDelta, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
         #endregion
@@ -566,9 +731,19 @@ namespace Numba.Tweening
             return Tween.Create(material.color, color, (c) => material.color = c, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoColor(this Material material, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoColor(material, color, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoColor(this Material material, string name, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetColor(name), color, (c) => material.SetColor(name, c), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoColor(this Material material, string name, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoColor(material, name, color, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoMainTextureOffset(this Material material, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -576,9 +751,19 @@ namespace Numba.Tweening
             return Tween.Create(material.mainTextureOffset, textureOffset, (to) => material.mainTextureOffset = to, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoMainTextureOffset(this Material material, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMainTextureOffset(material, textureOffset, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoMainTextureScale(this Material material, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.mainTextureScale, textureScale, (ts) => material.mainTextureScale = ts, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoMainTextureScale(this Material material, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMainTextureScale(material, textureScale, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -586,9 +771,19 @@ namespace Numba.Tweening
             return Tween.Create(material.GetTextureOffset(name), textureOffset, (to) => material.SetTextureOffset(name, to), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTextureOffset(material, name, textureOffset, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoTextureScale(this Material material, string name, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetTextureOffset(name), textureScale, (ts) => material.SetTextureScale(name, ts), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoTextureScale(this Material material, string name, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTextureScale(material, name, textureScale, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
 
         public static Tween DoInt(this Material material, string name, int value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
@@ -596,14 +791,29 @@ namespace Numba.Tweening
             return Tween.Create(material.GetInt(name), value, (i) => material.SetInt(name, i), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoInt(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoInt(material, name, value, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoFloat(this Material material, string name, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetFloat(name), value, (f) => material.SetFloat(name, f), duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoFloat(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoFloat(material, name, value, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoVector(this Material material, string name, Vector4 vector, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetVector(name), vector, (v) => material.SetVector(name, v), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoVector(this Material material, string name, Vector4 vector, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoVector(material, name, vector, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -611,6 +821,11 @@ namespace Numba.Tweening
         public static Tween DoVolume(this AudioSource audioSource, float volume, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.volume, volume, (v) => audioSource.volume = v, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoVolume(this AudioSource audioSource, float volume, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoVolume(audioSource, volume, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -620,9 +835,19 @@ namespace Numba.Tweening
             return Tween.Create(camera.fieldOfView, fieldOfView, (fov) => camera.fieldOfView = fov, duration, formula, loopsCount, loopType);
         }
 
+        public static Tween DoFieldOfView(this Camera camera, float fieldOfView, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoFieldOfView(camera, fieldOfView, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
+        }
+
         public static Tween DoRect(this Camera camera, Rect rect, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.rect, rect, (r) => camera.rect = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRect(this Camera camera, Rect rect, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRect(camera, rect, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
@@ -630,6 +855,11 @@ namespace Numba.Tweening
         public static Tween DoAlpha(this CanvasGroup canvasGroup, float alpha, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(canvasGroup.alpha, alpha, (a) => canvasGroup.alpha = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAlpha(this CanvasGroup canvasGroup, float alpha, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAlpha(canvasGroup, alpha, duration, FormulasUtility.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 

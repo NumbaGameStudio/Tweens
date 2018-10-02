@@ -35,7 +35,8 @@ namespace Namespace
 
             //Tween.Create(0f, 1f, (x) => _cube1.position = new Vector3(x, 0f, 0f), 1f).SetEase(FormulasUtility.InOutSine).Play();
 
-            _cube1.DoPosition(1f, 2f, 3f, 1f, Ease.InExpo, 2, LoopType.Yoyo).Play();
+            _cube1.DoPosition(1f, 2f, 3f, 1f, Ease.Linear, 2, LoopType.Yoyo).Play();
+            _cube1.GetComponent<MeshRenderer>().material.DoColor(Color.yellow, 1f, Ease.Linear).SetLoops(2, LoopType.Yoyo).Play();
         }
 
         //private void Update()
