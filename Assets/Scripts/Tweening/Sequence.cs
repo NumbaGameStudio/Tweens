@@ -7,7 +7,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    public sealed class Sequence : IPlayable
+    public sealed class Sequence : Playable
     {
         #region Structures and classes
         private struct PlayableData
@@ -16,9 +16,9 @@ namespace Numba.Tweening
 
             public float StartTime { get; private set; }
 
-            public IPlayable Playable { get; private set; }
+            public Playable Playable { get; private set; }
 
-            public PlayableData(int order, IPlayable playable, float startTime)
+            public PlayableData(int order, Playable playable, float startTime)
             {
                 Order = order;
                 Playable = playable;
@@ -78,9 +78,9 @@ namespace Numba.Tweening
         {
             public int Order { get; set; }
 
-            public IPlayable Playable { get; set; }
+            public Playable Playable { get; set; }
 
-            public PlayableDataToAppend(int order, IPlayable playable)
+            public PlayableDataToAppend(int order, Playable playable)
             {
                 Order = order;
                 Playable = playable;
@@ -106,9 +106,9 @@ namespace Numba.Tweening
 
             public float Time { get; set; }
 
-            public IPlayable Playable { get; set; }
+            public Playable Playable { get; set; }
 
-            public PlayableDataToInsert(int order, float time, IPlayable playable)
+            public PlayableDataToInsert(int order, float time, Playable playable)
             {
                 Order = order;
                 Time = time;
@@ -152,7 +152,6 @@ namespace Numba.Tweening
         #endregion
 
         #region Fields
-        #region Data containers
         private List<PlayableData> _playbleDatas = new List<PlayableData>();
 
         private List<CallbackData> _callbacksDatas = new List<CallbackData>();
@@ -166,45 +165,6 @@ namespace Numba.Tweening
         private Queue<CallbackDataToInsert> _callbackDatasToInsert = new Queue<CallbackDataToInsert>(0);
 
         private Queue<AddType> _addQueue = new Queue<AddType>(0);
-        #endregion
-
-        private IEnumerator _playTimeEnumerator;
-
-        private PlayRoutine _playRoutine;
-
-        private Action _playRoutineOnStopCallback;
-
-        private int _loopsCount = 1;
-
-        private LoopType _loopType;
-
-        private float _duration;
-
-        #region Playing
-        private float _playStartTime;
-
-        private float _playEndTime;
-
-        private float _playCurrentTime;
-
-        private bool _useRealtime;
-        #endregion
-
-        #region Events
-        public event Action Started;
-
-        public event Action Updated;
-
-        public event Action Completed;
-        #endregion
-
-        #region Callback
-        private Action _onStartCallback;
-
-        private Action _onUpdateCallback;
-
-        private Action _onCompleteCallback;
-        #endregion
         #endregion
 
         #region Constructors
@@ -225,9 +185,9 @@ namespace Numba.Tweening
         #endregion
 
         #region Properties
-        public string Name { get; private set; }
+        protected override string PlayableName { get { return "Sequence"; } }
 
-        public float Duration
+        public new float Duration
         {
             get { return _duration; }
             private set
@@ -238,32 +198,22 @@ namespace Numba.Tweening
             }
         }
 
-        public float DurationWithLoops { get; private set; }
-
-        public int LoopsCount
+        public override int LoopsCount
         {
             get { return _loopsCount; }
             set
             {
-                _loopsCount = Mathf.Max(value, -1);
-
-                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
-                ResetCurrentTime();
+                if (SetLoopsCount(value)) ResetCurrentTime();
             }
         }
 
-        public LoopType LoopType
+        public override LoopType LoopType
         {
             get { return _loopType; }
             set
             {
-                if (value == LoopType.Reversed)
-                    _loopType = LoopType.Backward;
-                else
-                    _loopType = value;
-
-                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
-                ResetCurrentTime();
+                if (value == LoopType.Reversed) value = LoopType.Backward;
+                if (SetLoopType(value)) ResetCurrentTime();
             }
         }
 
@@ -280,13 +230,11 @@ namespace Numba.Tweening
         public int NextOrder { get; private set; }
 
         public float CurrentTime { get; set; }
-
-        public PlayState PlayState { get; private set; }
         #endregion
 
         #region Methods
         #region Append and Insert
-        public Sequence Append(IPlayable playable)
+        public Sequence Append(Playable playable)
         {
             if (PlayState == PlayState.Play)
             {
@@ -301,7 +249,7 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Sequence Append(IPlayable playable, int order)
+        public Sequence Append(Playable playable, int order)
         {
             if (PlayState == PlayState.Play)
             {
@@ -346,7 +294,7 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Sequence Insert(float time, IPlayable playable)
+        public Sequence Insert(float time, Playable playable)
         {
             if (PlayState == PlayState.Play)
             {
@@ -363,7 +311,7 @@ namespace Numba.Tweening
             return this;
         }
 
-        public Sequence Insert(float time, IPlayable playable, int order)
+        public Sequence Insert(float time, Playable playable, int order)
         {
             if (PlayState == PlayState.Play)
             {
@@ -453,32 +401,19 @@ namespace Numba.Tweening
             ++NextOrder;
         }
 
-        IPlayable IPlayable.SetLoops(int loopsCount)
+        public new Sequence SetLoops(int loopsCount)
         {
-            return SetLoops(loopsCount, LoopType);
+            LoopsCount = loopsCount;
+            return this;
         }
 
-        public Sequence SetLoops(int loopsCount)
+        public new Sequence SetLoops(LoopType loopType)
         {
-            return SetLoops(loopsCount, LoopType);
+            LoopType = loopType;
+            return this;
         }
 
-        IPlayable IPlayable.SetLoops(LoopType loopType)
-        {
-            return SetLoops(loopType);
-        }
-
-        public Sequence SetLoops(LoopType loopType)
-        {
-            return SetLoops(LoopsCount, loopType);
-        }
-
-        IPlayable IPlayable.SetLoops(int loopsCount, LoopType loopType)
-        {
-            return SetLoops(loopsCount, loopType);
-        }
-
-        public Sequence SetLoops(int loopsCount, LoopType loopType)
+        public new Sequence SetLoops(int loopsCount, LoopType loopType)
         {
             LoopsCount = loopsCount;
             LoopType = loopType;
@@ -486,7 +421,7 @@ namespace Numba.Tweening
             return this;
         }
 
-        public void SetTime(float currentTime)
+        public override void SetTime(float currentTime)
         {
             SetTime(CurrentTime, currentTime, Duration, DurationWithLoops, LoopType);
         }
@@ -577,41 +512,13 @@ namespace Numba.Tweening
             }
         }
 
-        private float CalculateDurationWithLoops(float duration, int loopsCount, LoopType loopType)
-        {
-            return duration * GetLoopTypeDurationMultiplier(loopType) * Mathf.Abs(loopsCount);
-        }
-
-        private float GetLoopTypeDurationMultiplier(LoopType loopType)
-        {
-            return IsYoyoTypedLoopType(loopType) ? 2f : 1f;
-        }
-
-        private bool IsYoyoTypedLoopType(LoopType loopType)
-        {
-            return loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo;
-        }
-
-        private bool IsYoyoBackward(float time)
-        {
-            float repeated = time / Duration;
-            if (repeated <= 1f) return false;
-
-            int intPart = (int)repeated;
-            float fraction = repeated - intPart;
-
-            bool isEven = intPart % 2 == 0;
-
-            return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
-        }
-
         public Sequence SetSettings(Settings settings)
         {
             Settings = settings;
             return this;
         }
 
-        public PlayRoutine Play(bool useRealtime = false)
+        public override PlayRoutine Play(bool useRealtime = false)
         {
             if (PlayState == PlayState.Play)
             {
@@ -702,11 +609,6 @@ namespace Numba.Tweening
             HandleStop();
         }
 
-        private float GetTime(bool useRealtime)
-        {
-            return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
-        }
-
         private List<PhasedData> GetSortedByPhaseData(float startTime, float endTime)
         {
             bool isBackward = startTime > endTime;
@@ -783,18 +685,7 @@ namespace Numba.Tweening
             return startTime < endTime ? value >= startTime && value <= endTime : value >= endTime && value <= startTime;
         }
 
-        public void Stop()
-        {
-            if (PlayState == PlayState.Stop)
-            {
-                Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already stoped.", Name));
-                return;
-            }
-
-            HandleStop();
-        }
-
-        private void HandleStop()
+        protected override void HandleStop()
         {
             if (PlayState != PlayState.Pause) RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
             _playTimeEnumerator = null;
@@ -809,18 +700,6 @@ namespace Numba.Tweening
             InvokeComplete();
 
             AddSavedDatasToSequence();
-        }
-
-        public void Pause()
-        {
-            if (PlayState != PlayState.Play)
-            {
-                Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped or paused.", Name));
-                return;
-            }
-
-            RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
-            PlayState = PlayState.Pause;
         }
 
         private void AddSavedDatasToSequence()
@@ -864,60 +743,22 @@ namespace Numba.Tweening
             }
         }
 
-        IPlayable IPlayable.OnStart(Action callback)
-        {
-            return OnStart(callback);
-        }
-
-        public Sequence OnStart(Action callback)
+        public new Sequence OnStart(Action callback)
         {
             _onStartCallback = callback;
             return this;
         }
 
-        IPlayable IPlayable.OnUpdate(Action callback)
-        {
-            return OnUpdate(callback);
-        }
-
-        public Sequence OnUpdate(Action callback)
+        public new Sequence OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
-        IPlayable IPlayable.OnComplete(Action callback)
-        {
-            return OnComplete(callback);
-        }
-
-        public Sequence OnComplete(Action callback)
+        public new Sequence OnComplete(Action callback)
         {
             _onCompleteCallback = callback;
             return this;
-        }
-
-        public void InvokeStart()
-        {
-            if (Started != null) Started();
-            if (_onStartCallback != null) _onStartCallback();
-        }
-
-        public void InvokeUpdate()
-        {
-            if (Updated != null) Updated();
-            if (_onUpdateCallback != null) _onUpdateCallback();
-        }
-
-        public void InvokeComplete()
-        {
-            if (Completed != null) Completed();
-            if (_onCompleteCallback != null) _onCompleteCallback();
-        }
-
-        public void ClearCallbacks()
-        {
-            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
         }
         #endregion
     }

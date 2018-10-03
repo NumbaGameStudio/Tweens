@@ -8,7 +8,7 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
-    public sealed class Tween : IPlayable
+    public sealed class Tween : Playable
     {
         #region Create
         #region Float
@@ -354,47 +354,7 @@ namespace Numba.Tweening
         #endregion
         #endregion
 
-        #region Fields
-        private IEnumerator _playTimeEnumerator;
-
-        private PlayRoutine _playRoutine;
-
-        private Action _playRoutineOnStopCallback;
-
-        private float _duration;
-
         private Formula _formula = Formulas.Linear;
-
-        private int _loopsCount;
-
-        private LoopType _loopType;
-
-        #region Playing
-        private float _playStartTime;
-
-        private float _playEndTime;
-
-        private float _playCurrentTime;
-
-        private bool _useRealtime;
-        #endregion
-
-        #region Events
-        public event Action Started;
-
-        public event Action Updated;
-
-        public event Action Completed;
-        #endregion
-
-        #region Callback
-        private Action _onStartCallback;
-
-        private Action _onUpdateCallback;
-
-        private Action _onCompleteCallback;
-        #endregion
-        #endregion
 
         #region Constructors
         private Tween() { }
@@ -422,11 +382,11 @@ namespace Numba.Tweening
         #endregion
 
         #region Properties
-        public string Name { get; private set; }
+        protected override string PlayableName { get { return "Tween"; } }
 
         public Tweak Tweak { get; set; }
 
-        public float Duration
+        public new float Duration
         {
             get { return _duration; }
             set
@@ -435,8 +395,6 @@ namespace Numba.Tweening
                 DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
             }
         }
-
-        public float DurationWithLoops { get; private set; }
 
         public Formula Formula
         {
@@ -454,29 +412,21 @@ namespace Numba.Tweening
             set { _formula = Formulas.GetFormula(value); }
         }
 
-        public int LoopsCount
+        public override int LoopsCount
         {
             get { return _loopsCount; }
             set
             {
-                value = Mathf.Max(value, -1);
-
-                if (value == _loopsCount) return;
-
-                _loopsCount = value;
-                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                SetLoopsCount(value);
             }
         }
 
-        public LoopType LoopType
+        public override LoopType LoopType
         {
             get { return _loopType; }
             set
             {
-                if (_loopType == value) return;
-
-                _loopType = value;
-                DurationWithLoops = CalculateDurationWithLoops(Duration, LoopsCount, LoopType);
+                SetLoopType(value);
             }
         }
 
@@ -494,8 +444,6 @@ namespace Numba.Tweening
             }
         }
 
-        public PlayState PlayState { get; private set; }
-
         public static Engine.Time Time { get; private set; }
         #endregion
 
@@ -510,16 +458,6 @@ namespace Numba.Tweening
             LoopType = loopType;
         }
 
-        private bool IsYoyoTypedLoopType(LoopType loopType)
-        {
-            return loopType == LoopType.Yoyo || loopType == LoopType.ReversedYoyo;
-        }
-
-        private float GetLoopTypeDurationMultiplier(LoopType loopType)
-        {
-            return IsYoyoTypedLoopType(loopType) ? 2f : 1f;
-        }
-
         public Tween SetEase(Formula formula)
         {
             Formula = formula;
@@ -532,33 +470,19 @@ namespace Numba.Tweening
             return this;
         }
 
-        IPlayable IPlayable.SetLoops(int loopsCount)
-        {
-            return SetLoops(loopsCount, LoopType);
-        }
-
-        public Tween SetLoops(int loopsCount)
+        public new Tween SetLoops(int loopsCount)
         {
             LoopsCount = LoopsCount;
             return this;
         }
 
-        IPlayable IPlayable.SetLoops(LoopType loopType)
+        public new Tween SetLoops(LoopType loopType)
         {
-            return SetLoops(loopType);
+            LoopType = loopType;
+            return this;
         }
 
-        public Tween SetLoops(LoopType loopType)
-        {
-            return SetLoops(LoopsCount, loopType);
-        }
-
-        IPlayable IPlayable.SetLoops(int loopsCount, LoopType loopType)
-        {
-            return SetLoops(loopsCount, loopType);
-        }
-
-        public Tween SetLoops(int loopsCount, LoopType loopType)
+        public new Tween SetLoops(int loopsCount, LoopType loopType)
         {
             LoopsCount = loopsCount;
             LoopType = loopType;
@@ -566,12 +490,25 @@ namespace Numba.Tweening
             return this;
         }
 
-        public void SetTime(float time)
+        private bool IsYoyoBackward(float time, float duration)
+        {
+            float repeated = time / duration;
+            if (repeated <= 1f) return false;
+
+            int intPart = (int)repeated;
+            float fraction = repeated - intPart;
+
+            bool isEven = intPart % 2 == 0;
+
+            return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
+        }
+
+        public override void SetTime(float time)
         {
             SetTime(Tweak, time, Duration, DurationWithLoops, Formula, LoopType);
         }
 
-        public void SetTime(Tweak tweak, float time, float duration, float durationWithLoops, Formula formula, LoopType loopType)
+        private void SetTime(Tweak tweak, float time, float duration, float durationWithLoops, Formula formula, LoopType loopType)
         {
             if (duration == 0f)
             {
@@ -602,36 +539,13 @@ namespace Numba.Tweening
             tweak.SetTo(timeGetter(), formula, swapFromTo);
         }
 
-        private float CalculateDurationWithLoops(float duration, int loopsCount, LoopType loopType)
-        {
-            return duration * GetLoopTypeDurationMultiplier(loopType) * Mathf.Abs(loopsCount);
-        }
-
-        private bool IsYoyoBackward(float time, float duration)
-        {
-            float repeated = time / duration;
-            if (repeated <= 1f) return false;
-
-            int intPart = (int)repeated;
-            float fraction = repeated - intPart;
-
-            bool isEven = intPart % 2 == 0;
-
-            return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
-        }
-
         public Tween SetSettings(FormulaSettings settings)
         {
             Settings = settings;
             return this;
         }
 
-        private float GetTime(bool useRealtime)
-        {
-            return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
-        }
-
-        public PlayRoutine Play(bool useRealtime = false)
+        public override PlayRoutine Play(bool useRealtime = false)
         {
             if (PlayState == PlayState.Play)
             {
@@ -718,18 +632,7 @@ namespace Numba.Tweening
             HandleStop();
         }
 
-        public void Stop()
-        {
-            if (PlayState == PlayState.Stop)
-            {
-                Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped.", Name));
-                return;
-            }
-
-            HandleStop();
-        }
-
-        private void HandleStop()
+        protected override void HandleStop()
         {
             if (PlayState != PlayState.Pause) RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
             _playTimeEnumerator = null;
@@ -741,75 +644,22 @@ namespace Numba.Tweening
             InvokeComplete();
         }
 
-        public void Pause()
-        {
-            if (PlayState != PlayState.Play)
-            {
-                Debug.LogWarning(string.Format("Tween with name \"{0}\" already stoped or paused.", Name));
-                return;
-            }
-
-            RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
-            PlayState = PlayState.Pause;
-        }
-
-        IPlayable IPlayable.OnStart(Action callback)
-        {
-            return OnStart(callback);
-        }
-
-        public Tween OnStart(Action callback)
+        public new Tween OnStart(Action callback)
         {
             _onStartCallback = callback;
             return this;
         }
 
-        IPlayable IPlayable.OnUpdate(Action callback)
-        {
-            return OnUpdate(callback);
-        }
-
-        public Tween OnUpdate(Action callback)
+        public new Tween OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
-        IPlayable IPlayable.OnComplete(Action callback)
-        {
-            return OnComplete(callback);
-        }
-
-        public Tween OnComplete(Action callback)
+        public new Tween OnComplete(Action callback)
         {
             _onCompleteCallback = callback;
             return this;
-        }
-
-        public void InvokeStart()
-        {
-            InvokePhase(Started, _onStartCallback);
-        }
-
-        public void InvokeUpdate()
-        {
-            InvokePhase(Updated, _onUpdateCallback);
-        }
-
-        public void InvokeComplete()
-        {
-            InvokePhase(Completed, _onCompleteCallback);
-        }
-
-        private void InvokePhase(Action phaseEvent, Action callback)
-        {
-            if (phaseEvent != null) phaseEvent();
-            if (callback != null) callback();
-        }
-
-        public void ClearCallbacks()
-        {
-            _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
         }
         #endregion
     }
