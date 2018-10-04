@@ -30,6 +30,16 @@ namespace Numba.Tweening
             return new TweakDouble(from, to, setter);
         }
 
+        public static Tweak Create(char from, char to, Action<char> setter)
+        {
+            return new TweakChar(from, to, setter);
+        }
+
+        public static Tweak Create(string from, string to, Action<string> setter)
+        {
+            return new TweakString(from, to, setter);
+        }
+
         public static Tweak Create(DateTime from, DateTime to, Action<DateTime> setter)
         {
             return new TweakDateTime(from, to, setter);

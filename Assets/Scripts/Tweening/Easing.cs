@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Text;
 
 namespace Numba.Tweening
 {
@@ -61,6 +62,32 @@ namespace Numba.Tweening
         }
 
         public static double Ease(double from, double to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
+        #region Char
+        public static char Ease(char from, char to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return (char)Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static char Ease(char from, char to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
+        #region String
+        public static string Ease(string from, string to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static string Ease(string from, string to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
@@ -237,7 +264,7 @@ namespace Numba.Tweening
         #endregion
 
         #region Linear
-        public static int Linear(int from, int to, float interpolation)
+        private static int Linear(int from, int to, float interpolation)
         {
             float t = interpolation;
 
@@ -247,7 +274,7 @@ namespace Numba.Tweening
             return (int)((to - from) * t + from);
         }
 
-        public static long Linear(long from, long to, float interpolation)
+        private static long Linear(long from, long to, float interpolation)
         {
             float t = interpolation;
 
@@ -257,7 +284,7 @@ namespace Numba.Tweening
             return (long)((to - from) * t + from);
         }
 
-        public static float Linear(float from, float to, float interpolation)
+        private static float Linear(float from, float to, float interpolation)
         {
             float t = interpolation;
 
@@ -267,7 +294,7 @@ namespace Numba.Tweening
             return (to - from) * t + from;
         }
 
-        public static double Linear(double from, double to, float interpolation)
+        private static double Linear(double from, double to, float interpolation)
         {
             float t = interpolation;
 
@@ -277,47 +304,64 @@ namespace Numba.Tweening
             return (to - from) * t + from;
         }
 
-        public static DateTime Linear(DateTime from, DateTime to, float interpolation)
+        private static string Linear(string from, string to, float interpolation)
+        {
+            if (interpolation == 0f) return from;
+            if (interpolation == 1f) return to;
+
+            StringBuilder result = new StringBuilder(from);
+            if (result.Length < to.Length) result.Append(' ', to.Length - from.Length);
+
+            int matchedLength = Linear(0, result.Length, interpolation);
+            int toLength = Mathf.Min(matchedLength, to.Length);
+
+            for (int i = 0; i < toLength; ++i) result[i] = to[i];
+            for (int i = toLength; i < matchedLength; ++i) result[i] = ' ';
+
+            return result.ToString();
+        }
+
+        private static DateTime Linear(DateTime from, DateTime to, float interpolation)
         {
             return DateTime.MinValue.Add(TimeSpan.FromMinutes(Linear(new TimeSpan(from.Ticks).TotalMinutes, new TimeSpan(to.Ticks).TotalMinutes, interpolation)));
         }
 
-        public static Vector2 Linear(Vector2 from, Vector2 to, float interpolation)
+        private static Vector2 Linear(Vector2 from, Vector2 to, float interpolation)
         {
             return new Vector2(Linear(from.x, to.x, interpolation), Linear(from.y, to.y, interpolation));
         }
 
-        public static Vector3 Linear(Vector3 from, Vector3 to, float interpolation)
+        private static Vector3 Linear(Vector3 from, Vector3 to, float interpolation)
         {
             return new Vector3(Linear(from.x, to.x, interpolation), Linear(from.y, to.y, interpolation), Linear(from.z, to.z, interpolation));
         }
 
-        public static Vector4 Linear(Vector4 from, Vector4 to, float interpolation)
+        private static Vector4 Linear(Vector4 from, Vector4 to, float interpolation)
         {
             return new Vector4(Linear(from.x, to.x, interpolation), Linear(from.y, to.y, interpolation), Linear(from.z, to.z, interpolation), Linear(from.w, to.w, interpolation));
         }
 
-        public static Quaternion Linear(Quaternion from, Quaternion to, float interpolation)
+        private static Quaternion Linear(Quaternion from, Quaternion to, float interpolation)
         {
             return Quaternion.Lerp(from, to, interpolation);
         }
 
-        public static Rect Linear(Rect from, Rect to, float interpolation)
+        private static Rect Linear(Rect from, Rect to, float interpolation)
         {
             return new Rect(Linear(from.position, to.position, interpolation), Linear(from.size, to.size, interpolation));
         }
 
-        public static Color Linear(Color from, Color to, float interpolation)
+        private static Color Linear(Color from, Color to, float interpolation)
         {
             return Linear((Vector4)from, (Vector4)to, interpolation);
         }
 
-        public static Color32 Linear(Color32 from, Color32 to, float interpolation)
+        private static Color32 Linear(Color32 from, Color32 to, float interpolation)
         {
             return Linear((Color)from, (Color)to, interpolation);
         }
 
-        public static ColorBlock Linear(ColorBlock from, ColorBlock to, float interpolation)
+        private static ColorBlock Linear(ColorBlock from, ColorBlock to, float interpolation)
         {
             return new ColorBlock()
             {
@@ -330,12 +374,12 @@ namespace Numba.Tweening
             };
         }
 
-        public static Bounds Linear(Bounds from, Bounds to, float interpolation)
+        private static Bounds Linear(Bounds from, Bounds to, float interpolation)
         {
             return new Bounds(Linear(from.center, to.center, interpolation), Linear(from.size, to.size, interpolation));
         }
 
-        public static Matrix4x4 Linear(Matrix4x4 from, Matrix4x4 to, float interpolation)
+        private static Matrix4x4 Linear(Matrix4x4 from, Matrix4x4 to, float interpolation)
         {
             return new Matrix4x4(Linear(from.GetColumn(0), to.GetColumn(0), interpolation),
                 Linear(from.GetColumn(1), to.GetColumn(1), interpolation),
@@ -343,7 +387,7 @@ namespace Numba.Tweening
                 Linear(from.GetColumn(3), to.GetColumn(3), interpolation));
         }
 
-        public static WheelFrictionCurve Linear(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation)
+        private static WheelFrictionCurve Linear(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation)
         {
             return new WheelFrictionCurve()
             {
@@ -355,7 +399,7 @@ namespace Numba.Tweening
             };
         }
 
-        public static JointSpring Linear(JointSpring from, JointSpring to, float interpolation)
+        private static JointSpring Linear(JointSpring from, JointSpring to, float interpolation)
         {
             return new JointSpring()
             {

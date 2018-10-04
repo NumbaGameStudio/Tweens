@@ -98,6 +98,50 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region Char
+        public static Tween Create(char from, char to, Action<char> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, char from, char to, Action<char> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(char from, char to, Action<char> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, char from, char to, Action<char> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region String
+        public static Tween Create(string from, string to, Action<string> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, string from, string to, Action<string> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(string from, string to, Action<string> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, string from, string to, Action<string> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region DateTime
         public static Tween Create(DateTime from, DateTime to, Action<DateTime> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
