@@ -1222,6 +1222,296 @@ namespace Numba.Tweening
         #endregion
         #endregion
 
+        #region Collider
+        public static Tween DoContactOffset(this Collider collider, float offset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.contactOffset, offset, (o) => collider.contactOffset = o, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoContactOffset(this Collider collider, float offset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoContactOffset(collider, offset, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region BoxCollider
+        #region Center
+        public static Tween DoCenter(this BoxCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCenter(this BoxCollider collider, Vector3 center, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCenter(collider, center, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Size
+        public static Tween DoSize(this BoxCollider collider, Vector3 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSize(this BoxCollider collider, Vector3 size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSize(collider, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region CapsuleCollider
+        #region Center
+        public static Tween DoCenter(this CapsuleCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCenter(this CapsuleCollider collider, Vector3 center, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCenter(collider, center, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Height
+        public static Tween DoHeight(this CapsuleCollider collider, float height, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.height, height, (h) => collider.height = h, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoHeight(this CapsuleCollider collider, float height, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoHeight(collider, height, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Radius
+        public static Tween DoRadius(this CapsuleCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRadius(this CapsuleCollider collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region SphereCollider
+        #region Center
+        public static Tween DoCenter(this SphereCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCenter(this SphereCollider collider, Vector3 center, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCenter(collider, center, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Radius
+        public static Tween DoRadius(this SphereCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRadius(this SphereCollider collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region WheelCollider
+        #region BrakeTorque
+        public static Tween DoBrakeTorque(this WheelCollider collider, float torque, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.brakeTorque, torque, (bt) => collider.brakeTorque = bt, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoBrakeTorque(this WheelCollider collider, float torque, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoBrakeTorque(collider, torque, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Center
+        public static Tween DoCenter(this WheelCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCenter(this WheelCollider collider, Vector3 center, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCenter(collider, center, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ForceAppPointDistance
+        public static Tween DoForceAppPointDistance(this WheelCollider collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.forceAppPointDistance, distance, (bt) => collider.forceAppPointDistance = bt, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoForceAppPointDistance(this WheelCollider collider, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoForceAppPointDistance(collider, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Mass
+        public static Tween DoMass(this WheelCollider collider, float mass, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.mass, mass, (m) => collider.mass = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoMass(this WheelCollider collider, float mass, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMass(collider, mass, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region MotorTorque
+        public static Tween DoMotorTorque(this WheelCollider collider, float torque, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.motorTorque, torque, (t) => collider.motorTorque = t, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoMotorTorque(this WheelCollider collider, float torque, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMotorTorque(collider, torque, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Radius
+        public static Tween DoRadius(this WheelCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRadius(this WheelCollider collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SteerAngle
+        public static Tween DoSteerAngle(this WheelCollider collider, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.steerAngle, angle, (a) => collider.steerAngle = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSteerAngle(this WheelCollider collider, float angle, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSteerAngle(collider, angle, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SuspensionDistance
+        public static Tween DoSuspensionDistance(this WheelCollider collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.suspensionDistance, distance, (d) => collider.suspensionDistance = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSuspensionDistance(this WheelCollider collider, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSuspensionDistance(collider, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region WheelDampingRate
+        public static Tween DoWheelDampingRate(this WheelCollider collider, float rate, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.wheelDampingRate, rate, (r) => collider.wheelDampingRate = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoWheelDampingRate(this WheelCollider collider, float rate, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoWheelDampingRate(collider, rate, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region Collider2D
+        #region Density
+        public static Tween DoDensity(this Collider2D collider, float density, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.density, density, (d) => collider.density = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoDensity(this Collider2D collider, float density, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoDensity(collider, density, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Offset
+        public static Tween DoOffset(this Collider2D collider, Vector2 offset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.offset, offset, (o) => collider.offset = o, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOffset(this Collider2D collider, Vector2 offset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOffset(collider, offset, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region BoxCollider2D
+        #region EdgeRadius
+        public static Tween DoEdgeRadius(this BoxCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEdgeRadius(this BoxCollider2D collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEdgeRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Size
+        public static Tween DoSize(this BoxCollider2D collider, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSize(this BoxCollider2D collider, Vector2 size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSize(collider, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region CapsuleCollider2D
+        public static Tween DoSize(this CapsuleCollider2D collider, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSize(this CapsuleCollider2D collider, Vector2 size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSize(collider, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region CircleCollider2D
+        public static Tween DoRadius(this CircleCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRadius(this CircleCollider2D collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        
+
         private static Vector2 SetVectorValue(Vector2 vector2, int axis, float value)
         {
             vector2[axis] = value;
