@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Numba.Tweening.Engine;
 using UnityEngine.UI;
 
 namespace Numba.Tweening
@@ -197,6 +196,19 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region Matrix4x4
+        public static Matrix4x4 Ease(Matrix4x4 from, Matrix4x4 to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static Matrix4x4 Ease(Matrix4x4 from, Matrix4x4 to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
         #region WheelFrictionCurve
         public static WheelFrictionCurve Ease(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation, Formula formula)
         {
@@ -321,6 +333,14 @@ namespace Numba.Tweening
         public static Bounds Linear(Bounds from, Bounds to, float interpolation)
         {
             return new Bounds(Linear(from.center, to.center, interpolation), Linear(from.size, to.size, interpolation));
+        }
+
+        public static Matrix4x4 Linear(Matrix4x4 from, Matrix4x4 to, float interpolation)
+        {
+            return new Matrix4x4(Linear(from.GetColumn(0), to.GetColumn(0), interpolation),
+                Linear(from.GetColumn(1), to.GetColumn(1), interpolation),
+                Linear(from.GetColumn(2), to.GetColumn(2), interpolation),
+                Linear(from.GetColumn(3), to.GetColumn(3), interpolation));
         }
 
         public static WheelFrictionCurve Linear(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation)

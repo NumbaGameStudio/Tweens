@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Engine
+namespace Numba.Tweening
 {
-	public static class Math 
+    internal static class Math 
 	{
         public static float WrapCeil(float value, float max)
         {

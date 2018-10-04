@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Numba.Tweening.Tweaks;
-using Numba.Tweening.Engine;
 using UnityEngine.UI;
+using UnityEngine.XR.WSA;
 
 namespace Numba.Tweening
 {
@@ -727,6 +727,7 @@ namespace Numba.Tweening
         #endregion
 
         #region Material
+        #region Color
         public static Tween DoColor(this Material material, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.color, color, (c) => material.color = c, duration, formula, loopsCount, loopType);
@@ -736,17 +737,9 @@ namespace Numba.Tweening
         {
             return DoColor(material, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
-        public static Tween DoColor(this Material material, string name, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(material.GetColor(name), color, (c) => material.SetColor(name, c), duration, formula, loopsCount, loopType);
-        }
-
-        public static Tween DoColor(this Material material, string name, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoColor(material, name, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-
+        #region MainTextureOffset
         public static Tween DoMainTextureOffset(this Material material, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.mainTextureOffset, textureOffset, (to) => material.mainTextureOffset = to, duration, formula, loopsCount, loopType);
@@ -756,7 +749,9 @@ namespace Numba.Tweening
         {
             return DoMainTextureOffset(material, textureOffset, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
+        #region MainTextureScale
         public static Tween DoMainTextureScale(this Material material, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.mainTextureScale, textureScale, (ts) => material.mainTextureScale = ts, duration, formula, loopsCount, loopType);
@@ -766,59 +761,251 @@ namespace Numba.Tweening
         {
             return DoMainTextureScale(material, textureScale, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
-        public static Tween DoTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        #region SetTextureOffset
+        public static Tween DoSetTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetTextureOffset(name), textureOffset, (to) => material.SetTextureOffset(name, to), duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoSetTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoTextureOffset(material, name, textureOffset, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoSetTextureOffset(material, name, textureOffset, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
-        public static Tween DoTextureScale(this Material material, string name, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        #region SetTextureScale
+        public static Tween DoSetTextureScale(this Material material, string name, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetTextureOffset(name), textureScale, (ts) => material.SetTextureScale(name, ts), duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoTextureScale(this Material material, string name, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoSetTextureScale(this Material material, string name, Vector2 textureScale, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoTextureScale(material, name, textureScale, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoSetTextureScale(material, name, textureScale, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region RenderQueue
+        public static Tween DoRenderQueue(this Material material, int queue, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.renderQueue, queue, (q) => material.renderQueue = q, duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoInt(this Material material, string name, int value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoRenderQueue(this Material material, int queue, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRenderQueue(material, queue, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SetInt
+        public static Tween DoSetInt(this Material material, string name, int value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetInt(name), value, (i) => material.SetInt(name, i), duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoInt(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoSetInt(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoInt(material, name, value, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoSetInt(material, name, value, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
-        public static Tween DoFloat(this Material material, string name, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        #region SetFloat
+        public static Tween DoSetFloat(this Material material, string name, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetFloat(name), value, (f) => material.SetFloat(name, f), duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoFloat(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoSetFloat(this Material material, string name, int value, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoFloat(material, name, value, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoSetFloat(material, name, value, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
-        public static Tween DoVector(this Material material, string name, Vector4 vector, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        #region SetVector
+        public static Tween DoSetVector(this Material material, string name, Vector4 vector, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetVector(name), vector, (v) => material.SetVector(name, v), duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoVector(this Material material, string name, Vector4 vector, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoSetVector(this Material material, string name, Vector4 vector, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoVector(material, name, vector, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoSetVector(material, name, vector, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
 
+        #region SetColor
+        public static Tween DoSetColor(this Material material, string name, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.GetColor(name), color, (c) => material.SetColor(name, c), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSetColor(this Material material, string name, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSetColor(material, name, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SetMatrix4x4
+        public static Tween DoSetMatrix(this Material material, string name, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.GetMatrix(name), matrix, (m) => material.SetMatrix(name, m), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSetMatrix(this Material material, string name, Matrix4x4 matrix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSetMatrix(material, name, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SetPass
+        public static Tween DoSetPass(this Material material, string name, int pass, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.FindPass(name), pass, (p) => material.SetPass(p), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSetPass(this Material material, string name, int pass, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSetPass(material, name, pass, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
         #region AudioSource
+        #region DopplerLevel
+        public static Tween DoDopplerLevel(this AudioSource audioSource, float level, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.dopplerLevel, level, (l) => audioSource.dopplerLevel = l, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoDopplerLevel(this AudioSource audioSource, float level, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoDopplerLevel(audioSource, level, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region MaxDistance
+        public static Tween DoMaxDistance(this AudioSource audioSource, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.maxDistance, distance, (d) => audioSource.maxDistance = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoMaxDistance(this AudioSource audioSource, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMaxDistance(audioSource, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region MinDistance
+        public static Tween DoMinDistance(this AudioSource audioSource, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.minDistance, distance, (d) => audioSource.minDistance = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoMinDistance(this AudioSource audioSource, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoMinDistance(audioSource, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region PanStereo
+        public static Tween DoPanStereo(this AudioSource audioSource, float stereo, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.panStereo, stereo, (s) => audioSource.panStereo = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPanStereo(this AudioSource audioSource, float stereo, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPanStereo(audioSource, stereo, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Pitch
+        public static Tween DoPitch(this AudioSource audioSource, float pitch, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.pitch, pitch, (p) => audioSource.pitch = p, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPitch(this AudioSource audioSource, float pitch, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPitch(audioSource, pitch, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Priority
+        public static Tween DoPriority(this AudioSource audioSource, int priority, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.priority, priority, (p) => audioSource.priority = p, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPriority(this AudioSource audioSource, int priority, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPriority(audioSource, priority, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ReverbZoneMix
+        public static Tween DoReverbZoneMix(this AudioSource audioSource, float mix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.reverbZoneMix, mix, (m) => audioSource.reverbZoneMix = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoReverbZoneMix(this AudioSource audioSource, float mix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoReverbZoneMix(audioSource, mix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SpatialBlend
+        public static Tween DoSpatialBlend(this AudioSource audioSource, float blend, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.spatialBlend, blend, (b) => audioSource.spatialBlend = b, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSpatialBlend(this AudioSource audioSource, float blend, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSpatialBlend(audioSource, blend, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Spread
+        public static Tween DoSpread(this AudioSource audioSource, float spread, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.spread, spread, (s) => audioSource.spread = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSpread(this AudioSource audioSource, float spread, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSpread(audioSource, spread, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Time
+        public static Tween DoTime(this AudioSource audioSource, float time, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.time, time, (t) => audioSource.time = t, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoTime(this AudioSource audioSource, float time, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTime(audioSource, time, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region TimeSamples
+        public static Tween DoTimeSamples(this AudioSource audioSource, int samples, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(audioSource.timeSamples, samples, (s) => audioSource.timeSamples = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoTimeSamples(this AudioSource audioSource, int samples, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTimeSamples(audioSource, samples, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Valume
         public static Tween DoVolume(this AudioSource audioSource, float volume, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.volume, volume, (v) => audioSource.volume = v, duration, formula, loopsCount, loopType);
@@ -829,8 +1016,94 @@ namespace Numba.Tweening
             return DoVolume(audioSource, volume, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
+        #endregion
 
         #region Camera
+        #region Aspect
+        public static Tween DoAspect(this Camera camera, float aspect, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.aspect, aspect, (a) => camera.aspect = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAspect(this Camera camera, float aspect, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAspect(camera, aspect, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region BackgroundColor
+        public static Tween DoBackgroundColor(this Camera camera, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.backgroundColor, color, (c) => camera.backgroundColor = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoBackgroundColor(this Camera camera, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoBackgroundColor(camera, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region CullingMask
+        public static Tween DoCullingMask(this Camera camera, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.cullingMask, mask, (m) => camera.cullingMask = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCullingMask(this Camera camera, int mask, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCullingMask(camera, mask, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region CullingMatrix
+        public static Tween DoCullingMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.cullingMatrix, matrix, (m) => camera.cullingMatrix = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCullingMatrix(this Camera camera, Matrix4x4 matrix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCullingMatrix(camera, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Depth
+        public static Tween DoDepth(this Camera camera, float depth, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.depth, depth, (d) => camera.depth = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoDepth(this Camera camera, float depth, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoDepth(camera, depth, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region EventMask
+        public static Tween DoEventMask(this Camera camera, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.eventMask, mask, (m) => camera.eventMask = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEventMask(this Camera camera, int mask, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEventMask(camera, mask, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region FarClipPlane
+        public static Tween DoFarClipPlane(this Camera camera, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.farClipPlane, distance, (d) => camera.farClipPlane = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoFarClipPlane(this Camera camera, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoFarClipPlane(camera, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region FieldOfView
         public static Tween DoFieldOfView(this Camera camera, float fieldOfView, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.fieldOfView, fieldOfView, (fov) => camera.fieldOfView = fov, duration, formula, loopsCount, loopType);
@@ -840,7 +1113,81 @@ namespace Numba.Tweening
         {
             return DoFieldOfView(camera, fieldOfView, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
 
+        #region FocalLength
+        public static Tween DoFocalLength(this Camera camera, float length, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.focalLength, length, (l) => camera.focalLength = l, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoFocalLength(this Camera camera, float length, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoFocalLength(camera, length, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region LensShift
+        public static Tween DoLensShift(this Camera camera, Vector2 shift, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.lensShift, shift, (s) => camera.lensShift = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoLensShift(this Camera camera, Vector2 shift, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoLensShift(camera, shift, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region NearClipPlane
+        public static Tween DoNearClipPlane(this Camera camera, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.nearClipPlane, distance, (d) => camera.nearClipPlane = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoNearClipPlane(this Camera camera, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoNearClipPlane(camera, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region NonJitteredProjectionMatrix
+        public static Tween DoNonJitteredProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.nonJitteredProjectionMatrix, matrix, (m) => camera.nonJitteredProjectionMatrix = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoNonJitteredProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoNonJitteredProjectionMatrix(camera, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region OrthographicSize
+        public static Tween DoOrthographicSize(this Camera camera, float size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.orthographicSize, size, (s) => camera.orthographicSize = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoOrthographicSize(this Camera camera, float size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoOrthographicSize(camera, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ProjectionMatrix
+        public static Tween DoProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.projectionMatrix, matrix, (m) => camera.projectionMatrix = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoProjectionMatrix(camera, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Rect
         public static Tween DoRect(this Camera camera, Rect rect, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.rect, rect, (r) => camera.rect = r, duration, formula, loopsCount, loopType);
@@ -850,6 +1197,79 @@ namespace Numba.Tweening
         {
             return DoRect(camera, rect, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
+        #endregion
+
+        #region SensorSize
+        public static Tween DoSensorSize(this Camera camera, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.sensorSize, size, (s) => camera.sensorSize = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSensorSize(this Camera camera, Vector2 size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSensorSize(camera, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region StereoConvergence
+        public static Tween DoStereoConvergence(this Camera camera, float convergence, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.stereoConvergence, convergence, (c) => camera.stereoConvergence = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoStereoConvergence(this Camera camera, float convergence, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoStereoConvergence(camera, convergence, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region StereoSeparation
+        public static Tween DoStereoSeparation(this Camera camera, float separation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.stereoSeparation, separation, (s) => camera.stereoSeparation = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoStereoSeparation(this Camera camera, float convergence, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoStereoSeparation(camera, convergence, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region TargetDisplay
+        public static Tween DoTargetDisplay(this Camera camera, int display, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.targetDisplay, display, (d) => camera.targetDisplay = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoTargetDisplay(this Camera camera, int display, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTargetDisplay(camera, display, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region TransparencySortAxis
+        public static Tween DoTransparencySortAxis(this Camera camera, Vector3 axis, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.transparencySortAxis, axis, (a) => camera.transparencySortAxis = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoTransparencySortAxis(this Camera camera, Vector3 axis, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoTransparencySortAxis(camera, axis, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region WorldToCameraMatrix
+        public static Tween DoWorldToCameraMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(camera.worldToCameraMatrix, matrix, (m) => camera.worldToCameraMatrix = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoWorldToCameraMatrix(this Camera camera, Matrix4x4 matrix, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoWorldToCameraMatrix(camera, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
         #endregion
 
         #region CanvasGroup
@@ -1361,6 +1781,18 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region ForwardFriction
+        public static Tween DoForwardFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.forwardFriction, friction, (f) => collider.forwardFriction = f, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoForwardFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoForwardFriction(collider, friction, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region Mass
         public static Tween DoMass(this WheelCollider collider, float mass, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -1397,6 +1829,18 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region SidewayFriction
+        public static Tween DoSidewayFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.sidewaysFriction, friction, (f) => collider.sidewaysFriction = f, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSidewayFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSidewayFriction(collider, friction, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region SteerAngle
         public static Tween DoSteerAngle(this WheelCollider collider, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -1421,6 +1865,18 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region SuspensionSpring
+        public static Tween DoSuspensionSpring(this WheelCollider collider, JointSpring spring, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.suspensionSpring, spring, (s) => collider.suspensionSpring = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSuspensionSpring(this WheelCollider collider, JointSpring spring, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSuspensionSpring(collider, spring, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region WheelDampingRate
         public static Tween DoWheelDampingRate(this WheelCollider collider, float rate, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -1430,6 +1886,56 @@ namespace Numba.Tweening
         public static Tween DoWheelDampingRate(this WheelCollider collider, float rate, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoWheelDampingRate(collider, rate, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region SpatialMappingBase
+        #region HalfBoxExtents
+        public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.halfBoxExtents, extents, (e) => collider.halfBoxExtents = e, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoHalfBoxExtents(collider, extents, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region NumUpdatesBeforeRemoval
+        public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.numUpdatesBeforeRemoval, updates, (u) => collider.numUpdatesBeforeRemoval = u, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoNumUpdatesBeforeRemoval(collider, updates, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SecondsBetweenUpdates
+        public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.secondsBetweenUpdates, seconds, (s) => collider.secondsBetweenUpdates = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSecondsBetweenUpdates(collider, seconds, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SphereRadius
+        public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.sphereRadius, radius, (r) => collider.sphereRadius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSphereRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
         #endregion
@@ -1510,7 +2016,411 @@ namespace Numba.Tweening
         }
         #endregion
 
-        
+        #region CompositeCollider2D
+        #region EdgeRadius
+        public static Tween DoEdgeRadius(this CompositeCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEdgeRadius(this CompositeCollider2D collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEdgeRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region VertexDistance
+        public static Tween DoVertexDistance(this CompositeCollider2D collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.vertexDistance, distance, (d) => collider.vertexDistance = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoVertexDistance(this CompositeCollider2D collider, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoVertexDistance(collider, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region EdgeCollider2D
+        public static Tween DoEdgeRadius(this EdgeCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEdgeRadius(this EdgeCollider2D collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEdgeRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region PolygonCollider2D
+        public static Tween DoPathCount(this PolygonCollider2D collider, int count, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(collider.pathCount, count, (c) => collider.pathCount = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPathCount(this PolygonCollider2D collider, int count, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPathCount(collider, count, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Light
+        #region AreaSize
+        public static Tween DoAreaSize(this Light light, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.areaSize, size, (s) => light.areaSize = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoAreaSize(this Light light, Vector2 size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoAreaSize(light, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region BounceIntensity
+        public static Tween DoBounceIntensity(this Light light, float intensity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.bounceIntensity, intensity, (i) => light.bounceIntensity = i, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoBounceIntensity(this Light light, float intensity, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoBounceIntensity(light, intensity, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Color
+        public static Tween DoColor(this Light light, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.color, color, (c) => light.color = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoColor(this Light light, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoColor(light, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ColorTemperature
+        public static Tween DoColorTemperature(this Light light, float temperature, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.colorTemperature, temperature, (t) => light.colorTemperature = t, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoColorTemperature(this Light light, float temperature, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoColorTemperature(light, temperature, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region CoockieSize
+        public static Tween DoCoockieSize(this Light light, float size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.cookieSize, size, (t) => light.cookieSize = t, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCoockieSize(this Light light, float size, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCoockieSize(light, size, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region CullingMask
+        public static Tween DoCullingMask(this Light light, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.cullingMask, mask, (m) => light.cullingMask = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoCullingMask(this Light light, int mask, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoCullingMask(light, mask, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Intensity
+        public static Tween DoIntensity(this Light light, float intensity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.intensity, intensity, (i) => light.intensity = i, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoIntensity(this Light light, float intensity, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoIntensity(light, intensity, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Range
+        public static Tween DoRange(this Light light, float range, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.range, range, (r) => light.range = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoRange(this Light light, float range, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoRange(light, range, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowAngle
+        public static Tween DoShadowAngle(this Light light, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowAngle, angle, (a) => light.shadowAngle = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowAngle(this Light light, float angle, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowAngle(light, angle, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowBias
+        public static Tween DoShadowBias(this Light light, float bias, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowBias, bias, (b) => light.shadowBias = b, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowBias(this Light light, float bias, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowBias(light, bias, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowCustomResolution
+        public static Tween DoShadowCustomResolution(this Light light, int resolution, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowCustomResolution, resolution, (r) => light.shadowCustomResolution = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowCustomResolution(this Light light, int resolution, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowCustomResolution(light, resolution, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowNearPlane
+        public static Tween DoShadowNearPlane(this Light light, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowNearPlane, distance, (d) => light.shadowNearPlane = d, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowNearPlane(this Light light, float distance, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowNearPlane(light, distance, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowNormalBias
+        public static Tween DoShadowNormalBias(this Light light, float bias, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowNormalBias, bias, (b) => light.shadowNormalBias = b, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowNormalBias(this Light light, float bias, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowNormalBias(light, bias, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowRadius
+        public static Tween DoShadowRadius(this Light light, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowRadius, radius, (r) => light.shadowRadius = r, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowRadius(this Light light, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowRadius(light, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region ShadowStrength
+        public static Tween DoShadowStrength(this Light light, float strenght, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.shadowStrength, strenght, (s) => light.shadowStrength = s, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoShadowStrength(this Light light, float strenght, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoShadowStrength(light, strenght, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region SpotAngle
+        public static Tween DoSpotAngle(this Light light, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(light.spotAngle, angle, (a) => light.spotAngle = a, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoSpotAngle(this Light light, float angle, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoSpotAngle(light, angle, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region LineRenderer
+        #region EndColor
+        public static Tween DoEndColor(this LineRenderer renderer, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.endColor, color, (c) => renderer.endColor = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEndColor(this LineRenderer renderer, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEndColor(renderer, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region EndWidth
+        public static Tween DoEndWidth(this LineRenderer renderer, float width, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.endWidth, width, (w) => renderer.endWidth = w, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoEndWidth(this LineRenderer renderer, float width, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoEndWidth(renderer, width, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region NumCapVertices
+        public static Tween DoNumCapVertices(this LineRenderer renderer, int vertices, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.numCapVertices, vertices, (v) => renderer.numCapVertices = v, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoNumCapVertices(this LineRenderer renderer, int vertices, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoNumCapVertices(renderer, vertices, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region NumCornerVertices
+        public static Tween DoNumCornerVertices(this LineRenderer renderer, int vertices, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.numCornerVertices, vertices, (v) => renderer.numCornerVertices = v, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoNumCornerVertices(this LineRenderer renderer, int vertices, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoNumCornerVertices(renderer, vertices, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region PositionCount
+        public static Tween DoPositionCount(this LineRenderer renderer, int count, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.positionCount, count, (c) => renderer.positionCount = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoPositionCount(this LineRenderer renderer, int count, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoPositionCount(renderer, count, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region StartColor
+        public static Tween DoStartColor(this LineRenderer renderer, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.startColor, color, (c) => renderer.startColor = c, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoStartColor(this LineRenderer renderer, Color color, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoStartColor(renderer, color, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region StartWidth
+        public static Tween DoStartWidth(this LineRenderer renderer, float width, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.startWidth, width, (w) => renderer.startWidth = w, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoStartWidth(this LineRenderer renderer, float width, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoStartWidth(renderer, width, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region WidthMultiplier
+        public static Tween DoWidthMultiplier(this LineRenderer renderer, float multiplier, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(renderer.widthMultiplier, multiplier, (m) => renderer.widthMultiplier = m, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoWidthMultiplier(this LineRenderer renderer, float multiplier, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoWidthMultiplier(renderer, multiplier, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region PhysicMaterial
+        #region Bounciness
+        public static Tween DoBounciness(this PhysicMaterial material, float bounciness, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.bounciness, bounciness, (b) => material.bounciness = b, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoBounciness(this PhysicMaterial material, float bounciness, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoBounciness(material, bounciness, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region DynamicFriction
+        public static Tween DoDynamicFriction(this PhysicMaterial material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.dynamicFriction, friction, (f) => material.dynamicFriction = f, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoDynamicFriction(this PhysicMaterial material, float friction, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoDynamicFriction(material, friction, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region StaticFriction
+        public static Tween DoStaticFriction(this PhysicMaterial material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.staticFriction, friction, (f) => material.staticFriction = f, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoStaticFriction(this PhysicMaterial material, float friction, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoStaticFriction(material, friction, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
+
+        #region PhysicsMaterial2D
+        #region Bounciness
+        public static Tween DoBounciness(this PhysicsMaterial2D material, float bounciness, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.bounciness, bounciness, (b) => material.bounciness = b, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoBounciness(this PhysicsMaterial2D material, float bounciness, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoBounciness(material, bounciness, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Friction
+        public static Tween DoFriction(this PhysicsMaterial2D material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(material.friction, friction, (f) => material.friction = f, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoFriction(this PhysicsMaterial2D material, float friction, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoFriction(material, friction, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+        #endregion
 
         private static Vector2 SetVectorValue(Vector2 vector2, int axis, float value)
         {

@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using Numba.Tweening.Tweaks;
-using Numba.Tweening.Engine;
 
 namespace Numba.Tweening
 {
@@ -79,6 +78,11 @@ namespace Numba.Tweening
         public static Tweak Create(Bounds from, Bounds to, Action<Bounds> setter)
         {
             return new TweakBounds(from, to, setter);
+        }
+
+        public static Tweak Create(Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter)
+        {
+            return new TweakMatrix4x4(from, to, setter);
         }
 
         public static Tweak Create(WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter)

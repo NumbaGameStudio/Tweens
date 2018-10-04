@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Numba.Tweening.Engine;
-using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
@@ -438,14 +436,14 @@ namespace Numba.Tweening
 
                 if (previousTime < targetDuration && currentTime > targetDuration)
                 {
-                    UpdatePlayables(loopType, Engine.Math.WrapCeil(previousTime, duration), duration, duration);
-                    UpdatePlayables(loopType, Engine.Math.WrapCeil(previousTime, duration) - duration, currentTime, duration);
+                    UpdatePlayables(loopType, Math.WrapCeil(previousTime, duration), duration, duration);
+                    UpdatePlayables(loopType, Math.WrapCeil(previousTime, duration) - duration, currentTime, duration);
 
                     return;
                 }
             }
 
-            if (previousTime >= 0f && previousTime <= durationWithLoops) previousTime = Engine.Math.WrapCeil(previousTime, duration);
+            if (previousTime >= 0f && previousTime <= durationWithLoops) previousTime = Math.WrapCeil(previousTime, duration);
 
             UpdatePlayables(loopType, previousTime, currentTime, duration);
         }
@@ -453,26 +451,26 @@ namespace Numba.Tweening
         private void UpdatePlayables(LoopType loopType, float previousTime, float currentTime, float duration)
         {
             if (loopType == LoopType.Forward)
-                UpdatePlayables(previousTime, () => Engine.Math.WrapCeil(currentTime, duration));
+                UpdatePlayables(previousTime, () => Math.WrapCeil(currentTime, duration));
             else if (loopType == LoopType.Backward)
-                UpdatePlayables(previousTime, () => duration - Engine.Math.WrapCeil(currentTime, duration));
+                UpdatePlayables(previousTime, () => duration - Math.WrapCeil(currentTime, duration));
             else if (loopType == LoopType.Yoyo)
             {
-                float repeatedYoyo = Engine.Math.WrapCeil(currentTime, duration * 2);
+                float repeatedYoyo = Math.WrapCeil(currentTime, duration * 2);
 
                 if (repeatedYoyo <= duration)
-                    UpdatePlayables(previousTime, () => Engine.Math.WrapCeil(repeatedYoyo, duration));
+                    UpdatePlayables(previousTime, () => Math.WrapCeil(repeatedYoyo, duration));
                 else
-                    UpdatePlayables(previousTime, () => duration - Engine.Math.WrapCeil(repeatedYoyo, duration));
+                    UpdatePlayables(previousTime, () => duration - Math.WrapCeil(repeatedYoyo, duration));
             }
             else
             {
-                float repeatedRevYoyo = Engine.Math.WrapCeil(currentTime, duration * 2);
+                float repeatedRevYoyo = Math.WrapCeil(currentTime, duration * 2);
 
                 if (repeatedRevYoyo <= duration)
-                    UpdatePlayables(previousTime, () => duration - Engine.Math.WrapCeil(repeatedRevYoyo, duration));
+                    UpdatePlayables(previousTime, () => duration - Math.WrapCeil(repeatedRevYoyo, duration));
                 else
-                    UpdatePlayables(previousTime, () => Engine.Math.WrapCeil(repeatedRevYoyo, duration));
+                    UpdatePlayables(previousTime, () => Math.WrapCeil(repeatedRevYoyo, duration));
             }
         }
 

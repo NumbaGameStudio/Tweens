@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Numba.Tweening.Tweaks;
-using Numba.Tweening.Engine;
 using System;
 using UnityEngine.UI;
-using UnityTime = UnityEngine.Time;
+using Numba.Tweening.Static;
 
 namespace Numba.Tweening
 {
@@ -319,6 +318,28 @@ namespace Numba.Tweening
         }
         #endregion
 
+        #region Matrix4x4
+        public static Tween Create(Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween Create(Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
+        }
+
+        public static Tween Create(string name, Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region WheelFrictionCurve
         public static Tween Create(WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
@@ -421,7 +442,7 @@ namespace Numba.Tweening
 
         static Tween()
         {
-            Time = new Engine.Time();
+            Time = new Static.Time();
         }
         #endregion
 
@@ -488,7 +509,7 @@ namespace Numba.Tweening
             }
         }
 
-        public static Engine.Time Time { get; private set; }
+        public static Static.Time Time { get; private set; }
         #endregion
 
         #region Methods
@@ -563,17 +584,17 @@ namespace Numba.Tweening
             time = Mathf.Clamp(time, 0f, durationWithLoops);
 
             if (loopType == LoopType.Forward)
-                SetTweakTime(tweak, formula, () => Engine.Math.WrapCeil(time, duration) / duration);
+                SetTweakTime(tweak, formula, () => Math.WrapCeil(time, duration) / duration);
             else if (loopType == LoopType.Backward)
-                SetTweakTime(tweak, formula, () => Engine.Math.WrapCeil(time, duration) / duration, true);
+                SetTweakTime(tweak, formula, () => Math.WrapCeil(time, duration) / duration, true);
             else if (loopType == LoopType.Reversed)
-                SetTweakTime(tweak, formula, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
+                SetTweakTime(tweak, formula, () => 1f - Math.WrapCeil(time, duration) / duration);
             else if (loopType == LoopType.Yoyo)
-                SetTweakTime(tweak, formula, () => Engine.Math.WrapCeil(time, duration) / duration, IsYoyoBackward(time, duration));
+                SetTweakTime(tweak, formula, () => Math.WrapCeil(time, duration) / duration, IsYoyoBackward(time, duration));
             else
             {
-                if (IsYoyoBackward(time, duration)) SetTweakTime(tweak, formula, () => 1f - Engine.Math.WrapCeil(time, duration) / duration);
-                else SetTweakTime(tweak, formula, () => Engine.Math.WrapCeil(time, duration) / duration);
+                if (IsYoyoBackward(time, duration)) SetTweakTime(tweak, formula, () => 1f - Math.WrapCeil(time, duration) / duration);
+                else SetTweakTime(tweak, formula, () => Math.WrapCeil(time, duration) / duration);
             }
         }
 

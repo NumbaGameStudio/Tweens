@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Engine
+namespace Numba.Tweening
 {
     internal static class Formulas
     {

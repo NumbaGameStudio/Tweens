@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Engine
+namespace Numba.Tweening
 {
-	public static class ListExtensions 
+	internal static class ListExtensions 
 	{
 		public static void SortPart<T>(this List<T> list, int startIndex, int count, Comparison<T> comparison)
         {

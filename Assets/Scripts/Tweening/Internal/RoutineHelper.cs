@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Engine
+namespace Numba.Tweening
 {
     /// <summary>
     /// Help run coroutines. 
     /// Auto created, not destroyable and not visible in hierarchy.
     /// </summary>
-    public sealed class RoutineHelper : MonoBehaviour
+    internal sealed class RoutineHelper : MonoBehaviour
     {
         /// <summary>
         /// Return instance of this class (singleton pattern).

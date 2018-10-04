@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
-using Numba.Tweening.Engine;
-using Numba.Tweening.Tweaks;
-using UnityEngine.UI;
 
 namespace Namespace
 {
