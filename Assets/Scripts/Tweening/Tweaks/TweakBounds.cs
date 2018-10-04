@@ -14,7 +14,7 @@ namespace Numba.Tweening.Tweaks
 
         public override Bounds Evaluate(float interpolation, Formula formula, bool swapFromTo = false)
         {
-            return Evaluate(swapFromTo, (from, to) => new Bounds(Easing.Ease(from.center, to.center, interpolation, formula), Easing.Ease(from.size, to.size, interpolation, formula)));
+            return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
         }
 
         public override Bounds Evaluate(float interpolation, Ease ease, bool swapFromTo = false)

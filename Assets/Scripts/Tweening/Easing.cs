@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Numba.Tweening.Engine;
+using UnityEngine.UI;
 
 namespace Numba.Tweening
 {
@@ -169,6 +170,58 @@ namespace Numba.Tweening
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
         }
         #endregion
+
+        #region ColorBlock
+        public static ColorBlock Ease(ColorBlock from, ColorBlock to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static ColorBlock Ease(ColorBlock from, ColorBlock to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
+        #region Bounds
+        public static Bounds Ease(Bounds from, Bounds to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static Bounds Ease(Bounds from, Bounds to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
+        #region WheelFrictionCurve
+        public static WheelFrictionCurve Ease(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static WheelFrictionCurve Ease(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
+
+        #region JointSpring
+        public static JointSpring Ease(JointSpring from, JointSpring to, float interpolation, Formula formula)
+        {
+            CheckFormula(formula);
+            return Linear(from, to, formula.Calculate(interpolation));
+        }
+
+        public static JointSpring Ease(JointSpring from, JointSpring to, float interpolation, Ease ease)
+        {
+            return Ease(from, to, interpolation, Formulas.GetFormula(ease));
+        }
+        #endregion
         #endregion
 
         #region Linear
@@ -250,6 +303,46 @@ namespace Numba.Tweening
         public static Color32 Linear(Color32 from, Color32 to, float interpolation)
         {
             return Linear((Color)from, (Color)to, interpolation);
+        }
+
+        public static ColorBlock Linear(ColorBlock from, ColorBlock to, float interpolation)
+        {
+            return new ColorBlock()
+            {
+                colorMultiplier = Linear(from.colorMultiplier, to.colorMultiplier, interpolation),
+                disabledColor = Linear(from.disabledColor, to.disabledColor, interpolation),
+                fadeDuration = Linear(from.fadeDuration, to.fadeDuration, interpolation),
+                highlightedColor = Linear(from.highlightedColor, to.highlightedColor, interpolation),
+                normalColor = Linear(from.normalColor, to.normalColor, interpolation),
+                pressedColor = Linear(from.pressedColor, to.pressedColor, interpolation)
+            };
+        }
+
+        public static Bounds Linear(Bounds from, Bounds to, float interpolation)
+        {
+            return new Bounds(Linear(from.center, to.center, interpolation), Linear(from.size, to.size, interpolation));
+        }
+
+        public static WheelFrictionCurve Linear(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation)
+        {
+            return new WheelFrictionCurve()
+            {
+                asymptoteSlip = Linear(from.asymptoteSlip, to.asymptoteSlip, interpolation),
+                asymptoteValue = Linear(from.asymptoteValue, to.asymptoteValue, interpolation),
+                extremumSlip = Linear(from.extremumSlip, to.extremumSlip, interpolation),
+                extremumValue = Linear(from.extremumValue, to.extremumValue, interpolation),
+                stiffness = Linear(from.stiffness, to.stiffness, interpolation),
+            };
+        }
+
+        public static JointSpring Linear(JointSpring from, JointSpring to, float interpolation)
+        {
+            return new JointSpring()
+            {
+                damper = Linear(from.damper, to.damper, interpolation),
+                spring = Linear(from.spring, to.spring, interpolation),
+                targetPosition = Linear(from.targetPosition, to.targetPosition, interpolation)
+            };
         }
         #endregion
     }

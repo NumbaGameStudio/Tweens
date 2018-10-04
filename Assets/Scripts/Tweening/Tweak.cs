@@ -11,6 +11,16 @@ namespace Numba.Tweening
     public abstract class Tweak
     {
         #region Create
+        public static Tweak Create(int from, int to, Action<int> setter)
+        {
+            return new TweakInt(from, to, setter);
+        }
+
+        public static Tweak Create(long from, long to, Action<long> setter)
+        {
+            return new TweakLong(from, to, setter);
+        }
+
         public static Tweak Create(float from, float to, Action<float> setter)
         {
             return new TweakFloat(from, to, setter);
@@ -21,14 +31,9 @@ namespace Numba.Tweening
             return new TweakDouble(from, to, setter);
         }
 
-        public static Tweak Create(int from, int to, Action<int> setter)
+        public static Tweak Create(DateTime from, DateTime to, Action<DateTime> setter)
         {
-            return new TweakInt(from, to, setter);
-        }
-
-        public static Tweak Create(long from, long to, Action<long> setter)
-        {
-            return new TweakLong(from, to, setter);
+            return new TweakDateTime(from, to, setter);
         }
 
         public static Tweak Create(Vector2 from, Vector2 to, Action<Vector2> setter)
@@ -51,6 +56,11 @@ namespace Numba.Tweening
             return new TweakQuaternion(from, to, setter);
         }
 
+        public static Tweak Create(Rect from, Rect to, Action<Rect> setter)
+        {
+            return new TweakRect(from, to, setter);
+        }
+
         public static Tweak Create(Color from, Color to, Action<Color> setter)
         {
             return new TweakColor(from, to, setter);
@@ -61,14 +71,9 @@ namespace Numba.Tweening
             return new TweakColor32(from, to, setter);
         }
 
-        public static Tweak Create(DateTime from, DateTime to, Action<DateTime> setter)
+        public static Tweak Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter)
         {
-            return new TweakDateTime(from, to, setter);
-        }
-
-        public static Tweak Create(Rect from, Rect to, Action<Rect> setter)
-        {
-            return new TweakRect(from, to, setter);
+            return new TweakColorBlock(from, to, setter);
         }
 
         public static Tweak Create(Bounds from, Bounds to, Action<Bounds> setter)
@@ -76,9 +81,14 @@ namespace Numba.Tweening
             return new TweakBounds(from, to, setter);
         }
 
-        public static Tweak Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter)
+        public static Tweak Create(WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter)
         {
-            return new TweakColorBlock(from, to, setter);
+            return new TweakWheelFrictionCurve(from, to, setter);
+        }
+
+        public static Tweak Create(JointSpring from, JointSpring to, Action<JointSpring> setter)
+        {
+            return new TweakJointSpring(from, to, setter);
         }
         #endregion
 
