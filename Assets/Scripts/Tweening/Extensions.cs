@@ -10,6 +10,18 @@ namespace Numba.Tweening
 {
     public static class Extensions
     {
+        #region UnityEngine.Object
+        public static Tween DoName(this UnityEngine.Object obj, string name, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(obj.name, name, (n) => obj.name = n, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoName(this UnityEngine.Object obj, string name, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoName(obj, name, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
         #region Transform
         #region Move
         #region Global
@@ -1318,6 +1330,18 @@ namespace Numba.Tweening
         public static Tween DoLineSpacing(this Text text, float spacing, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoLineSpacing(text, spacing, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        }
+        #endregion
+
+        #region Text
+        public static Tween DoText(this Text textComponent, string text, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return Tween.Create(textComponent.text, text, (t) => textComponent.text = t, duration, formula, loopsCount, loopType);
+        }
+
+        public static Tween DoText(this Text textComponent, string text, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        {
+            return DoText(textComponent, text, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
         #endregion
