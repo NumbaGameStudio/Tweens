@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Represent base class for internal (built-in) formulas.
+    /// </summary>
 	internal abstract class InternalFormula : Formula 
 	{
+        /// <summary>
+        /// Formula's associated ease type.
+        /// </summary>
         public abstract new Ease Ease { get; }
 	}
 }

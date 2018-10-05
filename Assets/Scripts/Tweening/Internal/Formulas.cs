@@ -5,53 +5,123 @@ using UnityEngine;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Contain cached built-in formulas 
+    /// and methods for work with them.
+    /// </summary>
     internal static class Formulas
     {
         private static Formula[] _formulas = new Formula[22];
 
         #region Formulas
+        /// <summary>
+        /// Linear formula.
+        /// </summary>
         internal static LinearFormula Linear { get; private set; }
 
+        /// <summary>
+        /// Quadratic formula with acceleration.
+        /// </summary>
         internal static QuadraticInFormula InQuad { get; private set; }
 
+        /// <summary>
+        /// Quadratic formula with slowdown.
+        /// </summary>
         internal static QuadraticOutFormula OutQuad { get; private set; }
 
+        /// <summary>
+        /// Quadratic formula with acceleration and slowdown.
+        /// </summary>
         internal static QuadraticInOutFormula InOutQuad { get; private set; }
 
+        /// <summary>
+        /// Cubic formula with acceleration.
+        /// </summary>
         internal static CubicInFormula InCubic { get; private set; }
 
+        /// <summary>
+        /// Cubic formula with slowdown.
+        /// </summary>
         internal static CubicOutFormula OutCubic { get; private set; }
 
+        /// <summary>
+        /// Cubic formula with acceleration and slowdown.
+        /// </summary>
         internal static CubicInOutFormula InOutCubic { get; private set; }
 
+        /// <summary>
+        /// Quartic formula with acceleration.
+        /// </summary>
         internal static QuarticInFormula InQuart { get; private set; }
 
+        /// <summary>
+        /// Quartic formula with slowdown.
+        /// </summary>
         internal static QuarticOutFormula OutQuart { get; private set; }
 
+        /// <summary>
+        /// Quartic formula with acceleration and slowdown.
+        /// </summary>
         internal static QuarticInOutFormula InOutQuart { get; private set; }
 
+        /// <summary>
+        /// Quintic formula with acceleration.
+        /// </summary>
         internal static QuinticInFormula InQuint { get; private set; }
 
+        /// <summary>
+        /// Quintic formula with slowdown.
+        /// </summary>
         internal static QuinticOutFormula OutQuint { get; private set; }
 
+        /// <summary>
+        /// Quintic formula with acceleration and slowdown.
+        /// </summary>
         internal static QuinticInOutFormula InOutQuint { get; private set; }
 
+        /// <summary>
+        /// Sinusoidal formula with acceleration.
+        /// </summary>
         internal static SinusoidalInFormula InSine { get; private set; }
 
+        /// <summary>
+        /// Sinusoidal formula with slowdown.
+        /// </summary>
         internal static SinusoidalOutFormula OutSine { get; private set; }
 
+        /// <summary>
+        /// Sinusoidal formula with acceleration and slowdown.
+        /// </summary>
         internal static SinusoidalInOutFormula InOutSine { get; private set; }
 
+        /// <summary>
+        /// Exponential formula with acceleration.
+        /// </summary>
         internal static ExponentialInFormula InExpo { get; private set; }
 
+        /// <summary>
+        /// Exponential formula with slowdown.
+        /// </summary>
         internal static ExponentialOutFormula OutExpo { get; private set; }
 
+        /// <summary>
+        /// Exponential formula with acceleration and slowdown.
+        /// </summary>
         internal static ExponentialInOutFormula InOutExpo { get; private set; }
 
+        /// <summary>
+        /// Circular formula with acceleration.
+        /// </summary>
         internal static CircularInFormula InCirc { get; private set; }
 
+        /// <summary>
+        /// Circular formula with slowdown.
+        /// </summary>
         internal static CircularOutFormula OutCirc { get; private set; }
 
+        /// <summary>
+        /// Circular formula with acceleration and slowdown.
+        /// </summary>
         internal static CircularInOutFormula InOutCirc { get; private set; }
         #endregion
 
@@ -81,6 +151,12 @@ namespace Numba.Tweening
             _formulas[21] = InOutCirc = new CircularInOutFormula();
         }
 
+        /// <summary>
+        /// Get build-in formula by ease type.
+        /// </summary>
+        /// <param name="ease">Associated with built-in formula ease type.</param>
+        /// <returns>Associated with ease type built-in formula.</returns>
+        /// <exception cref="ArgumentException">Thrown when ease type is Ease.Other</exception>
         public static Formula GetFormula(Ease ease)
         {
             if (ease == Ease.Other)

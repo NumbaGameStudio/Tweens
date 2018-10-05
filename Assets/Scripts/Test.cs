@@ -22,6 +22,7 @@ namespace Namespace
 
         private void Start()
         {
+
             _text.DoText("Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens!", 1f, Ease.InOutExpo, -1, LoopType.ReversedYoyo).Play();
         }
     }

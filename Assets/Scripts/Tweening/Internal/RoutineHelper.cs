@@ -5,21 +5,20 @@ using UnityEngine;
 namespace Numba.Tweening
 {
     /// <summary>
-    /// Help run coroutines. 
-    /// Auto created, not destroyable and not visible in hierarchy.
+    /// <para>Help run coroutines.</para>
+    /// <para>Auto created, not destroyable and not visible in hierarchy.</para>
     /// </summary>
     internal sealed class RoutineHelper : MonoBehaviour
     {
         /// <summary>
-        /// Return instance of this class (singleton pattern).
-        /// Returned object will not be visualized in hierarchy and
-        /// not be destroyed between scenes loading.
+        /// <para>Return instance of this class (singleton pattern).</para>
+        /// <para>Returned object will not be visualized in hierarchy and not be destroyed between scenes loading.</para>
         /// </summary>
         public static RoutineHelper Instance { get; private set; }
 
         /// <summary>
-        /// Create and save one instance of this class (singleton pattern).
-        /// Created object will not be visible in hierarchy and do not destroyed between scenes.
+        /// <para>Create and save one instance of this class (singleton pattern).</para>
+        /// <para>Created object will not be visible in hierarchy and do not destroyed between scenes.</para>
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void CreateInstance()
