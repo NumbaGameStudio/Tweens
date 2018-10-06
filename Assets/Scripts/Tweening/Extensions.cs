@@ -8,9 +8,22 @@ using UnityEngine.XR.WSA;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Extensions for a lot of unity types.
+    /// </summary>
     public static class Extensions
     {
         #region UnityEngine.Object
+        /// <summary>
+        /// Create and return tween which animate name of the object.
+        /// </summary>
+        /// <param name="obj">Target object.</param>
+        /// <param name="name">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate object's name.</returns>
         public static Tween DoName(this UnityEngine.Object obj, string name, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(obj.name, name, (n) => obj.name = n, duration, formula, loopsCount, loopType);
@@ -26,6 +39,16 @@ namespace Numba.Tweening
         #region Move
         #region Global
         #region X axis
+        /// <summary>
+        /// Create and return tween which move transform along global x axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global x axis' position.</returns>
         public static Tween DoPositionX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.x, (px) => ChangeTransformPosition(transform, Space.World, 0, px), x, duration, formula, loopsCount, loopType);
@@ -38,6 +61,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Y axis
+        /// <summary>
+        /// Create and return tween which move transform along global y axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global y axis' position.</returns>
         public static Tween DoPositionY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.y, (py) => ChangeTransformPosition(transform, Space.World, 1, py), y, duration, formula, loopsCount, loopType);
@@ -50,6 +83,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Z axis
+        /// <summary>
+        /// Create and return tween which move transform along global z axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global z axis' position.</returns>
         public static Tween DoPositionZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.position.z, (pz) => ChangeTransformPosition(transform, Space.World, 2, pz), z, duration, formula, loopsCount, loopType);
@@ -62,6 +105,18 @@ namespace Numba.Tweening
         #endregion
 
         #region XYZ axis
+        /// <summary>
+        /// Create and return tween which move transform in global space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="z">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global position.</returns>
         public static Tween DoPosition(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.World, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
@@ -72,6 +127,16 @@ namespace Numba.Tweening
             return DoPosition(transform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move transform in global space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="position">Global position end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global position.</returns>
         public static Tween DoPosition(this Transform transform, Vector3 position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.World, position, duration, formula, loopsCount, loopType);
@@ -86,6 +151,16 @@ namespace Numba.Tweening
 
         #region Local
         #region X axis
+        /// <summary>
+        /// Create and return tween which move transform along local x axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local x axis' position.</returns>
         public static Tween DoLocalPositionX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.x, (lpx) => ChangeTransformPosition(transform, Space.Self, 0, lpx), x, duration, formula, loopsCount, loopType);
@@ -98,6 +173,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Y axis
+        /// <summary>
+        /// Create and return tween which move transform along local y axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local y axis' position.</returns>
         public static Tween DoLocalPositionY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.y, (lpy) => ChangeTransformPosition(transform, Space.Self, 1, lpy), y, duration, formula, loopsCount, loopType);
@@ -110,6 +195,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Z axis
+        /// <summary>
+        /// Create and return tween which move transform along local z axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="z">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local z axis' position.</returns>
         public static Tween DoLocalPositionZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoMoveAlongAxis(() => transform.localPosition.z, (lpz) => ChangeTransformPosition(transform, Space.Self, 2, lpz), z, duration, formula, loopsCount, loopType);
@@ -122,6 +217,18 @@ namespace Numba.Tweening
         #endregion
 
         #region XYZ axis
+        /// <summary>
+        /// Create and return tween which move transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="z">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local position.</returns>
         public static Tween DoLocalPosition(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.Self, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
@@ -132,6 +239,16 @@ namespace Numba.Tweening
             return DoLocalPosition(transform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="localPosition">Local position end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local position.</returns>
         public static Tween DoLocalPosition(this Transform transform, Vector3 localPosition, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoPosition(transform, Space.Self, localPosition, duration, formula, loopsCount, loopType);
@@ -167,6 +284,16 @@ namespace Numba.Tweening
         #region Rotation
         #region Global
         #region X axis
+        /// <summary>
+        /// Create and return tween which rotate transform around global x axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global x axis euler angle.</returns>
         public static Tween DoEulerAnglesX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.x, x, (eax) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 0, eax), duration, formula, loopsCount, loopType);
@@ -179,6 +306,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Y axis
+        /// <summary>
+        /// Create and return tween which rotate transform around global y axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global y axis euler angle.</returns>
         public static Tween DoEulerAnglesY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.y, y, (eay) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 1, eay), duration, formula, loopsCount, loopType);
@@ -191,6 +328,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Z axis
+        /// <summary>
+        /// Create and return tween which rotate transform around global z axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's global z axis euler angle.</returns>
         public static Tween DoEulerAnglesZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.eulerAngles.z, z, (eaz) => transform.eulerAngles = SetVectorValue(transform.eulerAngles, 2, eaz), duration, formula, loopsCount, loopType);
@@ -203,6 +350,18 @@ namespace Numba.Tweening
         #endregion
 
         #region XYZ axis
+        /// <summary>
+        /// Create and return tween which rotate transform in global space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="z">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in global space.</returns>
         public static Tween DoEulerAngles(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.World, Quaternion.Euler(x, y, z), duration, formula, loopsCount, loopType);
@@ -213,6 +372,16 @@ namespace Numba.Tweening
             return DoEulerAngles(transform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which rotate transform in global space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="eulerAngles">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in global space.</returns>
         public static Tween DoEulerAngles(this Transform transform, Vector3 eulerAngles, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.World, Quaternion.Euler(eulerAngles), duration, formula, loopsCount, loopType);
@@ -223,6 +392,16 @@ namespace Numba.Tweening
             return DoEulerAngles(transform, eulerAngles, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which rotate transform in global space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="rotation">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in global space.</returns>
         public static Tween DoRotation(this Transform transform, Quaternion rotation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.World, rotation, duration, formula, loopsCount, loopType);
@@ -237,6 +416,16 @@ namespace Numba.Tweening
 
         #region Local
         #region X axis
+        /// <summary>
+        /// Create and return tween which rotate transform around local x axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local x axis euler angle.</returns>
         public static Tween DoLocalEulerAnglesX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.x, x, (leax) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 0, leax), duration, formula, loopsCount, loopType);
@@ -249,6 +438,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Y axis
+        /// <summary>
+        /// Create and return tween which rotate transform around local y axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local y axis euler angle.</returns>
         public static Tween DoLocalEulerAnglesY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.y, y, (leay) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 1, leay), duration, formula, loopsCount, loopType);
@@ -261,6 +460,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Z axis
+        /// <summary>
+        /// Create and return tween which rotate transform around local z axis.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local z axis euler angle.</returns>
         public static Tween DoLocalEulerAnglesZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotateAroundAxis(() => transform.localEulerAngles.z, z, (leaz) => transform.localEulerAngles = SetVectorValue(transform.localEulerAngles, 2, leaz), duration, formula, loopsCount, loopType);
@@ -273,6 +482,18 @@ namespace Numba.Tweening
         #endregion
 
         #region XYZ axis
+        /// <summary>
+        /// Create and return tween which rotate transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="z">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in local space.</returns>
         public static Tween DoLocalEulerAngles(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.Self, Quaternion.Euler(x, y, z), duration, formula, loopsCount, loopType);
@@ -283,6 +504,16 @@ namespace Numba.Tweening
             return DoLocalEulerAngles(transform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which rotate transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="eulerAngles">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in local space.</returns>
         public static Tween DoLocalEulerAngles(this Transform transform, Vector3 localEulerAngles, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.Self, Quaternion.Euler(localEulerAngles), duration, formula, loopsCount, loopType);
@@ -293,6 +524,16 @@ namespace Numba.Tweening
             return DoLocalEulerAngles(transform, localEulerAngles, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which rotate transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform</param>
+        /// <param name="rotation">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which rotate transform in local space.</returns>
         public static Tween DoLocalRotation(this Transform transform, Quaternion localRotation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoRotation(transform, Space.Self, localRotation, duration, formula, loopsCount, loopType);
@@ -321,6 +562,16 @@ namespace Numba.Tweening
 
         #region Scale
         #region X axis
+        /// <summary>
+        /// Create and return tween which scale transform along local x axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local x axis' scale.</returns>
         public static Tween DoLocalScaleX(this Transform transform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.x, x, (lsx) => transform.localScale = SetVectorValue(transform.localScale, 0, lsx), duration, formula, loopsCount, loopType);
@@ -333,6 +584,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Y axis
+        /// <summary>
+        /// Create and return tween which scale transform along local y axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local y axis' scale.</returns>
         public static Tween DoLocalScaleY(this Transform transform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.y, y, (lsy) => transform.localScale = SetVectorValue(transform.localScale, 1, lsy), duration, formula, loopsCount, loopType);
@@ -345,6 +606,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Z axis
+        /// <summary>
+        /// Create and return tween which scale transform along local z axis.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local z axis' scale.</returns>
         public static Tween DoLocalScaleZ(this Transform transform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale.z, z, (lsz) => transform.localScale = SetVectorValue(transform.localScale, 2, lsz), duration, formula, loopsCount, loopType);
@@ -357,6 +628,16 @@ namespace Numba.Tweening
         #endregion
 
         #region XYZ axis
+        /// <summary>
+        /// Create and return tween which scale transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="uniformScale">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local scale.</returns>
         public static Tween DoLocalScale(this Transform transform, float uniformScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoLocalScale(transform, new Vector3(uniformScale, uniformScale, uniformScale), duration, formula, loopsCount, loopType);
@@ -367,6 +648,18 @@ namespace Numba.Tweening
             return DoLocalScale(transform, uniformScale, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which scale transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="x">Y axis end value.</param>
+        /// <param name="x">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local scale.</returns>
         public static Tween DoLocalScale(this Transform transform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return DoLocalScale(transform, new Vector3(x, y, z), duration, formula, loopsCount, loopType);
@@ -377,6 +670,16 @@ namespace Numba.Tweening
             return DoLocalScale(transform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which scale transform in local space.
+        /// </summary>
+        /// <param name="transform">Target tranform.</param>
+        /// <param name="localScale">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate transform's local scale.</returns>
         public static Tween DoLocalScale(this Transform transform, Vector3 localScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(transform.localScale, localScale, (ls) => transform.localScale = ls, duration, formula, loopsCount, loopType);

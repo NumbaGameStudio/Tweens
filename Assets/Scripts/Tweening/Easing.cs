@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Contain ease methods for a lot of system or unity classes.
+    /// </summary>
     public static class Easing
     {
         private static void CheckFormula(Formula formula)
@@ -16,12 +19,28 @@ namespace Numba.Tweening
 
         #region Ease
         #region Int
+        /// <summary>
+        /// Easing between two Int values with custom formula.
+        /// </summary>
+        /// <param name="from">From Int value.</param>
+        /// <param name="to">To Int value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Int value</returns>
         public static int Ease(int from, int to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Int values with custom formula.
+        /// </summary>
+        /// <param name="from">From Int value.</param>
+        /// <param name="to">To Int value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Int value</returns>
         public static int Ease(int from, int to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -29,12 +48,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Long
+        /// <summary>
+        /// Easing between two Long values with custom formula.
+        /// </summary>
+        /// <param name="from">From Long value.</param>
+        /// <param name="to">To Long value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Long value</returns>
         public static long Ease(long from, long to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Long values with custom formula.
+        /// </summary>
+        /// <param name="from">From Long value.</param>
+        /// <param name="to">To Long value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Long value</returns>
         public static long Ease(long from, long to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -42,12 +77,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Float
+        /// <summary>
+        /// Easing between two Float values with custom formula.
+        /// </summary>
+        /// <param name="from">From Float value.</param>
+        /// <param name="to">To Float value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Float value</returns>
         public static float Ease(float from, float to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Float values with custom formula.
+        /// </summary>
+        /// <param name="from">From Float value.</param>
+        /// <param name="to">To Float value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Float value</returns>
         public static float Ease(float from, float to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -55,12 +106,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Double
+        /// <summary>
+        /// Easing between two Double values with custom formula.
+        /// </summary>
+        /// <param name="from">From Double value.</param>
+        /// <param name="to">To Double value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Double value</returns>
         public static double Ease(double from, double to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Double values with custom formula.
+        /// </summary>
+        /// <param name="from">From Double value.</param>
+        /// <param name="to">To Double value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Double value</returns>
         public static double Ease(double from, double to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -68,12 +135,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Char
+        /// <summary>
+        /// Easing between two Char values with custom formula.
+        /// </summary>
+        /// <param name="from">From Char value.</param>
+        /// <param name="to">To Char value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Char value</returns>
         public static char Ease(char from, char to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return (char)Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Char values with custom formula.
+        /// </summary>
+        /// <param name="from">From Char value.</param>
+        /// <param name="to">To Char value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Char value</returns>
         public static char Ease(char from, char to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -81,12 +164,28 @@ namespace Numba.Tweening
         #endregion
 
         #region String
+        /// <summary>
+        /// Easing between two String values with custom formula.
+        /// </summary>
+        /// <param name="from">From String value.</param>
+        /// <param name="to">To String value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased String value</returns>
         public static string Ease(string from, string to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two String values with custom formula.
+        /// </summary>
+        /// <param name="from">From String value.</param>
+        /// <param name="to">To String value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased String value</returns>
         public static string Ease(string from, string to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -94,12 +193,28 @@ namespace Numba.Tweening
         #endregion
 
         #region DateTime
+        /// <summary>
+        /// Easing between two DateTime values with custom formula.
+        /// </summary>
+        /// <param name="from">From DateTime value.</param>
+        /// <param name="to">To DateTime value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased DateTime value</returns>
         public static DateTime Ease(DateTime from, DateTime to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two DateTime values with custom formula.
+        /// </summary>
+        /// <param name="from">From DateTime value.</param>
+        /// <param name="to">To DateTime value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased DateTime value</returns>
         public static DateTime Ease(DateTime from, DateTime to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -107,12 +222,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector2
+        /// <summary>
+        /// Easing between two Vector2 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector2 value.</param>
+        /// <param name="to">To Vector2 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Vector2 value</returns>
         public static Vector2 Ease(Vector2 from, Vector2 to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Vector2 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector2 value.</param>
+        /// <param name="to">To Vector2 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Vector2 value</returns>
         public static Vector2 Ease(Vector2 from, Vector2 to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -120,12 +251,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector3
+        /// <summary>
+        /// Easing between two Vector3 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector3 value.</param>
+        /// <param name="to">To Vector3 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Vector3 value</returns>
         public static Vector3 Ease(Vector3 from, Vector3 to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Vector3 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector3 value.</param>
+        /// <param name="to">To Vector3 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Vector3 value</returns>
         public static Vector3 Ease(Vector3 from, Vector3 to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -133,12 +280,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector4
+        /// <summary>
+        /// Easing between two Vector4 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector4 value.</param>
+        /// <param name="to">To Vector4 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Vector4 value</returns>
         public static Vector4 Ease(Vector4 from, Vector4 to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Vector4 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Vector4 value.</param>
+        /// <param name="to">To Vector4 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Vector4 value</returns>
         public static Vector4 Ease(Vector4 from, Vector4 to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -146,12 +309,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Quaternion
+        /// <summary>
+        /// Easing between two Quaternion values with custom formula.
+        /// </summary>
+        /// <param name="from">From Quaternion value.</param>
+        /// <param name="to">To Quaternion value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Quaternion value</returns>
         public static Quaternion Ease(Quaternion from, Quaternion to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Quaternion values with custom formula.
+        /// </summary>
+        /// <param name="from">From Quaternion value.</param>
+        /// <param name="to">To Quaternion value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Quaternion value</returns>
         public static Quaternion Ease(Quaternion from, Quaternion to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -159,12 +338,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Rect
+        /// <summary>
+        /// Easing between two Rect values with custom formula.
+        /// </summary>
+        /// <param name="from">From Rect value.</param>
+        /// <param name="to">To Rect value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Rect value</returns>
         public static Rect Ease(Rect from, Rect to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Rect values with custom formula.
+        /// </summary>
+        /// <param name="from">From Rect value.</param>
+        /// <param name="to">To Rect value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Rect value</returns>
         public static Rect Ease(Rect from, Rect to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -172,12 +367,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Color
+        /// <summary>
+        /// Easing between two Color values with custom formula.
+        /// </summary>
+        /// <param name="from">From Color value.</param>
+        /// <param name="to">To Color value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Color value</returns>
         public static Color Ease(Color from, Color to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Color values with custom formula.
+        /// </summary>
+        /// <param name="from">From Color value.</param>
+        /// <param name="to">To Color value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Color value</returns>
         public static Color Ease(Color from, Color to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -185,12 +396,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Color32
+        /// <summary>
+        /// Easing between two Color32 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Color32 value.</param>
+        /// <param name="to">To Color32 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Color32 value</returns>
         public static Color32 Ease(Color32 from, Color32 to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Color32 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Color32 value.</param>
+        /// <param name="to">To Color32 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Color32 value</returns>
         public static Color32 Ease(Color32 from, Color32 to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -198,12 +425,28 @@ namespace Numba.Tweening
         #endregion
 
         #region ColorBlock
+        /// <summary>
+        /// Easing between two ColorBlock values with custom formula.
+        /// </summary>
+        /// <param name="from">From ColorBlock value.</param>
+        /// <param name="to">To ColorBlock value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased ColorBlock value</returns>
         public static ColorBlock Ease(ColorBlock from, ColorBlock to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two ColorBlock values with custom formula.
+        /// </summary>
+        /// <param name="from">From ColorBlock value.</param>
+        /// <param name="to">To ColorBlock value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased ColorBlock value</returns>
         public static ColorBlock Ease(ColorBlock from, ColorBlock to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -211,12 +454,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Bounds
+        /// <summary>
+        /// Easing between two Bounds values with custom formula.
+        /// </summary>
+        /// <param name="from">From Bounds value.</param>
+        /// <param name="to">To Bounds value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Bounds value</returns>
         public static Bounds Ease(Bounds from, Bounds to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Bounds values with custom formula.
+        /// </summary>
+        /// <param name="from">From Bounds value.</param>
+        /// <param name="to">To Bounds value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Bounds value</returns>
         public static Bounds Ease(Bounds from, Bounds to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -224,12 +483,28 @@ namespace Numba.Tweening
         #endregion
 
         #region Matrix4x4
+        /// <summary>
+        /// Easing between two Matrix4x4 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Matrix4x4 value.</param>
+        /// <param name="to">To Matrix4x4 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased Matrix4x4 value</returns>
         public static Matrix4x4 Ease(Matrix4x4 from, Matrix4x4 to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two Matrix4x4 values with custom formula.
+        /// </summary>
+        /// <param name="from">From Matrix4x4 value.</param>
+        /// <param name="to">To Matrix4x4 value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased Matrix4x4 value</returns>
         public static Matrix4x4 Ease(Matrix4x4 from, Matrix4x4 to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -237,12 +512,28 @@ namespace Numba.Tweening
         #endregion
 
         #region WheelFrictionCurve
+        /// <summary>
+        /// Easing between two WheelFrictionCurve values with custom formula.
+        /// </summary>
+        /// <param name="from">From WheelFrictionCurve value.</param>
+        /// <param name="to">To WheelFrictionCurve value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased WheelFrictionCurve value</returns>
         public static WheelFrictionCurve Ease(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two WheelFrictionCurve values with custom formula.
+        /// </summary>
+        /// <param name="from">From WheelFrictionCurve value.</param>
+        /// <param name="to">To WheelFrictionCurve value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased WheelFrictionCurve value</returns>
         public static WheelFrictionCurve Ease(WheelFrictionCurve from, WheelFrictionCurve to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));
@@ -250,12 +541,28 @@ namespace Numba.Tweening
         #endregion
 
         #region JointSpring
+        /// <summary>
+        /// Easing between two JointSpring values with custom formula.
+        /// </summary>
+        /// <param name="from">From JointSpring value.</param>
+        /// <param name="to">To JointSpring value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="formula">Custom formula.</param>
+        /// <returns>Eased JointSpring value</returns>
         public static JointSpring Ease(JointSpring from, JointSpring to, float interpolation, Formula formula)
         {
             CheckFormula(formula);
             return Linear(from, to, formula.Calculate(interpolation));
         }
 
+        /// <summary>
+        /// Easing between two JointSpring values with custom formula.
+        /// </summary>
+        /// <param name="from">From JointSpring value.</param>
+        /// <param name="to">To JointSpring value.</param>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>Eased JointSpring value</returns>
         public static JointSpring Ease(JointSpring from, JointSpring to, float interpolation, Ease ease)
         {
             return Ease(from, to, interpolation, Formulas.GetFormula(ease));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Numba.Tweening;
 using UnityEngine.UI;
+using Numba.Tweening.Tweaks;
 
 namespace Namespace
 {
@@ -22,7 +23,7 @@ namespace Namespace
 
         private void Start()
         {
-
+            
             _text.DoText("Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens!", 1f, Ease.InOutExpo, -1, LoopType.ReversedYoyo).Play();
         }
     }
