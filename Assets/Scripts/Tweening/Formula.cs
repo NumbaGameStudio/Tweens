@@ -4,10 +4,21 @@ using UnityEngine;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Base class for aby formula.
+    /// </summary>
     public abstract class Formula
     {
+        /// <summary>
+        /// Calculate interpolation value affected by formula.
+        /// </summary>
+        /// <param name="interpolation">Interpolation.</param>
+        /// <returns>Value affected by formula.</returns>
         public abstract float Calculate(float interpolation);
 
+        /// <summary>
+        /// Ease type associated to this formula (for custom formulas is setted to Ease.Other).
+        /// </summary>
         public virtual Ease Ease
         {
             get

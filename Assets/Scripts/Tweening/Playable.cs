@@ -6,6 +6,9 @@ using UnityTime = UnityEngine.Time;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Base class for all playables (like Tween or Sequence).
+    /// </summary>
     public abstract class Playable
     {
         #region Fields
@@ -49,18 +52,36 @@ namespace Numba.Tweening
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Playable name.
+        /// </summary>
         public string Name { get; protected set; }
 
         protected abstract string PlayableName { get; }
 
+        /// <summary>
+        /// Duration of playable (without loops count and loop type).
+        /// </summary>
         public float Duration { get { return _duration; } }
 
+        /// <summary>
+        /// Duration with loops count and loop type.
+        /// </summary>
         public float DurationWithLoops { get; protected set; }
 
+        /// <summary>
+        /// How many times repeat the animation (-1 for infinity).
+        /// </summary>
         public abstract int LoopsCount { get; set; }
 
+        /// <summary>
+        /// What behaviour need use when playing.
+        /// </summary>
         public abstract LoopType LoopType { get; set; }
 
+        /// <summary>
+        /// Playing state.
+        /// </summary>
         public PlayState PlayState { get; protected set; }
         #endregion
 
@@ -87,18 +108,34 @@ namespace Numba.Tweening
             return true;
         }
 
+        /// <summary>
+        /// Set loops count.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <returns>This playable.</returns>
         public Playable SetLoops(int loopsCount)
         {
             LoopsCount = LoopsCount;
             return this;
         }
 
+        /// <summary>
+        /// Set loop type.
+        /// </summary>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public Playable SetLoops(LoopType loopType)
         {
             LoopType = loopType;
             return this;
         }
 
+        /// <summary>
+        /// Set loops count and loop type.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public Playable SetLoops(int loopsCount, LoopType loopType)
         {
             LoopsCount = loopsCount;
@@ -126,10 +163,22 @@ namespace Numba.Tweening
             return useRealtime ? UnityTime.realtimeSinceStartup : UnityTime.time;
         }
 
+        /// <summary>
+        /// Set time to this playable.
+        /// </summary>
+        /// <param name="time">Time (not interpolated).</param>
         public abstract void SetTime(float time);
 
+        /// <summary>
+        /// Starts playing animation.
+        /// </summary>
+        /// <param name="useRealtime">Realtime (system time) will be used if true.</param>
+        /// <returns>Object that represent playing (can be yielded).</returns>
         public abstract PlayRoutine Play(bool useRealtime = false);
 
+        /// <summary>
+        /// Stop playing.
+        /// </summary>
         public void Stop()
         {
             if (PlayState == PlayState.Stop)
@@ -143,6 +192,9 @@ namespace Numba.Tweening
 
         protected abstract void HandleStop();
 
+        /// <summary>
+        /// Pause playing (call Play if need continue animation).
+        /// </summary>
         public void Pause()
         {
             if (PlayState != PlayState.Play)
@@ -155,34 +207,58 @@ namespace Numba.Tweening
             PlayState = PlayState.Pause;
         }
 
+        /// <summary>
+        /// Set callback on Start event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public Playable OnStart(Action callback)
         {
             _onStartCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Update event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public Playable OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Complete event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public Playable OnComplete(Action callback)
         {
             _onCompleteCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Call Start event and callback.
+        /// </summary>
         public void InvokeStart()
         {
             InvokePhase(Started, _onStartCallback);
         }
 
+        /// <summary>
+        /// Call Update event and callback.
+        /// </summary>
         public void InvokeUpdate()
         {
             InvokePhase(Updated, _onUpdateCallback);
         }
 
+        /// <summary>
+        /// Call Complete event and callback.
+        /// </summary>
         public void InvokeComplete()
         {
             InvokePhase(Completed, _onCompleteCallback);
@@ -194,6 +270,9 @@ namespace Numba.Tweening
             if (callback != null) callback();
         }
 
+        /// <summary>
+        /// Clear all callbacks (onStart, onUpdate and onComplete).
+        /// </summary>
         public void ClearCallbacks()
         {
             _onStartCallback = _onUpdateCallback = _onCompleteCallback = null;
