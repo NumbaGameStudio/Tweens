@@ -35,10 +35,19 @@ namespace Numba.Tweening
         #endregion
 
         #region Events
+        /// <summary>
+        /// Emits when start playing.
+        /// </summary>
         public event Action Started;
 
+        /// <summary>
+        /// Emits every update while playing.
+        /// </summary>
         public event Action Updated;
 
+        /// <summary>
+        /// Emits when playing stoped or completed.
+        /// </summary>
         public event Action Completed;
         #endregion
 
@@ -57,7 +66,7 @@ namespace Numba.Tweening
         /// </summary>
         public string Name { get; protected set; }
 
-        protected abstract string PlayableName { get; }
+        protected abstract string PlayableTypeName { get; }
 
         /// <summary>
         /// Duration of playable (without loops count and loop type).
@@ -183,7 +192,7 @@ namespace Numba.Tweening
         {
             if (PlayState == PlayState.Stop)
             {
-                Debug.LogWarning(string.Format("{0} with name \"{1}\" is already stoped.", PlayableName, Name));
+                Debug.LogWarning(string.Format("{0} with name \"{1}\" is already stoped.", PlayableTypeName, Name));
                 return;
             }
 
@@ -199,7 +208,7 @@ namespace Numba.Tweening
         {
             if (PlayState != PlayState.Play)
             {
-                Debug.LogWarning(string.Format("{0} with name \"{1}\" already stoped or paused.", PlayableName, Name));
+                Debug.LogWarning(string.Format("{0} with name \"{1}\" already stoped or paused.", PlayableTypeName, Name));
                 return;
             }
 
@@ -243,7 +252,7 @@ namespace Numba.Tweening
         /// <summary>
         /// Call Start event and callback.
         /// </summary>
-        public void InvokeStart()
+        internal void InvokeStart()
         {
             InvokePhase(Started, _onStartCallback);
         }
@@ -251,7 +260,7 @@ namespace Numba.Tweening
         /// <summary>
         /// Call Update event and callback.
         /// </summary>
-        public void InvokeUpdate()
+        internal void InvokeUpdate()
         {
             InvokePhase(Updated, _onUpdateCallback);
         }
@@ -259,7 +268,7 @@ namespace Numba.Tweening
         /// <summary>
         /// Call Complete event and callback.
         /// </summary>
-        public void InvokeComplete()
+        internal void InvokeComplete()
         {
             InvokePhase(Completed, _onCompleteCallback);
         }

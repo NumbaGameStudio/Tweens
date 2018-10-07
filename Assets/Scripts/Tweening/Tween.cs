@@ -7,25 +7,75 @@ using Numba.Tweening.Static;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// Can animate any tweak in time.
+    /// Just set needed settings and call Play/Pause/Stop methods.
+    /// </summary>
     public sealed class Tween : Playable
     {
         #region Create
         #region Int
+        /// <summary>
+        /// Create tween for animate Int value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(int from, int to, Action<int> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Int value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, int from, int to, Action<int> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Int value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(int from, int to, Action<int> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Int value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, int from, int to, Action<int> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -33,21 +83,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Long
+        /// <summary>
+        /// Create tween for animate Long value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(long from, long to, Action<long> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Long value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, long from, long to, Action<long> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Long value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(long from, long to, Action<long> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Long value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, long from, long to, Action<long> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -55,21 +151,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Float
+        /// <summary>
+        /// Create tween for animate Float value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(float from, float to, Action<float> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Float value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, float from, float to, Action<float> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Float value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Float value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, float from, float to, Action<float> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -77,21 +219,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Double
+        /// <summary>
+        /// Create tween for animate Double value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(double from, double to, Action<double> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Double value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, double from, double to, Action<double> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Double value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(double from, double to, Action<double> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Double value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, double from, double to, Action<double> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -99,21 +287,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Char
+        /// <summary>
+        /// Create tween for animate Char value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(char from, char to, Action<char> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Char value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, char from, char to, Action<char> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Char value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(char from, char to, Action<char> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Char value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, char from, char to, Action<char> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -121,21 +355,67 @@ namespace Numba.Tweening
         #endregion
 
         #region String
+        /// <summary>
+        /// Create tween for animate String value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string from, string to, Action<string> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate String value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, string from, string to, Action<string> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate String value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string from, string to, Action<string> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate String value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, string from, string to, Action<string> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -143,21 +423,67 @@ namespace Numba.Tweening
         #endregion
 
         #region DateTime
+        /// <summary>
+        /// Create tween for animate DateTime value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(DateTime from, DateTime to, Action<DateTime> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate DateTime value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, DateTime from, DateTime to, Action<DateTime> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate DateTime value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(DateTime from, DateTime to, Action<DateTime> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate DateTime value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, DateTime from, DateTime to, Action<DateTime> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -165,21 +491,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector2
+        /// <summary>
+        /// Create tween for animate Vector2 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Vector2 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector2 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector2 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector2 from, Vector2 to, Action<Vector2> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -187,21 +559,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector3
+        /// <summary>
+        /// Create tween for animate Vector3 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Vector3 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector3 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector3 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector3 from, Vector3 to, Action<Vector3> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -209,21 +627,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Vector4
+        /// <summary>
+        /// Create tween for animate Vector4 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Vector4 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector4 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Vector4 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Vector4 from, Vector4 to, Action<Vector4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -231,21 +695,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Quaternion
+        /// <summary>
+        /// Create tween for animate Quaternion value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Quaternion value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Quaternion value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Quaternion value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Quaternion from, Quaternion to, Action<Quaternion> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -253,21 +763,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Rect
+        /// <summary>
+        /// Create tween for animate Rect value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Rect from, Rect to, Action<Rect> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Rect value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Rect from, Rect to, Action<Rect> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Rect value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Rect value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Rect from, Rect to, Action<Rect> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -275,21 +831,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Color
+        /// <summary>
+        /// Create tween for animate Color value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Color from, Color to, Action<Color> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Color value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Color from, Color to, Action<Color> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Color value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Color from, Color to, Action<Color> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Color value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Color from, Color to, Action<Color> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -297,21 +899,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Color32
+        /// <summary>
+        /// Create tween for animate Color32 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Color32 from, Color32 to, Action<Color32> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Color32 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Color32 from, Color32 to, Action<Color32> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Color32 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Color32 from, Color32 to, Action<Color32> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Color32 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Color32 from, Color32 to, Action<Color32> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -319,21 +967,67 @@ namespace Numba.Tweening
         #endregion
 
         #region ColorBlock
+        /// <summary>
+        /// Create tween for animate ColorBlock value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate ColorBlock value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate ColorBlock value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate ColorBlock value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, ColorBlock from, ColorBlock to, Action<ColorBlock> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -341,21 +1035,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Bounds
+        /// <summary>
+        /// Create tween for animate Bounds value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Bounds from, Bounds to, Action<Bounds> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Bounds value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Bounds from, Bounds to, Action<Bounds> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Bounds value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Bounds from, Bounds to, Action<Bounds> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Bounds value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Bounds from, Bounds to, Action<Bounds> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -363,21 +1103,67 @@ namespace Numba.Tweening
         #endregion
 
         #region Matrix4x4
+        /// <summary>
+        /// Create tween for animate Matrix4x4 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate Matrix4x4 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Matrix4x4 value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate Matrix4x4 value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Matrix4x4 from, Matrix4x4 to, Action<Matrix4x4> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -385,21 +1171,67 @@ namespace Numba.Tweening
         #endregion
 
         #region WheelFrictionCurve
+        /// <summary>
+        /// Create tween for animate WheelFrictionCurve value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate WheelFrictionCurve value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate WheelFrictionCurve value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate WheelFrictionCurve value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, WheelFrictionCurve from, WheelFrictionCurve to, Action<WheelFrictionCurve> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -407,21 +1239,67 @@ namespace Numba.Tweening
         #endregion
 
         #region JointSpring
+        /// <summary>
+        /// Create tween for animate JointSpring value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(JointSpring from, JointSpring to, Action<JointSpring> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate JointSpring value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, JointSpring from, JointSpring to, Action<JointSpring> setter, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, Tweak.Create(from, to, setter), duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate JointSpring value.
+        /// </summary>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(JointSpring from, JointSpring to, Action<JointSpring> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, from, to, setter, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate JointSpring value.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="from">From value.</param>
+        /// <param name="to">To value.</param>
+        /// <param name="setter">Setter callback.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, JointSpring from, JointSpring to, Action<JointSpring> setter, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, from, to, setter, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -429,33 +1307,86 @@ namespace Numba.Tweening
         #endregion
 
         #region Settings
-        public static Tween Create(Tweak tweak, float duration, FormulaSettings settings)
+        /// <summary>
+        /// Create tween with settings for animate existed tweak.
+        /// </summary>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="settings">Tween settings.</param>
+        /// <returns>Created tween.</returns>
+        public static Tween Create(Tweak tweak, float duration, TweenSettings settings)
         {
             return Create(null, tweak, duration, settings.Formula, settings.LoopsCount, settings.LoopType);
         }
 
-        public static Tween Create(string name, Tweak tweak, float duration, FormulaSettings settings)
+        /// <summary>
+        /// Create named tween with settings for animate existed tweak.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="settings">Tween settings.</param>
+        /// <returns>Created tween.</returns>
+        public static Tween Create(string name, Tweak tweak, float duration, TweenSettings settings)
         {
             return Create(name, tweak, duration, settings.Formula, settings.LoopsCount, settings.LoopType);
         }
         #endregion
 
         #region Tweak
+        /// <summary>
+        /// Create tween for animate existed tweak.
+        /// </summary>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Tweak tweak, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, tweak, duration, formula, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate existed tweak.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="formula">Formula used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Tweak tweak, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return new Tween(name, tweak, duration).SetEase(formula).SetLoops(loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create tween for animate existed tweak.
+        /// </summary>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(null, tweak, duration, ease, loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create named tween for animate existed tweak.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="tweak">Existed tweak.</param>
+        /// <param name="duration">Tween duration (without loops count and loop type).</param>
+        /// <param name="ease">Ease type associated with built-in formula which used in calculations.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type.</param>
+        /// <returns>Created tween.</returns>
         public static Tween Create(string name, Tweak tweak, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Create(name, tweak, duration, Formulas.GetFormula(ease), loopsCount, loopType);
@@ -468,17 +1399,41 @@ namespace Numba.Tweening
         #region Constructors
         private Tween() { }
 
+        /// <summary>
+        /// Create tween with tweak and duration.
+        /// </summary>
+        /// <param name="tweak">Tweak.</param>
+        /// <param name="duration">Tween duration.</param>
         public Tween(Tweak tweak, float duration) : this(null, tweak, duration) { }
 
+        /// <summary>
+        /// Create named tween with tweak and duration.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="tweak">Tweak.</param>
+        /// <param name="duration">Tween duration.</param>
         public Tween(string name, Tweak tweak, float duration)
         {
             ConstructBase(name, tweak, duration, 1, LoopType.Forward);
             Formula = Formulas.Linear;
         }
 
-        public Tween(Tweak tweak, float duration, FormulaSettings settings) : this(null, tweak, duration, settings) { }
+        /// <summary>
+        /// Create tween with tweak, duration and settings.
+        /// </summary>
+        /// <param name="tweak">Tweak.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="settings">Tween settings.</param>
+        public Tween(Tweak tweak, float duration, TweenSettings settings) : this(null, tweak, duration, settings) { }
 
-        public Tween(string name, Tweak tweak, float duration, FormulaSettings settings)
+        /// <summary>
+        /// Create named tween with tweak, duration and settings.
+        /// </summary>
+        /// <param name="name">Tween name.</param>
+        /// <param name="tweak">Tweak.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="settings">Tween settings.</param>
+        public Tween(string name, Tweak tweak, float duration, TweenSettings settings)
         {
             ConstructBase(name, tweak, duration, settings.LoopsCount, settings.LoopType);
             Formula = settings.Formula;
@@ -491,10 +1446,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Properties
-        protected override string PlayableName { get { return "Tween"; } }
+        protected override string PlayableTypeName { get { return "Tween"; } }
 
+        /// <summary>
+        /// Tweak which used by tween.
+        /// </summary>
         public Tweak Tweak { get; set; }
 
+        /// <summary>
+        /// Tween duration (without loops count and loop type).
+        /// </summary>
         public new float Duration
         {
             get { return _duration; }
@@ -505,6 +1466,9 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// Formula which will be used in calculations.
+        /// </summary>
         public Formula Formula
         {
             get { return _formula; }
@@ -515,12 +1479,19 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// Ease type associated with built-in formula.
+        /// Set value to this property will rewrite formula used in calculations.
+        /// </summary>
         public Ease Ease
         {
             get { return _formula.Ease; }
             set { _formula = Formulas.GetFormula(value); }
         }
 
+        /// <summary>
+        /// How many times repeat the animation (-1 for infinity).
+        /// </summary>
         public override int LoopsCount
         {
             get { return _loopsCount; }
@@ -530,6 +1501,9 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// What behaviour need use when playing.
+        /// </summary>
         public override LoopType LoopType
         {
             get { return _loopType; }
@@ -539,11 +1513,14 @@ namespace Numba.Tweening
             }
         }
 
-        public FormulaSettings Settings
+        /// <summary>
+        /// Tween settings (represent LoopsCount, LoopType and Formula).
+        /// </summary>
+        public TweenSettings Settings
         {
             get
             {
-                return new FormulaSettings(_loopsCount, _loopType, Formula);
+                return new TweenSettings(_loopsCount, _loopType, Formula);
             }
             set
             {
@@ -553,6 +1530,9 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// Give you access to tweening UnityEngine.Time class properties.
+        /// </summary>
         public static Static.Time Time { get; private set; }
         #endregion
 
@@ -567,30 +1547,56 @@ namespace Numba.Tweening
             LoopType = loopType;
         }
 
+        /// <summary>
+        /// Set formula which will be used for easing.
+        /// </summary>
+        /// <param name="formula">Formula.</param>
+        /// <returns>This tween.</returns>
         public Tween SetEase(Formula formula)
         {
             Formula = formula;
             return this;
         }
 
+        /// <summary>
+        /// Set built-in formula through ease type enumeration, which will be used for easing.
+        /// </summary>
+        /// <param name="ease">Ease type associated with built-in formula.</param>
+        /// <returns>This tween.</returns>
         public Tween SetEase(Ease ease)
         {
             Ease = ease;
             return this;
         }
 
+        /// <summary>
+        /// Set loops count.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <returns>This playable.</returns>
         public new Tween SetLoops(int loopsCount)
         {
             LoopsCount = LoopsCount;
             return this;
         }
 
+        /// <summary>
+        /// Set loop type.
+        /// </summary>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public new Tween SetLoops(LoopType loopType)
         {
             LoopType = loopType;
             return this;
         }
 
+        /// <summary>
+        /// Set loops count and loop type.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public new Tween SetLoops(int loopsCount, LoopType loopType)
         {
             LoopsCount = loopsCount;
@@ -612,6 +1618,10 @@ namespace Numba.Tweening
             return (!isEven && fraction == 0f) || (isEven && fraction != 0f) ? false : true;
         }
 
+        /// <summary>
+        /// Set tween current play time.
+        /// </summary>
+        /// <param name="time">Time (not interpolated).</param>
         public override void SetTime(float time)
         {
             SetTime(Tweak, time, Duration, DurationWithLoops, Formula, LoopType);
@@ -648,12 +1658,22 @@ namespace Numba.Tweening
             tweak.SetTo(timeGetter(), formula, swapFromTo);
         }
 
-        public Tween SetSettings(FormulaSettings settings)
+        /// <summary>
+        /// Set settings for this tween.
+        /// </summary>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>This tween.</returns>
+        public Tween SetSettings(TweenSettings settings)
         {
             Settings = settings;
             return this;
         }
 
+        /// <summary>
+        /// Starts playing this tween (or resume if was paused).
+        /// </summary>
+        /// <param name="useRealtime">Realtime (system time) will be used if true.</param>
+        /// <returns>Object that represent playing (can be yielded).</returns>
         public override PlayRoutine Play(bool useRealtime = false)
         {
             if (PlayState == PlayState.Play)
@@ -753,18 +1773,33 @@ namespace Numba.Tweening
             InvokeComplete();
         }
 
+        /// <summary>
+        /// Set callback on Start event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Tween OnStart(Action callback)
         {
             _onStartCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Update event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Tween OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Complete event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Tween OnComplete(Action callback)
         {
             _onCompleteCallback = callback;

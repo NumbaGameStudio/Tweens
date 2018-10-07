@@ -5,6 +5,12 @@ using System;
 
 namespace Numba.Tweening
 {
+    /// <summary>
+    /// <para>Represent container for other playables (Tween and Sequence) or callbacks.</para>
+    /// <para>
+    /// You can add other playables or callbacks in sequence and play/pause/stop them.
+    /// </para>
+    /// </summary>
     public sealed class Sequence : Playable
     {
         #region Structures and classes
@@ -140,13 +146,33 @@ namespace Numba.Tweening
         #endregion
 
         #region Create
+        /// <summary>
+        /// Create empty sequence.
+        /// </summary>
+        /// <returns>Empty sequence.</returns>
         public static Sequence Create() { return new Sequence(); }
 
+        /// <summary>
+        /// Create sequence with name.
+        /// </summary>
+        /// <param name="name">Sequence name.</param>
+        /// <returns>Named sequence.</returns>
         public static Sequence Create(string name) { return new Sequence(name); }
 
-        public static Sequence Create(Settings settings) { return new Sequence(settings); }
+        /// <summary>
+        /// Create sequence with settings.
+        /// </summary>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>Sequence with settings.</returns>
+        public static Sequence Create(SequenceSettings settings) { return new Sequence(settings); }
 
-        public static Sequence Create(string name, Settings settings) { return new Sequence(settings); }
+        /// <summary>
+        /// Named sequence with settings.
+        /// </summary>
+        /// <param name="name">Sequence name.</param>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>Named sequence with settings.</returns>
+        public static Sequence Create(string name, SequenceSettings settings) { return new Sequence(settings); }
         #endregion
 
         #region Fields
@@ -166,25 +192,48 @@ namespace Numba.Tweening
         #endregion
 
         #region Constructors
+        /// <summary>
+        /// Create empty sequence.
+        /// </summary>
+        /// <returns>Empty sequence.</returns>
         public Sequence() : this(string.Empty) { }
 
+        /// <summary>
+        /// Create sequence with name.
+        /// </summary>
+        /// <param name="name">Sequence name.</param>
+        /// <returns>Named sequence.</returns>
         public Sequence(string name)
         {
             Name = string.IsNullOrEmpty(name) ? "[noname]" : name;
             ResetCurrentTime();
         }
 
-        public Sequence(Settings settings) : this(null, settings) { }
+        /// <summary>
+        /// Create sequence with settings.
+        /// </summary>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>Sequence with settings.</returns>
+        public Sequence(SequenceSettings settings) : this(null, settings) { }
 
-        public Sequence(string name, Settings settings) : this(name)
+        /// <summary>
+        /// Named sequence with settings.
+        /// </summary>
+        /// <param name="name">Sequence name.</param>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>Named sequence with settings.</returns>
+        public Sequence(string name, SequenceSettings settings) : this(name)
         {
             Settings = settings;
         }
         #endregion
 
         #region Properties
-        protected override string PlayableName { get { return "Sequence"; } }
+        protected override string PlayableTypeName { get { return "Sequence"; } }
 
+        /// <summary>
+        /// Sequence duration (without LoopsCount and LoopType).
+        /// </summary>
         public new float Duration
         {
             get { return _duration; }
@@ -196,6 +245,9 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// How many times repeat the animation (-1 for infinity).
+        /// </summary>
         public override int LoopsCount
         {
             get { return _loopsCount; }
@@ -205,6 +257,9 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// What behaviour need use when playing.
+        /// </summary>
         public override LoopType LoopType
         {
             get { return _loopType; }
@@ -215,9 +270,12 @@ namespace Numba.Tweening
             }
         }
 
-        public Settings Settings
+        /// <summary>
+        /// Sequence settings (represent LoopsCount and LoopType).
+        /// </summary>
+        public SequenceSettings Settings
         {
-            get { return new Settings(_loopsCount, _loopType); }
+            get { return new SequenceSettings(_loopsCount, _loopType); }
             set
             {
                 LoopsCount = value.LoopsCount;
@@ -225,13 +283,24 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// Order for next playable or callback.
+        /// </summary>
         public int NextOrder { get; private set; }
 
+        /// <summary>
+        /// Last handled time by sequence.
+        /// </summary>
         public float CurrentTime { get; set; }
         #endregion
 
         #region Methods
         #region Append and Insert
+        /// <summary>
+        /// Add playable to end.
+        /// </summary>
+        /// <param name="playable">Playable to add.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Append(Playable playable)
         {
             if (PlayState == PlayState.Play)
@@ -247,6 +316,12 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add playable to end at passed order. Other playables and callbacks order will be shifts forward by 1.
+        /// </summary>
+        /// <param name="playable">Playable to add.</param>
+        /// <param name="order">Order to put at.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Append(Playable playable, int order)
         {
             if (PlayState == PlayState.Play)
@@ -264,6 +339,11 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add callback to end.
+        /// </summary>
+        /// <param name="callback">Callback to add.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Append(Action callback)
         {
             if (PlayState == PlayState.Play)
@@ -277,6 +357,12 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add callback to end at passed order. Other playables and callbacks order will be shifts forward by 1.
+        /// </summary>
+        /// <param name="callback">Callback to add.</param>
+        /// <param name="order">Order to put at.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Append(Action callback, int order)
         {
             if (PlayState == PlayState.Play)
@@ -292,6 +378,12 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add playable at passed time.
+        /// </summary>
+        /// <param name="time">Time to put at.</param>
+        /// <param name="playable">Playable to add.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Insert(float time, Playable playable)
         {
             if (PlayState == PlayState.Play)
@@ -309,6 +401,13 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add playable at passed time and order. Other playables and callbacks order will be shifts forward by 1.
+        /// </summary>
+        /// <param name="time">Time to put at.</param>
+        /// <param name="playable">Playable to add.</param>
+        /// <param name="order">Order to put at.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Insert(float time, Playable playable, int order)
         {
             if (PlayState == PlayState.Play)
@@ -328,6 +427,12 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add callback at passed time.
+        /// </summary>
+        /// <param name="time">Time to put at.</param>
+        /// <param name="callback">Callback to add.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Insert(float time, Action callback)
         {
             if (PlayState == PlayState.Play)
@@ -345,6 +450,13 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Add callback at passed time and order. Other playables and callbacks order will be shifts forward by 1.
+        /// </summary>
+        /// <param name="time">Time to put at.</param>
+        /// <param name="callback">Callback to add.</param>
+        /// <param name="order">Order to put at.</param>
+        /// <returns>This sequence.</returns>
         public Sequence Insert(float time, Action callback, int order)
         {
             if (PlayState == PlayState.Play)
@@ -364,6 +476,10 @@ namespace Numba.Tweening
         }
         #endregion
 
+        /// <summary>
+        /// Reset current time to initial position (-1 for forward and 
+        /// yoyo loop type, and DurationWithLoops + 1 for other).
+        /// </summary>
         public void ResetCurrentTime()
         {
             CurrentTime = GetPreviousTimeInitialPosition(LoopType);
@@ -399,18 +515,34 @@ namespace Numba.Tweening
             ++NextOrder;
         }
 
+        /// <summary>
+        /// Set loops count.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <returns>This playable.</returns>
         public new Sequence SetLoops(int loopsCount)
         {
             LoopsCount = loopsCount;
             return this;
         }
 
+        /// <summary>
+        /// Set loop type.
+        /// </summary>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public new Sequence SetLoops(LoopType loopType)
         {
             LoopType = loopType;
             return this;
         }
 
+        /// <summary>
+        /// Set loops count and loop type.
+        /// </summary>
+        /// <param name="loopsCount">Loops count (-1 for infinity).</param>
+        /// <param name="loopType">Loop type.</param>
+        /// <returns>This playable.</returns>
         public new Sequence SetLoops(int loopsCount, LoopType loopType)
         {
             LoopsCount = loopsCount;
@@ -419,6 +551,10 @@ namespace Numba.Tweening
             return this;
         }
 
+        /// <summary>
+        /// Set sequence current play time.
+        /// </summary>
+        /// <param name="time">Time (not interpolated).</param>
         public override void SetTime(float currentTime)
         {
             SetTime(CurrentTime, currentTime, Duration, DurationWithLoops, LoopType);
@@ -510,12 +646,22 @@ namespace Numba.Tweening
             }
         }
 
-        public Sequence SetSettings(Settings settings)
+        /// <summary>
+        /// Set settings for this sequence.
+        /// </summary>
+        /// <param name="settings">Sequence settings.</param>
+        /// <returns>This sequence.</returns>
+        public Sequence SetSettings(SequenceSettings settings)
         {
             Settings = settings;
             return this;
         }
 
+        /// <summary>
+        /// Starts playing this sequence (or resume if was paused).
+        /// </summary>
+        /// <param name="useRealtime">Realtime (system time) will be used if true.</param>
+        /// <returns>Object that represent playing (can be yielded).</returns>
         public override PlayRoutine Play(bool useRealtime = false)
         {
             if (PlayState == PlayState.Play)
@@ -741,18 +887,33 @@ namespace Numba.Tweening
             }
         }
 
+        /// <summary>
+        /// Set callback on Start event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Sequence OnStart(Action callback)
         {
             _onStartCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Update event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Sequence OnUpdate(Action callback)
         {
             _onUpdateCallback = callback;
             return this;
         }
 
+        /// <summary>
+        /// Set callback on Complete event.
+        /// </summary>
+        /// <param name="callback">Callback.</param>
+        /// <returns>This playable</returns>
         public new Sequence OnComplete(Action callback)
         {
             _onCompleteCallback = callback;
