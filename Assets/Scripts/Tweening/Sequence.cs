@@ -167,7 +167,7 @@ namespace Numba.Tweening
         public static Sequence Create(SequenceSettings settings) { return new Sequence(settings); }
 
         /// <summary>
-        /// Named sequence with settings.
+        /// Create named sequence with settings.
         /// </summary>
         /// <param name="name">Sequence name.</param>
         /// <param name="settings">Sequence settings.</param>
@@ -217,7 +217,7 @@ namespace Numba.Tweening
         public Sequence(SequenceSettings settings) : this(null, settings) { }
 
         /// <summary>
-        /// Named sequence with settings.
+        /// Create named sequence with settings.
         /// </summary>
         /// <param name="name">Sequence name.</param>
         /// <param name="settings">Sequence settings.</param>
