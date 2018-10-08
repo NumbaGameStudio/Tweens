@@ -9,14 +9,10 @@ namespace Numba.Tweens
     /// <summary>
     /// Base class for all playables (like Tween or Sequence).
     /// </summary>
-    public abstract class Playable
+    public abstract class Playable : CustomYieldInstruction
     {
         #region Fields
         protected IEnumerator _playTimeEnumerator;
-
-        protected PlayRoutine _playRoutine;
-
-        protected Action _playRoutineOnStopCallback;
 
         protected float _duration;
 
@@ -92,6 +88,11 @@ namespace Numba.Tweens
         /// Playing state.
         /// </summary>
         public PlayState PlayState { get; protected set; }
+
+        /// <summary>
+        /// Is need wait animation (true when playing or paused)?
+        /// </summary>
+        public override bool keepWaiting { get { return PlayState != PlayState.Stop; } }
         #endregion
 
         #region Methods
@@ -183,7 +184,40 @@ namespace Numba.Tweens
         /// </summary>
         /// <param name="useRealtime">Realtime (system time) will be used if true.</param>
         /// <returns>Object that represent playing (can be yielded).</returns>
-        public abstract PlayRoutine Play(bool useRealtime = false);
+        public virtual Playable Play(bool useRealtime = false)
+        {
+            if (PlayState == PlayState.Play)
+            {
+                Debug.LogWarning(string.Format("{0} with name \"{1}\" already playing.", PlayableTypeName, Name));
+                return this;
+            }
+
+            if (PlayState == PlayState.Pause)
+            {
+                float currentTime = GetTime(_useRealtime);
+
+                _playStartTime = currentTime - (_playCurrentTime - _playStartTime);
+                _playEndTime = currentTime + (_playEndTime - _playCurrentTime);
+
+                PlayState = PlayState.Play;
+                RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
+
+                return this;
+            }
+
+            if (LoopsCount == 0) return this;
+
+            PlayState = PlayState.Play;
+
+            _useRealtime = useRealtime;
+
+            _playTimeEnumerator = PlayTimeWithCurrentParameters();
+            RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
+
+            return this;
+        }
+
+        protected abstract IEnumerator PlayTimeWithCurrentParameters();
 
         /// <summary>
         /// Stop playing.

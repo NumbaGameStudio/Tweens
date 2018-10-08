@@ -662,37 +662,14 @@ namespace Numba.Tweens
         /// </summary>
         /// <param name="useRealtime">Realtime (system time) will be used if true.</param>
         /// <returns>Object that represent playing (can be yielded).</returns>
-        public override PlayRoutine Play(bool useRealtime = false)
+        public new Sequence Play(bool useRealtime = false)
         {
-            if (PlayState == PlayState.Play)
-            {
-                Debug.LogWarning(string.Format("Sequence with name \"{0}\" is already playing.", Name));
-                return _playRoutine;
-            }
+            return (Sequence)base.Play(useRealtime);
+        }
 
-            if (PlayState == PlayState.Pause)
-            {
-                float currentTime = GetTime(_useRealtime);
-
-                _playStartTime = currentTime - (_playCurrentTime - _playStartTime);
-                _playEndTime = currentTime + (_playEndTime - _playCurrentTime);
-
-                PlayState = PlayState.Play;
-                RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
-
-                return _playRoutine;
-            }
-
-            if (LoopsCount == 0) return PlayRoutine.CreateCompleted();
-
-            PlayState = PlayState.Play;
-
-            _useRealtime = useRealtime;
-
-            _playTimeEnumerator = PlayTime(GetPreviousTimeInitialPosition(LoopType), Duration, DurationWithLoops, LoopsCount, LoopType);
-            RoutineHelper.Instance.StartCoroutine(_playTimeEnumerator);
-
-            return PlayRoutine.Create(out _playRoutineOnStopCallback);
+        protected override sealed IEnumerator PlayTimeWithCurrentParameters()
+        {
+            return PlayTime(GetPreviousTimeInitialPosition(LoopType), Duration, DurationWithLoops, LoopsCount, LoopType);
         }
 
         private IEnumerator PlayTime(float previousTime, float duration, float durationWithLoops, int loopsCount, LoopType loopType)
@@ -833,9 +810,6 @@ namespace Numba.Tweens
         {
             if (PlayState != PlayState.Pause) RoutineHelper.Instance.StopCoroutine(_playTimeEnumerator);
             _playTimeEnumerator = null;
-
-            _playRoutineOnStopCallback();
-            _playRoutine = null;
 
             ResetCurrentTime();
 

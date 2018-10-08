@@ -20,8 +20,9 @@ namespace Namespace
         [SerializeField]
         private Text _text;
 
-        private void Start()
+        private IEnumerator Start()
         {
+            yield return _cube1.DoPositionX(1f, 1f, Ease.InOutExpo, 2, LoopType.Yoyo).Play();
             _text.DoText("Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens! Hello Tweens!", 1f, Ease.InOutExpo, -1, LoopType.ReversedYoyo).Play();
         }
     }
