@@ -695,6 +695,16 @@ namespace Numba.Tweening
 
         #region RectTransform
         #region Anchored position
+        /// <summary>
+        /// Create and return tween which move rect transform anchored position along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored position x axis value.</returns>
         public static Tween DoAnchoredPositionX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition.x, x, (apx) => rectTransform.anchoredPosition = SetVectorValue(rectTransform.anchoredPosition, 0, apx), duration, formula, loopsCount, loopType);
@@ -705,6 +715,16 @@ namespace Numba.Tweening
             return DoAnchoredPositionX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored position along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored position y axis value.</returns>
         public static Tween DoAnchoredPositionY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition.y, y, (apy) => rectTransform.anchoredPosition = SetVectorValue(rectTransform.anchoredPosition, 1, apy), duration, formula, loopsCount, loopType);
@@ -715,6 +735,17 @@ namespace Numba.Tweening
             return DoAnchoredPositionY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored position.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored position.</returns>
         public static Tween DoAnchoredPosition(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition, new Vector2(x, y), (ap) => rectTransform.anchoredPosition = ap, duration, formula, loopsCount, loopType);
@@ -725,6 +756,16 @@ namespace Numba.Tweening
             return DoAnchoredPosition(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored position.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="anchoredPosition">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored position.</returns>
         public static Tween DoAnchoredPosition(this RectTransform rectTransform, Vector2 anchoredPosition, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition, anchoredPosition, (ap) => rectTransform.anchoredPosition = ap, duration, formula, loopsCount, loopType);
@@ -737,6 +778,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Anchored position 3D
+        /// <summary>
+        /// Create and return tween which move rect transform anchored 3D position along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored 3D position x axis value.</returns>
         public static Tween DoAnchoredPosition3DX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D.x, x, (ap3dx) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 0, ap3dx), duration, formula, loopsCount, loopType);
@@ -747,6 +798,16 @@ namespace Numba.Tweening
             return DoAnchoredPosition3DX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored 3D position along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored 3D position y axis value.</returns>
         public static Tween DoAnchoredPosition3DY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D.y, y, (ap3dy) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 1, ap3dy), duration, formula, loopsCount, loopType);
@@ -757,6 +818,16 @@ namespace Numba.Tweening
             return DoAnchoredPosition3DY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored 3D position along z axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="z">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored 3D position z axis value.</returns>
         public static Tween DoAnchoredPosition3DZ(this RectTransform rectTransform, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D.z, z, (ap3dz) => rectTransform.anchoredPosition3D = SetVectorValue(rectTransform.anchoredPosition3D, 2, ap3dz), duration, formula, loopsCount, loopType);
@@ -767,6 +838,18 @@ namespace Numba.Tweening
             return DoAnchoredPosition3DZ(rectTransform, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored 3D position.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="z">Z axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored 3D position.</returns>
         public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, float x, float y, float z, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D, new Vector3(x, y, z), (ap3d) => rectTransform.anchoredPosition3D = ap3d, duration, formula, loopsCount, loopType);
@@ -777,6 +860,16 @@ namespace Numba.Tweening
             return DoAnchoredPosition3D(rectTransform, x, y, z, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchored 3D position.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="anchoredPosition3D">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchored 3D position.</returns>
         public static Tween DoAnchoredPosition3D(this RectTransform rectTransform, Vector3 anchoredPosition3D, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchoredPosition3D, anchoredPosition3D, (ap3d) => rectTransform.anchoredPosition3D = ap3d, duration, formula, loopsCount, loopType);
@@ -789,6 +882,16 @@ namespace Numba.Tweening
         #endregion
 
         #region AnchorMax
+        /// <summary>
+        /// Create and return tween which move rect transform anchor max value along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor max value along x axis.</returns>
         public static Tween DoAnchorMaxX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax.x, x, (amx) => rectTransform.anchorMax = SetVectorValue(rectTransform.anchorMax, 0, amx), duration, formula, loopsCount, loopType);
@@ -799,6 +902,16 @@ namespace Numba.Tweening
             return DoAnchorMaxX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor max value along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor max value along y axis.</returns>
         public static Tween DoAnchorMaxY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax.y, y, (amy) => rectTransform.anchorMax = SetVectorValue(rectTransform.anchorMax, 1, amy), duration, formula, loopsCount, loopType);
@@ -809,6 +922,17 @@ namespace Numba.Tweening
             return DoAnchorMaxY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor max value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor max value.</returns>
         public static Tween DoAnchorMax(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax, new Vector2(x, y), (am) => rectTransform.anchorMax = am, duration, formula, loopsCount, loopType);
@@ -819,6 +943,16 @@ namespace Numba.Tweening
             return DoAnchorMax(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor max value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="anchorMax">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor max value.</returns>
         public static Tween DoAnchorMax(this RectTransform rectTransform, Vector2 anchorMax, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMax, anchorMax, (am) => rectTransform.anchorMax = am, duration, formula, loopsCount, loopType);
@@ -831,6 +965,16 @@ namespace Numba.Tweening
         #endregion
 
         #region AnchorMin
+        /// <summary>
+        /// Create and return tween which move rect transform anchor min value along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor min value along x axis.</returns>
         public static Tween DoAnchorMinX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin.x, x, (amx) => rectTransform.anchorMin = SetVectorValue(rectTransform.anchorMin, 0, amx), duration, formula, loopsCount, loopType);
@@ -841,6 +985,16 @@ namespace Numba.Tweening
             return DoAnchorMinX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor min value along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor min value along y axis.</returns>
         public static Tween DoAnchorMinY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin.y, y, (amy) => rectTransform.anchorMin = SetVectorValue(rectTransform.anchorMin, 1, amy), duration, formula, loopsCount, loopType);
@@ -851,6 +1005,17 @@ namespace Numba.Tweening
             return DoAnchorMinY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor min value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor min value.</returns>
         public static Tween DoAnchorMin(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin, new Vector2(x, y), (am) => rectTransform.anchorMin = am, duration, formula, loopsCount, loopType);
@@ -861,6 +1026,16 @@ namespace Numba.Tweening
             return DoAnchorMin(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform anchor min value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="anchorMin">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor min value.</returns>
         public static Tween DoAnchorMin(this RectTransform rectTransform, Vector2 anchorMin, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.anchorMin, anchorMin, (am) => rectTransform.anchorMin = am, duration, formula, loopsCount, loopType);
@@ -873,6 +1048,16 @@ namespace Numba.Tweening
         #endregion
 
         #region OffsetMax
+        /// <summary>
+        /// Create and return tween which move rect transform offset max value along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset max value along x axis.</returns>
         public static Tween DoOffsetMaxX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax.x, x, (omx) => rectTransform.offsetMax = SetVectorValue(rectTransform.offsetMax, 0, omx), duration, formula, loopsCount, loopType);
@@ -883,6 +1068,16 @@ namespace Numba.Tweening
             return DoOffsetMaxX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset max value along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset max value along y axis.</returns>
         public static Tween DoOffsetMaxY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax.y, y, (omy) => rectTransform.offsetMax = SetVectorValue(rectTransform.offsetMax, 1, omy), duration, formula, loopsCount, loopType);
@@ -893,6 +1088,17 @@ namespace Numba.Tweening
             return DoOffsetMaxY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset max value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset max value.</returns>
         public static Tween DoOffsetMax(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax, new Vector2(x, y), (om) => rectTransform.offsetMax = om, duration, formula, loopsCount, loopType);
@@ -903,6 +1109,16 @@ namespace Numba.Tweening
             return DoOffsetMax(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset max value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="offsetMax">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset max value.</returns>
         public static Tween DoOffsetMax(this RectTransform rectTransform, Vector2 offsetMax, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMax, offsetMax, (om) => rectTransform.offsetMax = om, duration, formula, loopsCount, loopType);
@@ -915,6 +1131,16 @@ namespace Numba.Tweening
         #endregion
 
         #region OffsetMin
+        /// <summary>
+        /// Create and return tween which move rect transform offset min value along x axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform anchor offset value along x axis.</returns>
         public static Tween DoOffsetMinX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin.x, x, (omx) => rectTransform.offsetMin = SetVectorValue(rectTransform.offsetMin, 0, omx), duration, formula, loopsCount, loopType);
@@ -925,6 +1151,16 @@ namespace Numba.Tweening
             return DoOffsetMinX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset min value along y axis.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset min value along y axis.</returns>
         public static Tween DoOffsetMinY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin.y, y, (omy) => rectTransform.offsetMin = SetVectorValue(rectTransform.offsetMin, 1, omy), duration, formula, loopsCount, loopType);
@@ -935,6 +1171,17 @@ namespace Numba.Tweening
             return DoOffsetMinY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset min value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset min value.</returns>
         public static Tween DoOffsetMin(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin, new Vector2(x, y), (om) => rectTransform.offsetMin = om, duration, formula, loopsCount, loopType);
@@ -945,6 +1192,16 @@ namespace Numba.Tweening
             return DoOffsetMin(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform offset min value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="offsetMin">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform offset min value.</returns>
         public static Tween DoOffsetMin(this RectTransform rectTransform, Vector2 offsetMin, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.offsetMin, offsetMin, (om) => rectTransform.offsetMin = om, duration, formula, loopsCount, loopType);
@@ -957,6 +1214,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Pivot
+        /// <summary>
+        /// Create and return tween which move rect transform pivot x axis value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform pivot x axis value.</returns>
         public static Tween DoPivotX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot.x, x, (px) => rectTransform.pivot = SetVectorValue(rectTransform.pivot, 0, px), duration, formula, loopsCount, loopType);
@@ -967,6 +1234,16 @@ namespace Numba.Tweening
             return DoPivotX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform pivot y axis value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform pivot y axis value.</returns>
         public static Tween DoPivotY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot.y, y, (py) => rectTransform.pivot = SetVectorValue(rectTransform.pivot, 1, py), duration, formula, loopsCount, loopType);
@@ -977,6 +1254,17 @@ namespace Numba.Tweening
             return DoPivotY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform pivot.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform pivot.</returns>
         public static Tween DoPivot(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot, new Vector2(x, y), (p) => rectTransform.pivot = p, duration, formula, loopsCount, loopType);
@@ -987,6 +1275,16 @@ namespace Numba.Tweening
             return DoPivot(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform pivot.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="pivot">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform pivot.</returns>
         public static Tween DoPivot(this RectTransform rectTransform, Vector2 pivot, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.pivot, pivot, (p) => rectTransform.pivot = p, duration, formula, loopsCount, loopType);
@@ -999,6 +1297,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SizeDelta
+        /// <summary>
+        /// Create and return tween which move rect transform size delta x axis value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform size delta x axis value.</returns>
         public static Tween DoSizeDeltaX(this RectTransform rectTransform, float x, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta.x, x, (sdx) => rectTransform.sizeDelta = SetVectorValue(rectTransform.sizeDelta, 0, sdx), duration, formula, loopsCount, loopType);
@@ -1009,6 +1317,16 @@ namespace Numba.Tweening
             return DoSizeDeltaX(rectTransform, x, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform size delta y axis value.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="y">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform size delta y axis value.</returns>
         public static Tween DoSizeDeltaY(this RectTransform rectTransform, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta.y, y, (sdy) => rectTransform.sizeDelta = SetVectorValue(rectTransform.sizeDelta, 1, sdy), duration, formula, loopsCount, loopType);
@@ -1019,6 +1337,17 @@ namespace Numba.Tweening
             return DoSizeDeltaY(rectTransform, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform size delta.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="x">X axis end value.</param>
+        /// <param name="y">Y axis end value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform size delta.</returns>
         public static Tween DoSizeDelta(this RectTransform rectTransform, float x, float y, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta, new Vector2(x, y), (sd) => rectTransform.sizeDelta = sd, duration, formula, loopsCount, loopType);
@@ -1029,6 +1358,16 @@ namespace Numba.Tweening
             return DoSizeDelta(rectTransform, x, y, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
 
+        /// <summary>
+        /// Create and return tween which move rect transform size delta.
+        /// </summary>
+        /// <param name="rectTransform">Target rect tranform.</param>
+        /// <param name="sizeDelta">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate rect transform size delta.</returns>
         public static Tween DoSizeDelta(this RectTransform rectTransform, Vector2 sizeDelta, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(rectTransform.sizeDelta, sizeDelta, (sd) => rectTransform.sizeDelta = sd, duration, formula, loopsCount, loopType);
