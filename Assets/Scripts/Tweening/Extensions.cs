@@ -1382,6 +1382,16 @@ namespace Numba.Tweening
 
         #region Material
         #region Color
+        /// <summary>
+        /// Create and return tween which animate material's color.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's color.</returns>
         public static Tween DoColor(this Material material, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.color, color, (c) => material.color = c, duration, formula, loopsCount, loopType);
@@ -1394,6 +1404,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MainTextureOffset
+        /// <summary>
+        /// Create and return tween which animate material's main texture offset.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="textureOffset">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's main texture offset.</returns>
         public static Tween DoMainTextureOffset(this Material material, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.mainTextureOffset, textureOffset, (to) => material.mainTextureOffset = to, duration, formula, loopsCount, loopType);
@@ -1406,6 +1426,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MainTextureScale
+        /// <summary>
+        /// Create and return tween which animate material's main texture scale.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="textureScale">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's main texture scale.</returns>
         public static Tween DoMainTextureScale(this Material material, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.mainTextureScale, textureScale, (ts) => material.mainTextureScale = ts, duration, formula, loopsCount, loopType);
@@ -1418,6 +1448,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetTextureOffset
+        /// <summary>
+        /// Create and return tween which animate material's custom Texture offset.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom texture name.</param>
+        /// <param name="textureOffset">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom texture offset.</returns>
         public static Tween DoSetTextureOffset(this Material material, string name, Vector2 textureOffset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetTextureOffset(name), textureOffset, (to) => material.SetTextureOffset(name, to), duration, formula, loopsCount, loopType);
@@ -1430,6 +1471,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetTextureScale
+        /// <summary>
+        /// Create and return tween which animate material's custom Texture scale.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom texture name.</param>
+        /// <param name="textureScale">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom texture scale.</returns>
         public static Tween DoSetTextureScale(this Material material, string name, Vector2 textureScale, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetTextureOffset(name), textureScale, (ts) => material.SetTextureScale(name, ts), duration, formula, loopsCount, loopType);
@@ -1442,6 +1494,16 @@ namespace Numba.Tweening
         #endregion
 
         #region RenderQueue
+        /// <summary>
+        /// Create and return tween which animate material's render queue value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="queue">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's render queue value.</returns>
         public static Tween DoRenderQueue(this Material material, int queue, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.renderQueue, queue, (q) => material.renderQueue = q, duration, formula, loopsCount, loopType);
@@ -1454,6 +1516,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetInt
+        /// <summary>
+        /// Create and return tween which animate material's custom Int value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom int value name.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom int value.</returns>
         public static Tween DoSetInt(this Material material, string name, int value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetInt(name), value, (i) => material.SetInt(name, i), duration, formula, loopsCount, loopType);
@@ -1466,6 +1539,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetFloat
+        /// <summary>
+        /// Create and return tween which animate material's custom Float value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom float value name.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom float value.</returns>
         public static Tween DoSetFloat(this Material material, string name, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetFloat(name), value, (f) => material.SetFloat(name, f), duration, formula, loopsCount, loopType);
@@ -1478,6 +1562,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetVector
+        /// <summary>
+        /// Create and return tween which animate material's custom Vector4 value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom Vector4 value name.</param>
+        /// <param name="vector">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom Vector4 value.</returns>
         public static Tween DoSetVector(this Material material, string name, Vector4 vector, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetVector(name), vector, (v) => material.SetVector(name, v), duration, formula, loopsCount, loopType);
@@ -1490,6 +1585,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetColor
+        /// <summary>
+        /// Create and return tween which animate material's custom Color value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom Color value name.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom Color value.</returns>
         public static Tween DoSetColor(this Material material, string name, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetColor(name), color, (c) => material.SetColor(name, c), duration, formula, loopsCount, loopType);
@@ -1502,6 +1608,17 @@ namespace Numba.Tweening
         #endregion
 
         #region SetMatrix4x4
+        /// <summary>
+        /// Create and return tween which animate material's custom Matrix4x4 value.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="name">Custom Matrix4x4 value name.</param>
+        /// <param name="matrix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate material's custom Matrix4x4 value.</returns>
         public static Tween DoSetMatrix(this Material material, string name, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.GetMatrix(name), matrix, (m) => material.SetMatrix(name, m), duration, formula, loopsCount, loopType);
@@ -1512,22 +1629,20 @@ namespace Numba.Tweening
             return DoSetMatrix(material, name, matrix, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
-
-        #region SetPass
-        public static Tween DoSetPass(this Material material, string name, int pass, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(material.FindPass(name), pass, (p) => material.SetPass(p), duration, formula, loopsCount, loopType);
-        }
-
-        public static Tween DoSetPass(this Material material, string name, int pass, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoSetPass(material, name, pass, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-        #endregion
         #endregion
 
         #region AudioSource
         #region DopplerLevel
+        /// <summary>
+        /// Create and return tween which animate audio source's doppler level.
+        /// </summary>
+        /// <param name="material">Target material.</param>
+        /// <param name="level">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's doppler level.</returns>
         public static Tween DoDopplerLevel(this AudioSource audioSource, float level, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.dopplerLevel, level, (l) => audioSource.dopplerLevel = l, duration, formula, loopsCount, loopType);
@@ -1540,6 +1655,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MaxDistance
+        /// <summary>
+        /// Create and return tween which animate audio source's max distance.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's max distance.</returns>
         public static Tween DoMaxDistance(this AudioSource audioSource, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.maxDistance, distance, (d) => audioSource.maxDistance = d, duration, formula, loopsCount, loopType);
@@ -1552,6 +1677,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MinDistance
+        /// <summary>
+        /// Create and return tween which animate audio source's min distance.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's min distance.</returns>
         public static Tween DoMinDistance(this AudioSource audioSource, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.minDistance, distance, (d) => audioSource.minDistance = d, duration, formula, loopsCount, loopType);
@@ -1564,6 +1699,16 @@ namespace Numba.Tweening
         #endregion
 
         #region PanStereo
+        /// <summary>
+        /// Create and return tween which animate audio source's stereo panning.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="stereo">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's stereo panning.</returns>
         public static Tween DoPanStereo(this AudioSource audioSource, float stereo, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.panStereo, stereo, (s) => audioSource.panStereo = s, duration, formula, loopsCount, loopType);
@@ -1576,6 +1721,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Pitch
+        /// <summary>
+        /// Create and return tween which animate audio source's pitch value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="pitch">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's pitch value.</returns>
         public static Tween DoPitch(this AudioSource audioSource, float pitch, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.pitch, pitch, (p) => audioSource.pitch = p, duration, formula, loopsCount, loopType);
@@ -1588,6 +1743,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Priority
+        /// <summary>
+        /// Create and return tween which animate audio source's priority value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="priority">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's priority value.</returns>
         public static Tween DoPriority(this AudioSource audioSource, int priority, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.priority, priority, (p) => audioSource.priority = p, duration, formula, loopsCount, loopType);
@@ -1600,6 +1765,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ReverbZoneMix
+        /// <summary>
+        /// Create and return tween which animate audio source's reverb zone mix value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="mix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's reverb zone mix value.</returns>
         public static Tween DoReverbZoneMix(this AudioSource audioSource, float mix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.reverbZoneMix, mix, (m) => audioSource.reverbZoneMix = m, duration, formula, loopsCount, loopType);
@@ -1612,6 +1787,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SpatialBlend
+        /// <summary>
+        /// Create and return tween which animate audio source's spatial blending value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="blend">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's spatial blending value.</returns>
         public static Tween DoSpatialBlend(this AudioSource audioSource, float blend, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.spatialBlend, blend, (b) => audioSource.spatialBlend = b, duration, formula, loopsCount, loopType);
@@ -1624,6 +1809,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Spread
+        /// <summary>
+        /// Create and return tween which animate audio source's spread value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="spread">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's spread value.</returns>
         public static Tween DoSpread(this AudioSource audioSource, float spread, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.spread, spread, (s) => audioSource.spread = s, duration, formula, loopsCount, loopType);
@@ -1636,6 +1831,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Time
+        /// <summary>
+        /// Create and return tween which animate audio source's time value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="time">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's time value.</returns>
         public static Tween DoTime(this AudioSource audioSource, float time, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.time, time, (t) => audioSource.time = t, duration, formula, loopsCount, loopType);
@@ -1648,6 +1853,16 @@ namespace Numba.Tweening
         #endregion
 
         #region TimeSamples
+        /// <summary>
+        /// Create and return tween which animate audio source's time samples value.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="samples">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's time samples value.</returns>
         public static Tween DoTimeSamples(this AudioSource audioSource, int samples, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.timeSamples, samples, (s) => audioSource.timeSamples = s, duration, formula, loopsCount, loopType);
@@ -1659,7 +1874,17 @@ namespace Numba.Tweening
         }
         #endregion
 
-        #region Valume
+        #region Volume
+        /// <summary>
+        /// Create and return tween which animate audio source's volume.
+        /// </summary>
+        /// <param name="audioSource">Target audio source.</param>
+        /// <param name="volume">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate audio source's volume.</returns>
         public static Tween DoVolume(this AudioSource audioSource, float volume, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(audioSource.volume, volume, (v) => audioSource.volume = v, duration, formula, loopsCount, loopType);
@@ -1674,6 +1899,16 @@ namespace Numba.Tweening
 
         #region Camera
         #region Aspect
+        /// <summary>
+        /// Create and return tween which animate camera's aspect value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="aspect">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's aspect value.</returns>
         public static Tween DoAspect(this Camera camera, float aspect, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.aspect, aspect, (a) => camera.aspect = a, duration, formula, loopsCount, loopType);
@@ -1686,6 +1921,16 @@ namespace Numba.Tweening
         #endregion
 
         #region BackgroundColor
+        /// <summary>
+        /// Create and return tween which animate camera's background color.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's background color.</returns>
         public static Tween DoBackgroundColor(this Camera camera, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.backgroundColor, color, (c) => camera.backgroundColor = c, duration, formula, loopsCount, loopType);
@@ -1698,6 +1943,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CullingMask
+        /// <summary>
+        /// Create and return tween which animate camera's culling mask value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="mask">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's culling mask value.</returns>
         public static Tween DoCullingMask(this Camera camera, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.cullingMask, mask, (m) => camera.cullingMask = m, duration, formula, loopsCount, loopType);
@@ -1710,6 +1965,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CullingMatrix
+        /// <summary>
+        /// Create and return tween which animate camera's culling matrix.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="matrix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's culling matrix.</returns>
         public static Tween DoCullingMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.cullingMatrix, matrix, (m) => camera.cullingMatrix = m, duration, formula, loopsCount, loopType);
@@ -1722,6 +1987,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Depth
+        /// <summary>
+        /// Create and return tween which animate camera's depth value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="depth">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's depth value.</returns>
         public static Tween DoDepth(this Camera camera, float depth, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.depth, depth, (d) => camera.depth = d, duration, formula, loopsCount, loopType);
@@ -1734,6 +2009,16 @@ namespace Numba.Tweening
         #endregion
 
         #region EventMask
+        /// <summary>
+        /// Create and return tween which animate camera's event mask value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="mask">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's event mask value.</returns>
         public static Tween DoEventMask(this Camera camera, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.eventMask, mask, (m) => camera.eventMask = m, duration, formula, loopsCount, loopType);
@@ -1746,6 +2031,16 @@ namespace Numba.Tweening
         #endregion
 
         #region FarClipPlane
+        /// <summary>
+        /// Create and return tween which animate camera's far clip plane value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's far clip plane value.</returns>
         public static Tween DoFarClipPlane(this Camera camera, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.farClipPlane, distance, (d) => camera.farClipPlane = d, duration, formula, loopsCount, loopType);
@@ -1758,6 +2053,16 @@ namespace Numba.Tweening
         #endregion
 
         #region FieldOfView
+        /// <summary>
+        /// Create and return tween which animate camera's field of view value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="fieldOfView">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's field of view value.</returns>
         public static Tween DoFieldOfView(this Camera camera, float fieldOfView, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.fieldOfView, fieldOfView, (fov) => camera.fieldOfView = fov, duration, formula, loopsCount, loopType);
@@ -1770,6 +2075,16 @@ namespace Numba.Tweening
         #endregion
 
         #region FocalLength
+        /// <summary>
+        /// Create and return tween which animate camera's focal length value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="length">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's focal length value.</returns>
         public static Tween DoFocalLength(this Camera camera, float length, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.focalLength, length, (l) => camera.focalLength = l, duration, formula, loopsCount, loopType);
@@ -1782,6 +2097,16 @@ namespace Numba.Tweening
         #endregion
 
         #region LensShift
+        /// <summary>
+        /// Create and return tween which animate camera's lens shift value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="shift">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's lens shift value.</returns>
         public static Tween DoLensShift(this Camera camera, Vector2 shift, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.lensShift, shift, (s) => camera.lensShift = s, duration, formula, loopsCount, loopType);
@@ -1794,6 +2119,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NearClipPlane
+        /// <summary>
+        /// Create and return tween which animate camera's near clip plane value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's near clip plane value.</returns>
         public static Tween DoNearClipPlane(this Camera camera, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.nearClipPlane, distance, (d) => camera.nearClipPlane = d, duration, formula, loopsCount, loopType);
@@ -1806,6 +2141,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NonJitteredProjectionMatrix
+        /// <summary>
+        /// Create and return tween which animate camera's non jittered projection matrix.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="matrix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's non jittered projection matrix.</returns>
         public static Tween DoNonJitteredProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.nonJitteredProjectionMatrix, matrix, (m) => camera.nonJitteredProjectionMatrix = m, duration, formula, loopsCount, loopType);
@@ -1818,6 +2163,16 @@ namespace Numba.Tweening
         #endregion
 
         #region OrthographicSize
+        /// <summary>
+        /// Create and return tween which animate camera's orthographic size.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's orthographic size.</returns>
         public static Tween DoOrthographicSize(this Camera camera, float size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.orthographicSize, size, (s) => camera.orthographicSize = s, duration, formula, loopsCount, loopType);
@@ -1830,6 +2185,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ProjectionMatrix
+        /// <summary>
+        /// Create and return tween which animate camera's projection matrix.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="matrix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's projection matrix.</returns>
         public static Tween DoProjectionMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.projectionMatrix, matrix, (m) => camera.projectionMatrix = m, duration, formula, loopsCount, loopType);
@@ -1842,6 +2207,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Rect
+        /// <summary>
+        /// Create and return tween which animate camera's rect.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="rect">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's rect.</returns>
         public static Tween DoRect(this Camera camera, Rect rect, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.rect, rect, (r) => camera.rect = r, duration, formula, loopsCount, loopType);
@@ -1854,6 +2229,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SensorSize
+        /// <summary>
+        /// Create and return tween which animate camera's sensor size.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's sensor size.</returns>
         public static Tween DoSensorSize(this Camera camera, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.sensorSize, size, (s) => camera.sensorSize = s, duration, formula, loopsCount, loopType);
@@ -1866,6 +2251,16 @@ namespace Numba.Tweening
         #endregion
 
         #region StereoConvergence
+        /// <summary>
+        /// Create and return tween which animate camera's stereo convergence value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="convergence">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's stereo convergence value.</returns>
         public static Tween DoStereoConvergence(this Camera camera, float convergence, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.stereoConvergence, convergence, (c) => camera.stereoConvergence = c, duration, formula, loopsCount, loopType);
@@ -1878,6 +2273,16 @@ namespace Numba.Tweening
         #endregion
 
         #region StereoSeparation
+        /// <summary>
+        /// Create and return tween which animate camera's stereo separation value.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="separation">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's stereo separation value.</returns>
         public static Tween DoStereoSeparation(this Camera camera, float separation, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.stereoSeparation, separation, (s) => camera.stereoSeparation = s, duration, formula, loopsCount, loopType);
@@ -1890,6 +2295,16 @@ namespace Numba.Tweening
         #endregion
 
         #region TargetDisplay
+        /// <summary>
+        /// Create and return tween which animate camera's target display index.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="display">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's target display index.</returns>
         public static Tween DoTargetDisplay(this Camera camera, int display, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.targetDisplay, display, (d) => camera.targetDisplay = d, duration, formula, loopsCount, loopType);
@@ -1902,6 +2317,16 @@ namespace Numba.Tweening
         #endregion
 
         #region TransparencySortAxis
+        /// <summary>
+        /// Create and return tween which animate camera's transparency sort axis.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="axis">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's transparency sort axis.</returns>
         public static Tween DoTransparencySortAxis(this Camera camera, Vector3 axis, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.transparencySortAxis, axis, (a) => camera.transparencySortAxis = a, duration, formula, loopsCount, loopType);
@@ -1914,6 +2339,16 @@ namespace Numba.Tweening
         #endregion
 
         #region WorldToCameraMatrix
+        /// <summary>
+        /// Create and return tween which animate camera's world to camera matrix.
+        /// </summary>
+        /// <param name="camera">Target camera.</param>
+        /// <param name="matrix">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate camera's world to camera matrix.</returns>
         public static Tween DoWorldToCameraMatrix(this Camera camera, Matrix4x4 matrix, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(camera.worldToCameraMatrix, matrix, (m) => camera.worldToCameraMatrix = m, duration, formula, loopsCount, loopType);
@@ -1927,6 +2362,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CanvasGroup
+        /// <summary>
+        /// Create and return tween which animate canvas group's alpha value.
+        /// </summary>
+        /// <param name="canvasGroup">Target canvas group.</param>
+        /// <param name="alpha">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate canvas group's alpha value.</returns>
         public static Tween DoAlpha(this CanvasGroup canvasGroup, float alpha, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(canvasGroup.alpha, alpha, (a) => canvasGroup.alpha = a, duration, formula, loopsCount, loopType);
@@ -1939,6 +2384,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Graphic
+        /// <summary>
+        /// Create and return tween which animate graphic's base color.
+        /// </summary>
+        /// <param name="graphic">Target graphic.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate graphic's base color.</returns>
         public static Tween DoColor(this Graphic graphic, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(graphic.color, color, (c) => graphic.color = c, duration, formula, loopsCount, loopType);
@@ -1952,6 +2407,16 @@ namespace Numba.Tweening
 
         #region Text
         #region FontSize
+        /// <summary>
+        /// Create and return tween which animate text component's font size.
+        /// </summary>
+        /// <param name="text">Target text component.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate text component's font size.</returns>
         public static Tween DoFontSize(this Text text, int size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(text.fontSize, size, (s) => text.fontSize = s, duration, formula, loopsCount, loopType);
@@ -1964,6 +2429,16 @@ namespace Numba.Tweening
         #endregion
 
         #region LineSpacing
+        /// <summary>
+        /// Create and return tween which animate text component's line spacing.
+        /// </summary>
+        /// <param name="text">Target text component.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate text component's line spacing.</returns>
         public static Tween DoLineSpacing(this Text text, float spacing, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(text.lineSpacing, spacing, (s) => text.lineSpacing = s, duration, formula, loopsCount, loopType);
@@ -1976,19 +2451,39 @@ namespace Numba.Tweening
         #endregion
 
         #region Text
-        public static Tween DoText(this Text textComponent, string text, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        /// <summary>
+        /// Create and return tween which animate text component's text (symbols) value.
+        /// </summary>
+        /// <param name="text">Target text component.</param>
+        /// <param name="targetText">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate text component's text (symbols) value.</returns>
+        public static Tween DoText(this Text text, string targetText, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return Tween.Create(textComponent.text, text, (t) => textComponent.text = t, duration, formula, loopsCount, loopType);
+            return Tween.Create(text.text, targetText, (t) => text.text = t, duration, formula, loopsCount, loopType);
         }
 
-        public static Tween DoText(this Text textComponent, string text, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        public static Tween DoText(this Text text, string targetText, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
-            return DoText(textComponent, text, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+            return DoText(text, targetText, duration, Formulas.GetFormula(ease), loopsCount, loopType);
         }
         #endregion
         #endregion
 
         #region Image
+        /// <summary>
+        /// Create and return tween which animate image's fill amount.
+        /// </summary>
+        /// <param name="image">Target image.</param>
+        /// <param name="amount">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate image's fill amount.</returns>
         public static Tween DoFillAmount(this Image image, float amount, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(image.fillAmount, amount, (a) => image.fillAmount = a, duration, formula, loopsCount, loopType);
@@ -2001,6 +2496,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Selectable
+        /// <summary>
+        /// Create and return tween which animate selectable's colors.
+        /// </summary>
+        /// <param name="selectable">Target selectable.</param>
+        /// <param name="colors">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate selectable's colors.</returns>
         public static Tween DoColors(this Selectable selectable, ColorBlock colors, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(selectable.colors, colors, (cs) => selectable.colors = cs, duration, formula, loopsCount, loopType);
@@ -2014,6 +2519,16 @@ namespace Numba.Tweening
 
         #region Slider
         #region MinValue
+        /// <summary>
+        /// Create and return tween which animate slider's min value.
+        /// </summary>
+        /// <param name="slider">Target slider.</param>
+        /// <param name="min">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate slider's min value.</returns>
         public static Tween DoMinValue(this Slider slider, float min, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(slider.minValue, min, (mv) => slider.minValue = mv, duration, formula, loopsCount, loopType);
@@ -2026,6 +2541,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MaxValue
+        /// <summary>
+        /// Create and return tween which animate slider's max value.
+        /// </summary>
+        /// <param name="slider">Target slider.</param>
+        /// <param name="max">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate slider's max value.</returns>
         public static Tween DoMaxValue(this Slider slider, float max, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(slider.maxValue, max, (mv) => slider.maxValue = mv, duration, formula, loopsCount, loopType);
@@ -2038,6 +2563,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NormalizedValue
+        /// <summary>
+        /// Create and return tween which animate slider's normalized value.
+        /// </summary>
+        /// <param name="slider">Target slider.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate slider's normalized value.</returns>
         public static Tween DoNormalizedValue(this Slider slider, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(slider.normalizedValue, value, (nv) => slider.normalizedValue = nv, duration, formula, loopsCount, loopType);
@@ -2050,6 +2585,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Value
+        /// <summary>
+        /// Create and return tween which animate slider's value (handle position).
+        /// </summary>
+        /// <param name="slider">Target slider.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate slider's value (handle position).</returns>
         public static Tween DoValue(this Slider slider, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(slider.value, value, (nv) => slider.value = nv, duration, formula, loopsCount, loopType);
@@ -2064,6 +2609,16 @@ namespace Numba.Tweening
 
         #region Scrollbar
         #region NumberOfSteps
+        /// <summary>
+        /// Create and return tween which animate scrollbar's number of steps.
+        /// </summary>
+        /// <param name="scrollbar">Target scrollbar.</param>
+        /// <param name="steps">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scrollbar's number of steps.</returns>
         public static Tween DoNumberOfSteps(this Scrollbar scrollbar, int steps, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollbar.numberOfSteps, steps, (s) => scrollbar.numberOfSteps = s, duration, formula, loopsCount, loopType);
@@ -2076,6 +2631,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Size
+        /// <summary>
+        /// Create and return tween which animate scrollbar's size.
+        /// </summary>
+        /// <param name="scrollbar">Target scrollbar.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scrollbar's size.</returns>
         public static Tween DoSize(this Scrollbar scrollbar, float size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollbar.size, size, (s) => scrollbar.size = s, duration, formula, loopsCount, loopType);
@@ -2088,6 +2653,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Value
+        /// <summary>
+        /// Create and return tween which animate scrollbar's value (handle position).
+        /// </summary>
+        /// <param name="scrollbar">Target scrollbar.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scrollbar's value (handle position).</returns>
         public static Tween DoValue(this Scrollbar scrollbar, float value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollbar.value, value, (v) => scrollbar.value = v, duration, formula, loopsCount, loopType);
@@ -2101,6 +2676,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Dropdown
+        /// <summary>
+        /// Create and return tween which animate dropdown's value index.
+        /// </summary>
+        /// <param name="dropdown">Target dropdown.</param>
+        /// <param name="value">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate dropdown's value index.</returns>
         public static Tween DoValue(this Dropdown dropdown, int value, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(dropdown.value, value, (v) => dropdown.value = v, duration, formula, loopsCount, loopType);
@@ -2114,6 +2699,16 @@ namespace Numba.Tweening
 
         #region InputField
         #region CaretBlinkRate
+        /// <summary>
+        /// Create and return tween which animate input field's caret blink rate value.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="rate">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's caret blink rate value.</returns>
         public static Tween DoCaretBlinkRate(this InputField inputField, float rate, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.caretBlinkRate, rate, (r) => inputField.caretBlinkRate = r, duration, formula, loopsCount, loopType);
@@ -2126,6 +2721,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CaretColor
+        /// <summary>
+        /// Create and return tween which animate input field's caret color.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's caret color.</returns>
         public static Tween DoCaretColor(this InputField inputField, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.caretColor, color, (c) => inputField.caretColor = c, duration, formula, loopsCount, loopType);
@@ -2138,6 +2743,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CaretPosition
+        /// <summary>
+        /// Create and return tween which animate input field's caret position.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's caret position.</returns>
         public static Tween DoCaretPosition(this InputField inputField, int position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.caretPosition, position, (p) => inputField.caretPosition = p, duration, formula, loopsCount, loopType);
@@ -2150,6 +2765,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CaretWidth
+        /// <summary>
+        /// Create and return tween which animate input field's caret width.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="width">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's caret width.</returns>
         public static Tween DoCaretWidth(this InputField inputField, int width, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.caretWidth, width, (w) => inputField.caretWidth = w, duration, formula, loopsCount, loopType);
@@ -2162,6 +2787,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CharacterLimit
+        /// <summary>
+        /// Create and return tween which animate input field's character limit value.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="limit">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's character limit value.</returns>
         public static Tween DoCharacterLimit(this InputField inputField, int limit, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.characterLimit, limit, (l) => inputField.characterLimit = l, duration, formula, loopsCount, loopType);
@@ -2174,6 +2809,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SelectionAnchorPosition
+        /// <summary>
+        /// Create and return tween which animate input field's selection anchor position.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's selection anchor position.</returns>
         public static Tween DoSelectionAnchorPosition(this InputField inputField, int position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.selectionAnchorPosition, position, (p) => inputField.selectionAnchorPosition = p, duration, formula, loopsCount, loopType);
@@ -2186,6 +2831,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SelectionColor
+        /// <summary>
+        /// Create and return tween which animate input field's selection color.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's selection color.</returns>
         public static Tween DoSelectionColor(this InputField inputField, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.selectionColor, color, (c) => inputField.selectionColor = c, duration, formula, loopsCount, loopType);
@@ -2198,6 +2853,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SelectionFocusPosition
+        /// <summary>
+        /// Create and return tween which animate input field's selection focus position.
+        /// </summary>
+        /// <param name="inputField">Target input field.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate inputField's selection focus position.</returns>
         public static Tween DoSelectionFocusPosition(this InputField inputField, int position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(inputField.selectionFocusPosition, position, (p) => inputField.selectionFocusPosition = p, duration, formula, loopsCount, loopType);
@@ -2212,6 +2877,16 @@ namespace Numba.Tweening
 
         #region ScrollRect
         #region DecelerationRate
+        /// <summary>
+        /// Create and return tween which animate scroll rect's deceleration rate.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="rate">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's deceleration rate.</returns>
         public static Tween DoDecelerationRate(this ScrollRect scrollRect, float rate, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.decelerationRate, rate, (r) => scrollRect.decelerationRate = r, duration, formula, loopsCount, loopType);
@@ -2224,6 +2899,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Elasticity
+        /// <summary>
+        /// Create and return tween which animate scroll rect's elasticity.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="elasticity">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's elasticity.</returns>
         public static Tween DoElasticity(this ScrollRect scrollRect, float elasticity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.elasticity, elasticity, (e) => scrollRect.elasticity = e, duration, formula, loopsCount, loopType);
@@ -2236,6 +2921,16 @@ namespace Numba.Tweening
         #endregion
 
         #region HorizontalNormalizedPosition
+        /// <summary>
+        /// Create and return tween which animate scroll rect's horizontal normalized position.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's horizontal normalized position.</returns>
         public static Tween DoHorizontalNormalizedPosition(this ScrollRect scrollRect, float position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.horizontalNormalizedPosition, position, (p) => scrollRect.horizontalNormalizedPosition = p, duration, formula, loopsCount, loopType);
@@ -2248,6 +2943,16 @@ namespace Numba.Tweening
         #endregion
 
         #region HorizontalScrollbarSpacing
+        /// <summary>
+        /// Create and return tween which animate scroll rect's horizontal scrollbar spacing.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="space">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's horizontal scrollbar spacing.</returns>
         public static Tween DoHorizontalScrollbarSpacing(this ScrollRect scrollRect, float space, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.horizontalScrollbarSpacing, space, (p) => scrollRect.horizontalScrollbarSpacing = p, duration, formula, loopsCount, loopType);
@@ -2260,6 +2965,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NormalizedPosition
+        /// <summary>
+        /// Create and return tween which animate scroll rect's normalized position.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's normalized position.</returns>
         public static Tween DoNormalizedPosition(this ScrollRect scrollRect, Vector2 position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.normalizedPosition, position, (p) => scrollRect.normalizedPosition = p, duration, formula, loopsCount, loopType);
@@ -2272,6 +2987,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ScrollSensitivity
+        /// <summary>
+        /// Create and return tween which animate scroll rect's scroll sensetivity.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="sensitivity">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's scroll sensetivity.</returns>
         public static Tween DoScrollSensitivity(this ScrollRect scrollRect, float sensitivity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.scrollSensitivity, sensitivity, (s) => scrollRect.scrollSensitivity = s, duration, formula, loopsCount, loopType);
@@ -2284,6 +3009,16 @@ namespace Numba.Tweening
         #endregion
 
         #region VerticalNormalizedPosition
+        /// <summary>
+        /// Create and return tween which animate scroll rect's vertical normalized position.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="position">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's vertical normalized position.</returns>
         public static Tween DoVerticalNormalizedPosition(this ScrollRect scrollRect, float position, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.verticalNormalizedPosition, position, (p) => scrollRect.verticalNormalizedPosition = p, duration, formula, loopsCount, loopType);
@@ -2296,6 +3031,16 @@ namespace Numba.Tweening
         #endregion
 
         #region VerticalScrollbarSpacing
+        /// <summary>
+        /// Create and return tween which animate scroll rect's vertical scrollbar spacing.
+        /// </summary>
+        /// <param name="scrollRect">Target scroll rect.</param>
+        /// <param name="space">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate scroll rect's vertical scrollbar spacing.</returns>
         public static Tween DoVerticalScrollbarSpacing(this ScrollRect scrollRect, float space, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(scrollRect.verticalScrollbarSpacing, space, (p) => scrollRect.verticalScrollbarSpacing = p, duration, formula, loopsCount, loopType);
@@ -2309,6 +3054,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Collider
+        /// <summary>
+        /// Create and return tween which animate collider's contact offset value.
+        /// </summary>
+        /// <param name="collider">Target collider.</param>
+        /// <param name="offset">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate collider's contact offset value.</returns>
         public static Tween DoContactOffset(this Collider collider, float offset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.contactOffset, offset, (o) => collider.contactOffset = o, duration, formula, loopsCount, loopType);
@@ -2322,6 +3077,16 @@ namespace Numba.Tweening
 
         #region BoxCollider
         #region Center
+        /// <summary>
+        /// Create and return tween which animate box collider's center.
+        /// </summary>
+        /// <param name="collider">Target box collider.</param>
+        /// <param name="center">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate box collider's center.</returns>
         public static Tween DoCenter(this BoxCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
@@ -2334,6 +3099,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Size
+        /// <summary>
+        /// Create and return tween which animate box collider's size.
+        /// </summary>
+        /// <param name="collider">Target box collider.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate box collider's size.</returns>
         public static Tween DoSize(this BoxCollider collider, Vector3 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
@@ -2348,6 +3123,16 @@ namespace Numba.Tweening
 
         #region CapsuleCollider
         #region Center
+        /// <summary>
+        /// Create and return tween which animate capsule collider's center.
+        /// </summary>
+        /// <param name="collider">Target capsule collider.</param>
+        /// <param name="center">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate capsule collider's center.</returns>
         public static Tween DoCenter(this CapsuleCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
@@ -2360,6 +3145,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Height
+        /// <summary>
+        /// Create and return tween which animate capsule collider's height.
+        /// </summary>
+        /// <param name="collider">Target capsule collider.</param>
+        /// <param name="height">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate capsule collider's height.</returns>
         public static Tween DoHeight(this CapsuleCollider collider, float height, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.height, height, (h) => collider.height = h, duration, formula, loopsCount, loopType);
@@ -2372,6 +3167,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Radius
+        /// <summary>
+        /// Create and return tween which animate capsule collider's radius.
+        /// </summary>
+        /// <param name="collider">Target capsule collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate capsule collider's radius.</returns>
         public static Tween DoRadius(this CapsuleCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
@@ -2386,6 +3191,16 @@ namespace Numba.Tweening
 
         #region SphereCollider
         #region Center
+        /// <summary>
+        /// Create and return tween which animate sphere collider's center.
+        /// </summary>
+        /// <param name="collider">Target sphere collider.</param>
+        /// <param name="center">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate sphere collider's center.</returns>
         public static Tween DoCenter(this SphereCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
@@ -2398,6 +3213,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Radius
+        /// <summary>
+        /// Create and return tween which animate sphere collider's radius.
+        /// </summary>
+        /// <param name="collider">Target sphere collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate sphere collider's radius.</returns>
         public static Tween DoRadius(this SphereCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
@@ -2412,6 +3237,16 @@ namespace Numba.Tweening
 
         #region WheelCollider
         #region BrakeTorque
+        /// <summary>
+        /// Create and return tween which animate wheel collider's brake torque.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="torque">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's brake torque.</returns>
         public static Tween DoBrakeTorque(this WheelCollider collider, float torque, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.brakeTorque, torque, (bt) => collider.brakeTorque = bt, duration, formula, loopsCount, loopType);
@@ -2424,6 +3259,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Center
+        /// <summary>
+        /// Create and return tween which animate wheel collider's center.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="center">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's center.</returns>
         public static Tween DoCenter(this WheelCollider collider, Vector3 center, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.center, center, (c) => collider.center = c, duration, formula, loopsCount, loopType);
@@ -2436,6 +3281,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ForceAppPointDistance
+        /// <summary>
+        /// Create and return tween which animate wheel collider's force app point distance value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's force app point distance value.</returns>
         public static Tween DoForceAppPointDistance(this WheelCollider collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.forceAppPointDistance, distance, (bt) => collider.forceAppPointDistance = bt, duration, formula, loopsCount, loopType);
@@ -2448,6 +3303,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ForwardFriction
+        /// <summary>
+        /// Create and return tween which animate wheel collider's forward friction value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="friction">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's forward friction value.</returns>
         public static Tween DoForwardFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.forwardFriction, friction, (f) => collider.forwardFriction = f, duration, formula, loopsCount, loopType);
@@ -2460,6 +3325,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Mass
+        /// <summary>
+        /// Create and return tween which animate wheel collider's mass value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="mass">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's mass value.</returns>
         public static Tween DoMass(this WheelCollider collider, float mass, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.mass, mass, (m) => collider.mass = m, duration, formula, loopsCount, loopType);
@@ -2472,6 +3347,16 @@ namespace Numba.Tweening
         #endregion
 
         #region MotorTorque
+        /// <summary>
+        /// Create and return tween which animate wheel collider's motor torque value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="torque">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's motor torque value.</returns>
         public static Tween DoMotorTorque(this WheelCollider collider, float torque, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.motorTorque, torque, (t) => collider.motorTorque = t, duration, formula, loopsCount, loopType);
@@ -2484,6 +3369,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Radius
+        /// <summary>
+        /// Create and return tween which animate wheel collider's radius.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's radius.</returns>
         public static Tween DoRadius(this WheelCollider collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
@@ -2496,6 +3391,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SidewayFriction
+        /// <summary>
+        /// Create and return tween which animate wheel collider's sideway friction value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="friction">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's sideway friction value.</returns>
         public static Tween DoSidewayFriction(this WheelCollider collider, WheelFrictionCurve friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.sidewaysFriction, friction, (f) => collider.sidewaysFriction = f, duration, formula, loopsCount, loopType);
@@ -2508,6 +3413,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SteerAngle
+        /// <summary>
+        /// Create and return tween which animate wheel collider's steer angle.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="angle">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's steer angle.</returns>
         public static Tween DoSteerAngle(this WheelCollider collider, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.steerAngle, angle, (a) => collider.steerAngle = a, duration, formula, loopsCount, loopType);
@@ -2520,6 +3435,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SuspensionDistance
+        /// <summary>
+        /// Create and return tween which animate wheel collider's suspension distance value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's suspension distance value.</returns>
         public static Tween DoSuspensionDistance(this WheelCollider collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.suspensionDistance, distance, (d) => collider.suspensionDistance = d, duration, formula, loopsCount, loopType);
@@ -2532,6 +3457,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SuspensionSpring
+        /// <summary>
+        /// Create and return tween which animate wheel collider's suspension spring value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="spring">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's suspension spring value.</returns>
         public static Tween DoSuspensionSpring(this WheelCollider collider, JointSpring spring, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.suspensionSpring, spring, (s) => collider.suspensionSpring = s, duration, formula, loopsCount, loopType);
@@ -2544,6 +3479,16 @@ namespace Numba.Tweening
         #endregion
 
         #region WheelDampingRate
+        /// <summary>
+        /// Create and return tween which animate wheel collider's wheel damping rate value.
+        /// </summary>
+        /// <param name="collider">Target wheel collider.</param>
+        /// <param name="rate">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate wheel collider's wheel damping rate value.</returns>
         public static Tween DoWheelDampingRate(this WheelCollider collider, float rate, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.wheelDampingRate, rate, (r) => collider.wheelDampingRate = r, duration, formula, loopsCount, loopType);
@@ -2558,6 +3503,16 @@ namespace Numba.Tweening
 
         #region SpatialMappingBase
         #region HalfBoxExtents
+        /// <summary>
+        /// Create and return tween which animate spatial mapping base's half box extents.
+        /// </summary>
+        /// <param name="collider">Target spatial mapping base.</param>
+        /// <param name="extents">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate spatial mapping base's half box extents.</returns>
         public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.halfBoxExtents, extents, (e) => collider.halfBoxExtents = e, duration, formula, loopsCount, loopType);
@@ -2570,6 +3525,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NumUpdatesBeforeRemoval
+        /// <summary>
+        /// Create and return tween which animate spatial mapping base's number updates before removal.
+        /// </summary>
+        /// <param name="collider">Target spatial mapping base.</param>
+        /// <param name="updates">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate spatial mapping base's number updates before removal.</returns>
         public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.numUpdatesBeforeRemoval, updates, (u) => collider.numUpdatesBeforeRemoval = u, duration, formula, loopsCount, loopType);
@@ -2582,6 +3547,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SecondsBetweenUpdates
+        /// <summary>
+        /// Create and return tween which animate spatial mapping base's seconds between updates.
+        /// </summary>
+        /// <param name="collider">Target spatial mapping base.</param>
+        /// <param name="seconds">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate spatial mapping base's seconds between updates.</returns>
         public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.secondsBetweenUpdates, seconds, (s) => collider.secondsBetweenUpdates = s, duration, formula, loopsCount, loopType);
@@ -2594,6 +3569,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SphereRadius
+        /// <summary>
+        /// Create and return tween which animate spatial mapping base's sphere radius.
+        /// </summary>
+        /// <param name="collider">Target spatial mapping base.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate spatial mapping base's sphere radius.</returns>
         public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.sphereRadius, radius, (r) => collider.sphereRadius = r, duration, formula, loopsCount, loopType);
@@ -2608,6 +3593,16 @@ namespace Numba.Tweening
 
         #region Collider2D
         #region Density
+        /// <summary>
+        /// Create and return tween which animate 2D collider's density value.
+        /// </summary>
+        /// <param name="collider">Target 2D collider.</param>
+        /// <param name="density">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D collider's density value.</returns>
         public static Tween DoDensity(this Collider2D collider, float density, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.density, density, (d) => collider.density = d, duration, formula, loopsCount, loopType);
@@ -2620,6 +3615,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Offset
+        /// <summary>
+        /// Create and return tween which animate 2D collider's offset value.
+        /// </summary>
+        /// <param name="collider">Target 2D collider.</param>
+        /// <param name="density">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D collider's offset value.</returns>
         public static Tween DoOffset(this Collider2D collider, Vector2 offset, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.offset, offset, (o) => collider.offset = o, duration, formula, loopsCount, loopType);
@@ -2634,6 +3639,16 @@ namespace Numba.Tweening
 
         #region BoxCollider2D
         #region EdgeRadius
+        /// <summary>
+        /// Create and return tween which animate 2D box collider's edge radius.
+        /// </summary>
+        /// <param name="collider">Target 2D box collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D box collider's edge radius.</returns>
         public static Tween DoEdgeRadius(this BoxCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
@@ -2646,6 +3661,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Size
+        /// <summary>
+        /// Create and return tween which animate 2D box collider's size value.
+        /// </summary>
+        /// <param name="collider">Target 2D box collider.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D box collider's size value.</returns>
         public static Tween DoSize(this BoxCollider2D collider, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
@@ -2659,6 +3684,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CapsuleCollider2D
+        /// <summary>
+        /// Create and return tween which animate 2D capsule collider's size value.
+        /// </summary>
+        /// <param name="collider">Target 2D capsule collider.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D capsule collider's size value.</returns>
         public static Tween DoSize(this CapsuleCollider2D collider, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.size, size, (s) => collider.size = s, duration, formula, loopsCount, loopType);
@@ -2671,6 +3706,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CircleCollider2D
+        /// <summary>
+        /// Create and return tween which animate 2D circle collider's radius.
+        /// </summary>
+        /// <param name="collider">Target 2D circle collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D circle collider's radius.</returns>
         public static Tween DoRadius(this CircleCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.radius, radius, (r) => collider.radius = r, duration, formula, loopsCount, loopType);
@@ -2684,6 +3729,16 @@ namespace Numba.Tweening
 
         #region CompositeCollider2D
         #region EdgeRadius
+        /// <summary>
+        /// Create and return tween which animate 2D composite collider's edge radius.
+        /// </summary>
+        /// <param name="collider">Target 2D composite collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D composite collider's edge radius.</returns>
         public static Tween DoEdgeRadius(this CompositeCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
@@ -2696,6 +3751,16 @@ namespace Numba.Tweening
         #endregion
 
         #region VertexDistance
+        /// <summary>
+        /// Create and return tween which animate 2D composite collider's vertex distance.
+        /// </summary>
+        /// <param name="collider">Target 2D composite collider.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D composite collider's vertex distance.</returns>
         public static Tween DoVertexDistance(this CompositeCollider2D collider, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.vertexDistance, distance, (d) => collider.vertexDistance = d, duration, formula, loopsCount, loopType);
@@ -2709,6 +3774,16 @@ namespace Numba.Tweening
         #endregion
 
         #region EdgeCollider2D
+        /// <summary>
+        /// Create and return tween which animate 2D edge collider's edge radius.
+        /// </summary>
+        /// <param name="collider">Target 2D edge collider.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D edge collider's edge radius.</returns>
         public static Tween DoEdgeRadius(this EdgeCollider2D collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.edgeRadius, radius, (r) => collider.edgeRadius = r, duration, formula, loopsCount, loopType);
@@ -2721,6 +3796,16 @@ namespace Numba.Tweening
         #endregion
 
         #region PolygonCollider2D
+        /// <summary>
+        /// Create and return tween which animate 2D polygon collider's path count value.
+        /// </summary>
+        /// <param name="collider">Target 2D polygon collider.</param>
+        /// <param name="count">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D polygon collider's path count value.</returns>
         public static Tween DoPathCount(this PolygonCollider2D collider, int count, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(collider.pathCount, count, (c) => collider.pathCount = c, duration, formula, loopsCount, loopType);
@@ -2734,6 +3819,16 @@ namespace Numba.Tweening
 
         #region Light
         #region AreaSize
+        /// <summary>
+        /// Create and return tween which animate light's area size.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's area size.</returns>
         public static Tween DoAreaSize(this Light light, Vector2 size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.areaSize, size, (s) => light.areaSize = s, duration, formula, loopsCount, loopType);
@@ -2746,6 +3841,16 @@ namespace Numba.Tweening
         #endregion
 
         #region BounceIntensity
+        /// <summary>
+        /// Create and return tween which animate light's bounce intensity value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="intensity">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's bounce intensity value.</returns>
         public static Tween DoBounceIntensity(this Light light, float intensity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.bounceIntensity, intensity, (i) => light.bounceIntensity = i, duration, formula, loopsCount, loopType);
@@ -2758,6 +3863,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Color
+        /// <summary>
+        /// Create and return tween which animate light's color.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's color.</returns>
         public static Tween DoColor(this Light light, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.color, color, (c) => light.color = c, duration, formula, loopsCount, loopType);
@@ -2770,6 +3885,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ColorTemperature
+        /// <summary>
+        /// Create and return tween which animate light's color temperature.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="temperature">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's color temperature.</returns>
         public static Tween DoColorTemperature(this Light light, float temperature, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.colorTemperature, temperature, (t) => light.colorTemperature = t, duration, formula, loopsCount, loopType);
@@ -2782,6 +3907,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CoockieSize
+        /// <summary>
+        /// Create and return tween which animate light's coockie size value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="size">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's coockie size value.</returns>
         public static Tween DoCoockieSize(this Light light, float size, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.cookieSize, size, (t) => light.cookieSize = t, duration, formula, loopsCount, loopType);
@@ -2794,6 +3929,16 @@ namespace Numba.Tweening
         #endregion
 
         #region CullingMask
+        /// <summary>
+        /// Create and return tween which animate light's culling mask value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="mask">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's culling mask value.</returns>
         public static Tween DoCullingMask(this Light light, int mask, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.cullingMask, mask, (m) => light.cullingMask = m, duration, formula, loopsCount, loopType);
@@ -2806,6 +3951,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Intensity
+        /// <summary>
+        /// Create and return tween which animate light's intensity.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="intensity">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's intensity.</returns>
         public static Tween DoIntensity(this Light light, float intensity, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.intensity, intensity, (i) => light.intensity = i, duration, formula, loopsCount, loopType);
@@ -2818,6 +3973,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Range
+        /// <summary>
+        /// Create and return tween which animate light's range value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="range">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's range value.</returns>
         public static Tween DoRange(this Light light, float range, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.range, range, (r) => light.range = r, duration, formula, loopsCount, loopType);
@@ -2830,6 +3995,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowAngle
+        /// <summary>
+        /// Create and return tween which animate light's shadow angle.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="angle">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow angle.</returns>
         public static Tween DoShadowAngle(this Light light, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowAngle, angle, (a) => light.shadowAngle = a, duration, formula, loopsCount, loopType);
@@ -2842,6 +4017,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowBias
+        /// <summary>
+        /// Create and return tween which animate light's shadow bias.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="bias">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow bias.</returns>
         public static Tween DoShadowBias(this Light light, float bias, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowBias, bias, (b) => light.shadowBias = b, duration, formula, loopsCount, loopType);
@@ -2854,6 +4039,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowCustomResolution
+        /// <summary>
+        /// Create and return tween which animate light's shadow custom resolution value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="resolution">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow custom resolution value.</returns>
         public static Tween DoShadowCustomResolution(this Light light, int resolution, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowCustomResolution, resolution, (r) => light.shadowCustomResolution = r, duration, formula, loopsCount, loopType);
@@ -2866,6 +4061,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowNearPlane
+        /// <summary>
+        /// Create and return tween which animate light's shadow near plane value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="distance">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow near plane value.</returns>
         public static Tween DoShadowNearPlane(this Light light, float distance, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowNearPlane, distance, (d) => light.shadowNearPlane = d, duration, formula, loopsCount, loopType);
@@ -2878,6 +4083,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowNormalBias
+        /// <summary>
+        /// Create and return tween which animate light's shadow normal bias value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="bias">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow normal bias value.</returns>
         public static Tween DoShadowNormalBias(this Light light, float bias, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowNormalBias, bias, (b) => light.shadowNormalBias = b, duration, formula, loopsCount, loopType);
@@ -2890,6 +4105,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowRadius
+        /// <summary>
+        /// Create and return tween which animate light's shadow radius.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="radius">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow radius.</returns>
         public static Tween DoShadowRadius(this Light light, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowRadius, radius, (r) => light.shadowRadius = r, duration, formula, loopsCount, loopType);
@@ -2902,6 +4127,16 @@ namespace Numba.Tweening
         #endregion
 
         #region ShadowStrength
+        /// <summary>
+        /// Create and return tween which animate light's shadow strenght.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="strenght">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow strenght.</returns>
         public static Tween DoShadowStrength(this Light light, float strenght, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.shadowStrength, strenght, (s) => light.shadowStrength = s, duration, formula, loopsCount, loopType);
@@ -2914,6 +4149,16 @@ namespace Numba.Tweening
         #endregion
 
         #region SpotAngle
+        /// <summary>
+        /// Create and return tween which animate light's spot angle value.
+        /// </summary>
+        /// <param name="light">Target light.</param>
+        /// <param name="angle">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate light's shadow spot angle value.</returns>
         public static Tween DoSpotAngle(this Light light, float angle, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(light.spotAngle, angle, (a) => light.spotAngle = a, duration, formula, loopsCount, loopType);
@@ -2928,6 +4173,16 @@ namespace Numba.Tweening
 
         #region LineRenderer
         #region EndColor
+        /// <summary>
+        /// Create and return tween which animate line renderer's end color.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's end color.</returns>
         public static Tween DoEndColor(this LineRenderer renderer, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.endColor, color, (c) => renderer.endColor = c, duration, formula, loopsCount, loopType);
@@ -2940,6 +4195,16 @@ namespace Numba.Tweening
         #endregion
 
         #region EndWidth
+        /// <summary>
+        /// Create and return tween which animate line renderer's end width.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="width">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's end width.</returns>
         public static Tween DoEndWidth(this LineRenderer renderer, float width, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.endWidth, width, (w) => renderer.endWidth = w, duration, formula, loopsCount, loopType);
@@ -2952,6 +4217,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NumCapVertices
+        /// <summary>
+        /// Create and return tween which animate line renderer's number of cap vertices.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="vertices">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's number of cap vertices.</returns>
         public static Tween DoNumCapVertices(this LineRenderer renderer, int vertices, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.numCapVertices, vertices, (v) => renderer.numCapVertices = v, duration, formula, loopsCount, loopType);
@@ -2964,6 +4239,16 @@ namespace Numba.Tweening
         #endregion
 
         #region NumCornerVertices
+        /// <summary>
+        /// Create and return tween which animate line renderer's number of corner vertices.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="vertices">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's number of corner vertices.</returns>
         public static Tween DoNumCornerVertices(this LineRenderer renderer, int vertices, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.numCornerVertices, vertices, (v) => renderer.numCornerVertices = v, duration, formula, loopsCount, loopType);
@@ -2976,6 +4261,16 @@ namespace Numba.Tweening
         #endregion
 
         #region PositionCount
+        /// <summary>
+        /// Create and return tween which animate line renderer's position count value.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="count">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's position count value.</returns>
         public static Tween DoPositionCount(this LineRenderer renderer, int count, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.positionCount, count, (c) => renderer.positionCount = c, duration, formula, loopsCount, loopType);
@@ -2988,6 +4283,16 @@ namespace Numba.Tweening
         #endregion
 
         #region StartColor
+        /// <summary>
+        /// Create and return tween which animate line renderer's start color.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="color">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's start color.</returns>
         public static Tween DoStartColor(this LineRenderer renderer, Color color, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.startColor, color, (c) => renderer.startColor = c, duration, formula, loopsCount, loopType);
@@ -3000,6 +4305,16 @@ namespace Numba.Tweening
         #endregion
 
         #region StartWidth
+        /// <summary>
+        /// Create and return tween which animate line renderer's start width.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="width">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's start width.</returns>
         public static Tween DoStartWidth(this LineRenderer renderer, float width, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.startWidth, width, (w) => renderer.startWidth = w, duration, formula, loopsCount, loopType);
@@ -3012,6 +4327,16 @@ namespace Numba.Tweening
         #endregion
 
         #region WidthMultiplier
+        /// <summary>
+        /// Create and return tween which animate line renderer's width multiplier value.
+        /// </summary>
+        /// <param name="renderer">Target line renderer.</param>
+        /// <param name="multiplier">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate line renderer's start width multiplier value.</returns>
         public static Tween DoWidthMultiplier(this LineRenderer renderer, float multiplier, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(renderer.widthMultiplier, multiplier, (m) => renderer.widthMultiplier = m, duration, formula, loopsCount, loopType);
@@ -3026,6 +4351,16 @@ namespace Numba.Tweening
 
         #region PhysicMaterial
         #region Bounciness
+        /// <summary>
+        /// Create and return tween which animate physic material's bounciness value.
+        /// </summary>
+        /// <param name="material">Target physic material.</param>
+        /// <param name="bounciness">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate physic material's bounciness value.</returns>
         public static Tween DoBounciness(this PhysicMaterial material, float bounciness, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.bounciness, bounciness, (b) => material.bounciness = b, duration, formula, loopsCount, loopType);
@@ -3038,6 +4373,16 @@ namespace Numba.Tweening
         #endregion
 
         #region DynamicFriction
+        /// <summary>
+        /// Create and return tween which animate physic material's dynamic friction.
+        /// </summary>
+        /// <param name="material">Target physic material.</param>
+        /// <param name="friction">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate physic material's dynamic friction.</returns>
         public static Tween DoDynamicFriction(this PhysicMaterial material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.dynamicFriction, friction, (f) => material.dynamicFriction = f, duration, formula, loopsCount, loopType);
@@ -3050,6 +4395,16 @@ namespace Numba.Tweening
         #endregion
 
         #region StaticFriction
+        /// <summary>
+        /// Create and return tween which animate physic material's static friction.
+        /// </summary>
+        /// <param name="material">Target physic material.</param>
+        /// <param name="friction">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate physic material's static friction.</returns>
         public static Tween DoStaticFriction(this PhysicMaterial material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.staticFriction, friction, (f) => material.staticFriction = f, duration, formula, loopsCount, loopType);
@@ -3064,6 +4419,16 @@ namespace Numba.Tweening
 
         #region PhysicsMaterial2D
         #region Bounciness
+        /// <summary>
+        /// Create and return tween which animate 2D physics material's bounciness value.
+        /// </summary>
+        /// <param name="material">Target 2D physics material.</param>
+        /// <param name="bounciness">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D physics material's bounciness value.</returns>
         public static Tween DoBounciness(this PhysicsMaterial2D material, float bounciness, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.bounciness, bounciness, (b) => material.bounciness = b, duration, formula, loopsCount, loopType);
@@ -3076,6 +4441,16 @@ namespace Numba.Tweening
         #endregion
 
         #region Friction
+        /// <summary>
+        /// Create and return tween which animate 2D physics material's friction.
+        /// </summary>
+        /// <param name="material">Target 2D physics material.</param>
+        /// <param name="friction">End value.</param>
+        /// <param name="duration">Tween duration.</param>
+        /// <param name="formula"> Tween formula for easing.</param>
+        /// <param name="loopsCount">Tween loops count.</param>
+        /// <param name="loopType">Tween loop type for cycling.</param>
+        /// <returns>Tween which animate 2D physics material's friction.</returns>
         public static Tween DoFriction(this PhysicsMaterial2D material, float friction, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
         {
             return Tween.Create(material.friction, friction, (f) => material.friction = f, duration, formula, loopsCount, loopType);
