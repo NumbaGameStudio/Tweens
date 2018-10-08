@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Numba.Tweening.Tweaks
+namespace Numba.Tweens.Tweaks
 {
     /// <summary>
     /// Interpolate one Quaternion value to other and call passed action.

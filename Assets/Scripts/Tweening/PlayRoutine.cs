@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Represent tween animation (even if it paused). 

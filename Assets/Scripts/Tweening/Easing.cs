@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 using System.Text;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Contain ease methods for a lot of system or unity classes.

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Numba.Tweening.Tweaks;
+using Numba.Tweens.Tweaks;
 using UnityEngine.UI;
 using UnityEngine.XR.WSA;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Extensions for a lot of unity types.

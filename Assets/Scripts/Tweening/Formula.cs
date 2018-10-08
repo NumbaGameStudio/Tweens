@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Base class for aby formula.

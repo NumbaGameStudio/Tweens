@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Numba.Tweening.Static
+namespace Numba.Tweens.Static
 {
     /// <summary>
     /// Represent time extension methods.

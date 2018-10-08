@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// <para>Represent container for other playables (Tween and Sequence) or callbacks.</para>

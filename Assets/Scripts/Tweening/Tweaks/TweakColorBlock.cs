@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-namespace Numba.Tweening.Tweaks
+namespace Numba.Tweens.Tweaks
 {
     /// <summary>
     /// Interpolate one ColorBlock value to other and call passed action.

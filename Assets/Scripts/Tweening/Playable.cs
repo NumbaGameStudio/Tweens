@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityTime = UnityEngine.Time;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Base class for all playables (like Tween or Sequence).

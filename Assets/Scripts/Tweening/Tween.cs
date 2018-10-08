@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Numba.Tweening.Tweaks;
+using Numba.Tweens.Tweaks;
 using System;
 using UnityEngine.UI;
-using Numba.Tweening.Static;
+using Numba.Tweens.Static;
 
-namespace Numba.Tweening
+namespace Numba.Tweens
 {
     /// <summary>
     /// Can animate any tweak in time.
