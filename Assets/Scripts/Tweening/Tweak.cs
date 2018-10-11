@@ -333,7 +333,10 @@ namespace Numba.Tweens
         /// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
         /// <param name="useSwap">Is need swap From and To values.</param>
         /// <returns>Calculated value.</returns>
-        public abstract T Evaluate(float interpolation, Ease ease, bool swapFromTo = false);
+        public T Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
+        {
+            return Evaluate(interpolation, Formulas.GetFormula(ease), swapFromTo);
+        }
 
         /// <summary>
         /// Evaluate tweaked value and call setter callback.

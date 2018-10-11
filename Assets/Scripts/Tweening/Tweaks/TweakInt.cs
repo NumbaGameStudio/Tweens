@@ -31,17 +31,5 @@ namespace Numba.Tweens.Tweaks
         {
             return Evaluate(swapFromTo, (from, to) => Easing.Ease(from, to, interpolation, formula));
         }
-
-        /// <summary>
-        /// Calculate Int value by formula and interpolation.
-        /// </summary>
-        /// <param name="interpolation">Interpolation.</param>
-        /// <param name="ease">Ease associated with built-in formula for tweaking.</param>
-        /// <param name="swapFromTo">Is need swap from and to?</param>
-        /// <returns>Int value interpolated by formula.</returns>
-        public override int Evaluate(float interpolation, Ease ease, bool swapFromTo = false)
-        {
-            return Evaluate(interpolation, Formulas.GetFormula(ease), swapFromTo);
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Numba.Tweens
 
         /// <summary>
         /// <para>Starts from end.</para>
-        /// <para>For Tween when playing in backward direction, forward formula will be used.</para>
+        /// <para>For Tween when playing as backward, but use reversed formula.</para>
         /// <para>For Sequence is similar to Backward loop type.</para>
         /// </summary>
         Reversed,

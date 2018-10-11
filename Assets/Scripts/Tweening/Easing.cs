@@ -578,7 +578,7 @@ namespace Numba.Tweens
             if (t == 0f) return from;
             if (t == 1f) return to;
 
-            return (int)((to - from) * t + from);
+            return  (int)((to - from) * t + from);
         }
 
         private static long Linear(long from, long to, float interpolation)
