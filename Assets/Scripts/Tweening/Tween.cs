@@ -1622,7 +1622,7 @@ namespace Numba.Tweens
         /// Set tween current play time.
         /// </summary>
         /// <param name="time">Time (not interpolated).</param>
-        public override void SetTime(float time)
+        internal override void SetTime(float time)
         {
             SetTime(Tweak, time, Duration, DurationWithLoops, Formula, LoopType);
         }

@@ -177,7 +177,7 @@ namespace Numba.Tweens
         /// Set time to this playable.
         /// </summary>
         /// <param name="time">Time (not interpolated).</param>
-        public abstract void SetTime(float time);
+        internal abstract void SetTime(float time);
 
         /// <summary>
         /// Starts playing animation.

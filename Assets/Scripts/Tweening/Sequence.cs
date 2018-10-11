@@ -145,36 +145,6 @@ namespace Numba.Tweens
         }
         #endregion
 
-        #region Create
-        /// <summary>
-        /// Create empty sequence.
-        /// </summary>
-        /// <returns>Empty sequence.</returns>
-        public static Sequence Create() { return new Sequence(); }
-
-        /// <summary>
-        /// Create sequence with name.
-        /// </summary>
-        /// <param name="name">Sequence name.</param>
-        /// <returns>Named sequence.</returns>
-        public static Sequence Create(string name) { return new Sequence(name); }
-
-        /// <summary>
-        /// Create sequence with settings.
-        /// </summary>
-        /// <param name="settings">Sequence settings.</param>
-        /// <returns>Sequence with settings.</returns>
-        public static Sequence Create(SequenceSettings settings) { return new Sequence(settings); }
-
-        /// <summary>
-        /// Create named sequence with settings.
-        /// </summary>
-        /// <param name="name">Sequence name.</param>
-        /// <param name="settings">Sequence settings.</param>
-        /// <returns>Named sequence with settings.</returns>
-        public static Sequence Create(string name, SequenceSettings settings) { return new Sequence(settings); }
-        #endregion
-
         #region Fields
         private List<PlayableData> _playbleDatas = new List<PlayableData>();
 
@@ -291,7 +261,7 @@ namespace Numba.Tweens
         /// <summary>
         /// Last handled time by sequence.
         /// </summary>
-        public float CurrentTime { get; set; }
+        private float CurrentTime { get; set; }
         #endregion
 
         #region Methods
@@ -480,7 +450,7 @@ namespace Numba.Tweens
         /// Reset current time to initial position (-1 for forward and 
         /// yoyo loop type, and DurationWithLoops + 1 for other).
         /// </summary>
-        public void ResetCurrentTime()
+        private void ResetCurrentTime()
         {
             CurrentTime = GetPreviousTimeInitialPosition(LoopType);
         }
@@ -555,7 +525,7 @@ namespace Numba.Tweens
         /// Set sequence current play time.
         /// </summary>
         /// <param name="time">Time (not interpolated).</param>
-        public override void SetTime(float currentTime)
+        internal override void SetTime(float currentTime)
         {
             SetTime(CurrentTime, currentTime, Duration, DurationWithLoops, LoopType);
         }
@@ -759,13 +729,19 @@ namespace Numba.Tweens
 
             for (int i = 0; i < _callbacksDatas.Count; i++)
                 if (IsValueBetween(_callbacksDatas[i].StartTime, startTime, endTime) && _callbacksDatas[i].StartTime != startTime)
-                    phasedPlayableDatas.Add(new PhasedData(Phase.Start, _callbacksDatas[i]));
+                    phasedPlayableDatas.Add(new PhasedData(Phase.Complete, _callbacksDatas[i]));
 
             phasedPlayableDatas.Sort((p1, p2) =>
             {
                 if (p1.Phase == Phase.Update && p2.Phase != Phase.Update) return 1;
                 else if (p2.Phase == Phase.Update && p1.Phase != Phase.Update) return -1;
-                else return p1.PlayableData.Value.Order.CompareTo(p2.PlayableData.Value.Order);
+                else
+                {
+                    int o1 = p1.PlayableData == null ? p1.CallbackData.Value.Order : p1.PlayableData.Value.Order;
+                    int o2 = p2.PlayableData == null ? p2.CallbackData.Value.Order : p2.PlayableData.Value.Order;
+
+                    return o1.CompareTo(o2);
+                }
             });
 
             for (int i = 0; i < phasedPlayableDatas.Count - 1; i++)

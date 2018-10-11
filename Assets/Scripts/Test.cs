@@ -24,46 +24,8 @@ namespace Namespace
 
         private void Start()
         {
-            float easedValue = Easing.Ease(0f, 15f, 0.75f, Ease.Linear);
-            Debug.Log(easedValue);
-        }
-
-        // This method just write person info to UI text.
-        private void WritePersonInfo(PersonInfo info)
-        {
-            _text.text = string.Format("{0} {1}", info.Age, info.Name);
-        }
-
-        public struct PersonInfo
-        {
-            public int Age { get; set; }
-            public string Name { get; set; }
-
-            public PersonInfo(int age, string name)
-            {
-                Age = age;
-                Name = name;
-            }
-        }
-
-        public class TweakPersonInfo : Tweak<PersonInfo>
-        {
-            public TweakPersonInfo(PersonInfo from, PersonInfo to, Action<PersonInfo> setter) 
-                : base(from, to, setter) { }
-
-            public override PersonInfo Evaluate(float interpolation, Formula formula, bool useSwap = false)
-            {
-                return Evaluate(useSwap, (from, to) =>
-                {
-                    PersonInfo info = new PersonInfo
-                    {
-                        Age = Easing.Ease(from.Age, to.Age, interpolation, formula),
-                        Name = Easing.Ease(from.Name, to.Name, interpolation, formula)
-                    };
-
-                    return info;
-                });
-            }
+            Tween tween = _cube1.DoPositionX(1f, 1f, Ease.InExpo, 2, LoopType.ReversedYoyo);
+            Sequence seq1 = new Sequence(tween.Settings);
         }
     }
 }
