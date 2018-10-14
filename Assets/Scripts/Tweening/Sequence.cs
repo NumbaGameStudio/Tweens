@@ -703,70 +703,57 @@ namespace Numba.Tweens
         private List<PhasedData> GetSortedByPhaseData(float startTime, float endTime)
         {
             bool isBackward = startTime > endTime;
-            List<PhasedData> phasedPlayableDatas = new List<PhasedData>();
+            List<PhasedData> phasedDatas = new List<PhasedData>();
 
             foreach (var playableData in _playbleDatas)
             {
                 float tweenStartTime = isBackward ? playableData.StartTime + playableData.Playable.DurationWithLoops : playableData.StartTime;
                 float tweenEndTime = isBackward ? playableData.StartTime : playableData.StartTime + playableData.Playable.DurationWithLoops;
 
-                if (IsValueBetween(tweenEndTime, startTime, endTime) && tweenEndTime != startTime)
-                {
-                    if (isBackward && (tweenStartTime < startTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
-                    else if (!isBackward && (tweenStartTime > startTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
-
-                    phasedPlayableDatas.Add(new PhasedData(Phase.Complete, playableData));
-                    continue;
-                }
-
+                // If playable not in played zone - just skip it.
                 if (isBackward && (tweenEndTime >= startTime || tweenStartTime < endTime)) continue;
                 else if (!isBackward && (tweenEndTime <= startTime || tweenStartTime > endTime)) continue;
 
-                if (isBackward && (tweenStartTime < startTime && tweenStartTime >= endTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
-                else if (!isBackward && (tweenStartTime > startTime && tweenStartTime <= endTime)) phasedPlayableDatas.Add(new PhasedData(Phase.Start, playableData));
-                else phasedPlayableDatas.Add(new PhasedData(Phase.Update, playableData));
+                // If playable starts in played zone - add it to start phase.
+                if (isBackward && (tweenStartTime < startTime && tweenStartTime >= endTime)) phasedDatas.Add(new PhasedData(Phase.Start, playableData));
+                else if (!isBackward && (tweenStartTime > startTime && tweenStartTime <= endTime)) phasedDatas.Add(new PhasedData(Phase.Start, playableData));
+
+                // If playable starts before played zone, but yet not comlpeted - add it to update phase.
+                if (isBackward && (tweenStartTime > endTime && tweenEndTime < endTime)) phasedDatas.Add(new PhasedData(Phase.Update, playableData));
+                else if (!isBackward && (tweenStartTime < endTime && tweenEndTime > endTime)) phasedDatas.Add(new PhasedData(Phase.Update, playableData));
+
+                // If playable ends in played zone - add it to complete phase.
+                if (isBackward && (tweenEndTime < startTime && tweenEndTime >= endTime)) phasedDatas.Add(new PhasedData(Phase.Complete, playableData));
+                else if (!isBackward && (tweenEndTime > startTime && tweenEndTime <= endTime)) phasedDatas.Add(new PhasedData(Phase.Complete, playableData));
             }
 
+            // Adding callbacks which in played zone.
             for (int i = 0; i < _callbacksDatas.Count; i++)
-                if (IsValueBetween(_callbacksDatas[i].StartTime, startTime, endTime) && _callbacksDatas[i].StartTime != startTime)
-                    phasedPlayableDatas.Add(new PhasedData(Phase.Complete, _callbacksDatas[i]));
-
-            phasedPlayableDatas.Sort((p1, p2) =>
             {
-                if (p1.Phase == Phase.Update && p2.Phase != Phase.Update) return 1;
-                else if (p2.Phase == Phase.Update && p1.Phase != Phase.Update) return -1;
-                else
-                {
-                    int o1 = p1.PlayableData == null ? p1.CallbackData.Value.Order : p1.PlayableData.Value.Order;
-                    int o2 = p2.PlayableData == null ? p2.CallbackData.Value.Order : p2.PlayableData.Value.Order;
+                CallbackData callbackData = _callbacksDatas[i];
 
-                    return o1.CompareTo(o2);
-                }
+                if (callbackData.StartTime > startTime && callbackData.StartTime <= endTime)
+                    phasedDatas.Add(new PhasedData(Phase.Complete, _callbacksDatas[i]));
+            }
+
+            phasedDatas.Sort((p1, p2) =>
+            {
+                float p1Time = GetPhasedDataTimeForSorting(p1, endTime);
+                float p2Time = GetPhasedDataTimeForSorting(p2, endTime);
+
+                if (p1Time != p2Time) return p1Time.CompareTo(p2Time);
+                else return GetPhasedDataOrder(p1).CompareTo(GetPhasedDataOrder(p2));
             });
 
-            for (int i = 0; i < phasedPlayableDatas.Count - 1; i++)
-            {
-                if (phasedPlayableDatas[i].Phase == Phase.Update) break;
-
-                float originTime = GetPhasedDataTimeForSorting(phasedPlayableDatas[i]);
-
-                int j = i + 1;
-                for (; j < phasedPlayableDatas.Count; j++) if (GetPhasedDataTimeForSorting(phasedPlayableDatas[j]) != originTime) break;
-
-                if (j - i == 1) continue;
-
-                phasedPlayableDatas.SortPart(i, j - i, (p1, p2) => GetPhasedDataOrder(p1).CompareTo(GetPhasedDataOrder(p2)));
-                i = j - 1;
-            }
-
-            return phasedPlayableDatas;
+            return phasedDatas;
         }
 
-        private float GetPhasedDataTimeForSorting(PhasedData phasedData)
+        private float GetPhasedDataTimeForSorting(PhasedData phasedData, float endTime)
         {
             if (phasedData.PlayableData != null)
             {
                 if (phasedData.Phase == Phase.Start) return phasedData.PlayableData.Value.StartTime;
+                else if (phasedData.Phase == Phase.Update) return endTime;
                 else return phasedData.PlayableData.Value.StartTime + phasedData.PlayableData.Value.Playable.DurationWithLoops;
             }
             else return phasedData.CallbackData.Value.StartTime;
@@ -775,11 +762,6 @@ namespace Numba.Tweens
         private int GetPhasedDataOrder(PhasedData phasedData)
         {
             return phasedData.PlayableData != null ? phasedData.PlayableData.Value.Order : phasedData.CallbackData.Value.Order;
-        }
-
-        private bool IsValueBetween(float value, float startTime, float endTime)
-        {
-            return startTime < endTime ? value >= startTime && value <= endTime : value >= endTime && value <= startTime;
         }
 
         protected override void HandleStop()

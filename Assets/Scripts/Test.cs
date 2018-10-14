@@ -24,8 +24,15 @@ namespace Namespace
 
         private void Start()
         {
-            Tween tween = _cube1.DoPositionX(1f, 1f, Ease.InExpo, 2, LoopType.ReversedYoyo);
-            Sequence seq1 = new Sequence(tween.Settings);
+            Sequence sequence = new Sequence();
+            sequence.Append(_cube1.DoPositionX(1f, 1f));
+            sequence.Append(_cube1.DoEulerAnglesY(90f, 1f));
+            sequence.Insert(0f, _cube1.DoLocalScaleX(2f, 1f));
+            sequence.Insert(0f, () => Debug.Log("cb1"), 1);
+            sequence.Insert(0f, () => Debug.Log("cb2"), 0);
+            sequence.Insert(0f, () => Debug.Log("cb3"));
+
+            sequence.Play();
         }
     }
 }
