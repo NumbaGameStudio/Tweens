@@ -5097,134 +5097,136 @@ namespace Numba.Tweens
         #endregion
         #endregion
 
+        // TODO: Fix code with spatial mapping.
         #region SpatialMappingBase
-        #region HalfBoxExtents
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's half box extents.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="extents">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="formula"> Tween formula for easing.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's half box extents.</returns>
-        public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(collider.halfBoxExtents, extents, (e) => collider.halfBoxExtents = e, duration, formula, loopsCount, loopType);
-        }
+        //#region HalfBoxExtents
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's half box extents.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="extents">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="formula"> Tween formula for easing.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's half box extents.</returns>
+        //public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    UnityEngine.XR.WSA.WebCam.spa
+        //    return Tween.Create(collider.halfBoxExtents, extents, (e) => collider.halfBoxExtents = e, duration, formula, loopsCount, loopType);
+        //}
 
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's half box extents.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="extents">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's half box extents.</returns>
-        public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoHalfBoxExtents(collider, extents, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-        #endregion
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's half box extents.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="extents">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's half box extents.</returns>
+        //public static Tween DoHalfBoxExtents(this SpatialMappingBase collider, Vector3 extents, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return DoHalfBoxExtents(collider, extents, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        //}
+        //#endregion
 
-        #region NumUpdatesBeforeRemoval
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's number updates before removal.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="updates">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="formula"> Tween formula for easing.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's number updates before removal.</returns>
-        public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(collider.numUpdatesBeforeRemoval, updates, (u) => collider.numUpdatesBeforeRemoval = u, duration, formula, loopsCount, loopType);
-        }
+        //#region NumUpdatesBeforeRemoval
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's number updates before removal.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="updates">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="formula"> Tween formula for easing.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's number updates before removal.</returns>
+        //public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return Tween.Create(collider.numUpdatesBeforeRemoval, updates, (u) => collider.numUpdatesBeforeRemoval = u, duration, formula, loopsCount, loopType);
+        //}
 
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's number updates before removal.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="updates">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's number updates before removal.</returns>
-        public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoNumUpdatesBeforeRemoval(collider, updates, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-        #endregion
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's number updates before removal.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="updates">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's number updates before removal.</returns>
+        //public static Tween DoNumUpdatesBeforeRemoval(this SpatialMappingBase collider, int updates, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return DoNumUpdatesBeforeRemoval(collider, updates, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        //}
+        //#endregion
 
-        #region SecondsBetweenUpdates
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's seconds between updates.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="seconds">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="formula"> Tween formula for easing.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's seconds between updates.</returns>
-        public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(collider.secondsBetweenUpdates, seconds, (s) => collider.secondsBetweenUpdates = s, duration, formula, loopsCount, loopType);
-        }
+        //#region SecondsBetweenUpdates
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's seconds between updates.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="seconds">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="formula"> Tween formula for easing.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's seconds between updates.</returns>
+        //public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return Tween.Create(collider.secondsBetweenUpdates, seconds, (s) => collider.secondsBetweenUpdates = s, duration, formula, loopsCount, loopType);
+        //}
 
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's seconds between updates.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="seconds">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's seconds between updates.</returns>
-        public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoSecondsBetweenUpdates(collider, seconds, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-        #endregion
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's seconds between updates.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="seconds">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's seconds between updates.</returns>
+        //public static Tween DoSecondsBetweenUpdates(this SpatialMappingBase collider, float seconds, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return DoSecondsBetweenUpdates(collider, seconds, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        //}
+        //#endregion
 
-        #region SphereRadius
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's sphere radius.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="radius">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="formula"> Tween formula for easing.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's sphere radius.</returns>
-        public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return Tween.Create(collider.sphereRadius, radius, (r) => collider.sphereRadius = r, duration, formula, loopsCount, loopType);
-        }
+        //#region SphereRadius
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's sphere radius.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="radius">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="formula"> Tween formula for easing.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's sphere radius.</returns>
+        //public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Formula formula, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return Tween.Create(collider.sphereRadius, radius, (r) => collider.sphereRadius = r, duration, formula, loopsCount, loopType);
+        //}
 
-        /// <summary>
-        /// Create and return tween which animate spatial mapping base's sphere radius.
-        /// </summary>
-        /// <param name="collider">Target spatial mapping base.</param>
-        /// <param name="radius">End value.</param>
-        /// <param name="duration">Tween duration.</param>
-        /// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
-        /// <param name="loopsCount">Tween loops count.</param>
-        /// <param name="loopType">Tween loop type for cycling.</param>
-        /// <returns>Tween which animate spatial mapping base's sphere radius.</returns>
-        public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
-        {
-            return DoSphereRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
-        }
-        #endregion
+        ///// <summary>
+        ///// Create and return tween which animate spatial mapping base's sphere radius.
+        ///// </summary>
+        ///// <param name="collider">Target spatial mapping base.</param>
+        ///// <param name="radius">End value.</param>
+        ///// <param name="duration">Tween duration.</param>
+        ///// <param name="ease">Ease type associated with built-in formula, which will be used in calculations.</param>
+        ///// <param name="loopsCount">Tween loops count.</param>
+        ///// <param name="loopType">Tween loop type for cycling.</param>
+        ///// <returns>Tween which animate spatial mapping base's sphere radius.</returns>
+        //public static Tween DoSphereRadius(this SpatialMappingBase collider, float radius, float duration, Ease ease = Ease.Linear, int loopsCount = 1, LoopType loopType = LoopType.Forward)
+        //{
+        //    return DoSphereRadius(collider, radius, duration, Formulas.GetFormula(ease), loopsCount, loopType);
+        //}
+        //#endregion
         #endregion
 
         #region Collider2D
