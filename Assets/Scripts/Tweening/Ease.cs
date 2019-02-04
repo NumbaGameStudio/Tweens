@@ -120,6 +120,51 @@ namespace Numba.Tweens
         InOutCirc,
 
         /// <summary>
+        /// Elastic slow formula.
+        /// </summary>
+        ElasticEaseIn,
+
+        /// <summary>
+        /// Elastic fast formula.
+        /// </summary>
+        ElasticEaseOut,
+
+        /// <summary>
+        /// Elastic middle speed formula.
+        /// </summary>
+        ElasticEaseInOut,
+
+        /// <summary>
+        /// Back slow formula.
+        /// </summary>
+        BackEaseIn,
+
+        /// <summary>
+        /// Back fast formula.
+        /// </summary>
+        BackEaseOut,
+
+        /// <summary>
+        /// Back middle speed formula.
+        /// </summary>
+        BackEaseInOut,
+
+        /// <summary>
+        /// Bounce slow formula.
+        /// </summary>
+        BounceEaseIn,
+
+        /// <summary>
+        /// Bounce fast formula.
+        /// </summary>
+        BounceEaseOut,
+
+        /// <summary>
+        /// Bounce middle speed formula.
+        /// </summary>
+        BounceEaseInOut,
+
+        /// <summary>
         /// Other formula.
         /// </summary>
         Other

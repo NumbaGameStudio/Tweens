@@ -11,7 +11,7 @@ namespace Numba.Tweens
     /// </summary>
     internal static class Formulas
     {
-        private static Formula[] _formulas = new Formula[22];
+        private static Formula[] _formulas = new Formula[31];
 
         #region Formulas
         /// <summary>
@@ -123,6 +123,51 @@ namespace Numba.Tweens
         /// Circular formula with acceleration and slowdown.
         /// </summary>
         internal static CircularInOutFormula InOutCirc { get; private set; }
+
+        /// <summary>
+        /// Elastic formula slowdown.
+        /// </summary>
+        internal static ElasticEaseIn InElastic { get; private set; }
+
+        /// <summary>
+        /// Elastic formula with acceleration and slowdown.
+        /// </summary>
+        internal static ElasticEaseInOut InOutElastic { get; private set; }
+
+        /// <summary>
+        /// Elastic formula with acceleration.
+        /// </summary>
+        internal static ElasticEaseOut OutElastic { get; private set; }
+
+        /// <summary>
+        /// Back formula slowdown.
+        /// </summary>
+        internal static BackEaseIn InBack { get; private set; }
+
+        /// <summary>
+        /// Back formula with acceleration and slowdown.
+        /// </summary>
+        internal static BackEaseInOut InOutBack { get; private set; }
+
+        /// <summary>
+        /// Back formula with acceleration.
+        /// </summary>
+        internal static BackEaseOut OutBack { get; private set; }
+
+        /// <summary>
+        /// Bounce formula slowdown.
+        /// </summary>
+        internal static BounceEaseIn InBounce { get; private set; }
+
+        /// <summary>
+        /// Bounce formula with acceleration and slowdown.
+        /// </summary>
+        internal static BounceEaseInOut InOutBounce { get; private set; }
+
+        /// <summary>
+        /// Bounce formula with acceleration.
+        /// </summary>
+        internal static BounceEaseOut OutBounce { get; private set; }
         #endregion
 
         static Formulas()
@@ -149,6 +194,15 @@ namespace Numba.Tweens
             _formulas[19] = InCirc = new CircularInFormula();
             _formulas[20] = OutCirc = new CircularOutFormula();
             _formulas[21] = InOutCirc = new CircularInOutFormula();
+            _formulas[22] = InElastic = new ElasticEaseIn();
+            _formulas[23] = InOutElastic = new ElasticEaseInOut();
+            _formulas[24] = OutElastic = new ElasticEaseOut();
+            _formulas[25] = InBack = new BackEaseIn();
+            _formulas[26] = InOutBack = new BackEaseInOut();
+            _formulas[27] = OutBack = new BackEaseOut();
+            _formulas[28] = InBounce = new BounceEaseIn();
+            _formulas[29] = InOutBounce = new BounceEaseInOut();
+            _formulas[30] = OutBounce = new BounceEaseOut();
         }
 
         /// <summary>
