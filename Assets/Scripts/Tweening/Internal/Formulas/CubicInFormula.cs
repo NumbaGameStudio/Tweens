@@ -13,7 +13,7 @@ namespace Numba.Tweens
         /// <summary>
         /// Associated ease type.
         /// </summary>
-        public override Ease Ease { get { return Ease.InCubic; } }
+        public override Ease Ease { get { return Ease.CubicIn; } }
 
         /// <summary>
         /// Calculate time by formula.

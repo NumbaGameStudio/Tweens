@@ -17,152 +17,152 @@ namespace Numba.Tweens
         /// <summary>
         /// Quadratic formula with acceleration.
         /// </summary>
-        InQuad,
+        QuadIn,
 
         /// <summary>
         /// Quadratic formula with slowdown.
         /// </summary>
-        OutQuad,
+        QuadOut,
 
         /// <summary>
         /// Quadratic formula with acceleration and slowdown.
         /// </summary>
-        InOutQuad,
+        QuadInOut,
 
         /// <summary>
         /// Cubic formula with acceleration.
         /// </summary>
-        InCubic,
+        CubicIn,
 
         /// <summary>
         /// Cubic formula with slowdown.
         /// </summary>
-        OutCubic,
+        CubicOut,
 
         /// <summary>
         /// Cubic formula with acceleration and slowdown.
         /// </summary>
-        InOutCubic,
+        CubicInOut,
 
         /// <summary>
         /// Quartic formula with acceleration.
         /// </summary>
-        InQuart,
+        QuartsIn,
 
         /// <summary>
         /// Quartic formula with slowdown.
         /// </summary>
-        OutQuart,
+        QuartsOut,
 
         /// <summary>
         /// Quartic formula with acceleration and slowdown.
         /// </summary>
-        InOutQuart,
+        QuartsInOut,
 
         /// <summary>
         /// Quintic formula with acceleration.
         /// </summary>
-        InQuint,
+        QuintIn,
 
         /// <summary>
         /// Quintic formula with slowdown.
         /// </summary>
-        OutQuint,
+        QuintOut,
 
         /// <summary>
         /// Quintic formula with acceleration and slowdown.
         /// </summary>
-        InOutQuint,
+        QuintInOut,
 
         /// <summary>
         /// Sinusoidal formula with acceleration.
         /// </summary>
-        InSine,
+        SineIn,
 
         /// <summary>
         /// Sinusoidal formula with slowdown.
         /// </summary>
-        OutSine,
+        SineOut,
 
         /// <summary>
         /// Sinusoidal formula with acceleration and slowdown.
         /// </summary>
-        InOutSine,
+        SineInOut,
 
         /// <summary>
         /// Exponential formula with acceleration.
         /// </summary>
-        InExpo,
+        ExpoIn,
 
         /// <summary>
         /// Exponential formula with slowdown.
         /// </summary>
-        OutExpo,
+        ExpoOut,
 
         /// <summary>
         /// Exponential formula with acceleration and slowdown.
         /// </summary>
-        InOutExpo,
+        ExpoInOut,
 
         /// <summary>
         /// Circular formula with acceleration.
         /// </summary>
-        InCirc,
+        CircIn,
 
         /// <summary>
         /// Circular formula with slowdown.
         /// </summary>
-        OutCirc,
+        CircOut,
 
         /// <summary>
         /// Circular formula with acceleration and slowdown.
         /// </summary>
-        InOutCirc,
+        CircInOut,
 
         /// <summary>
-        /// Elastic slow formula.
+        /// Elastic formula with acceleration.
         /// </summary>
-        ElasticEaseIn,
+        ElasticIn,
 
         /// <summary>
-        /// Elastic fast formula.
+        /// Elastic formula with slowdown.
         /// </summary>
-        ElasticEaseOut,
+        ElasticOut,
 
         /// <summary>
-        /// Elastic middle speed formula.
+        /// Elastic formula with acceleration and slowdown.
         /// </summary>
-        ElasticEaseInOut,
+        ElasticInOut,
 
         /// <summary>
-        /// Back slow formula.
+        /// Back formula with acceleration.
         /// </summary>
-        BackEaseIn,
+        BackIn,
 
         /// <summary>
-        /// Back fast formula.
+        /// Back formula with slowdown.
         /// </summary>
-        BackEaseOut,
+        BackOut,
 
         /// <summary>
-        /// Back middle speed formula.
+        /// Back formula with acceleration and slowdown.
         /// </summary>
-        BackEaseInOut,
+        BackInOut,
 
         /// <summary>
-        /// Bounce slow formula.
+        /// Bounce formula with acceleration.
         /// </summary>
-        BounceEaseIn,
+        BounceIn,
 
         /// <summary>
-        /// Bounce fast formula.
+        /// Bounce formula with slowdown.
         /// </summary>
-        BounceEaseOut,
+        BounceOut,
 
         /// <summary>
-        /// Bounce middle speed formula.
+        /// Bounce formula with acceleration and slowdown.
         /// </summary>
-        BounceEaseInOut,
+        BounceInOut,
 
         /// <summary>
         /// Other formula.

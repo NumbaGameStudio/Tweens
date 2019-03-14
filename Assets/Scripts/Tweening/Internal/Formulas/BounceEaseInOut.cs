@@ -11,7 +11,7 @@ namespace Numba.Tweens
         /// <summary>
         /// Associated ease type.
         /// </summary>
-        public override Ease Ease { get { return Ease.BounceEaseInOut; } }
+        public override Ease Ease { get { return Ease.BounceInOut; } }
 
         /// <summary>
         /// Calculate time by formula (just return passed time).
